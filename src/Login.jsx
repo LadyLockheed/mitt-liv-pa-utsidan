@@ -1,6 +1,7 @@
 // import react from 'react'
 import styled from 'styled-components'
 import autumnleaf from './Assets/autumnleaf.svg'
+import backarrow from './Assets/backarrow.svg'
 
 const LoginSquare=styled.div` 
     height:314px;
@@ -23,7 +24,6 @@ const H1=styled.h1`
     font-weight:300;
     font-size:2.5rem;
     margin-top:1.5rem;
-   
     margin-bottom:1rem;
     grid-column:1/3;
 
@@ -56,6 +56,7 @@ const Button=styled.button`
     border-radius:5px;
     color:#F4F4F4;
     padding:.5rem;
+    cursor:pointer;
     
     
 
@@ -66,37 +67,46 @@ const NewUserLink=styled.p`
 
 
 `
-const Image=styled.img` 
+const Logo=styled.img` 
     width:5rem;
     heigh:5rem;
     border:1px solid pink;
     justify-self:center;
-    ${'' /* align-self:center; */}
     margin-top:1rem;
 
 `
+const BackarrowIcon=styled.img` 
+    height:1.3rem;
+    width:auto;
 
+`
 
+const Login = (props) => {
 
-const Login=()=>{
+    //lägg till variabel för userauthenticated
 
+    const {headline, labelTop, labelBottom, buttonText, displayBackArrow} = props;
+    console.log(displayBackArrow)
 
     return(
 
       
         <LoginSquare>
 
-            <H1>Mitt liv på utsidan</H1>
+            <H1>{headline}</H1>
             
             <InputSection>
-                <Label>Login</Label>
+                <Label>{labelTop}</Label>
                 <Input type='text'></Input>
-                <Label>Lösen</Label>
+                <Label>{labelBottom}</Label>
                 <Input type='text'></Input>
-                <Button>Logga in</Button>
-                <NewUserLink>Ny användare</NewUserLink>
+                <Button>{buttonText}</Button>
+               {displayBackArrow ? <BackarrowIcon src={backarrow}></BackarrowIcon> : <NewUserLink>Ny användare</NewUserLink> } 
+                
             </InputSection>
-            <Image src={autumnleaf}></Image>
+            <Logo src={autumnleaf}></Logo>
+            
+
             
             
           
