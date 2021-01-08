@@ -1,23 +1,31 @@
 import React, {useRef, useEffect} from 'react'
-import { NavLink } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+
+
 import styled from 'styled-components';
-import autumnleaf from './Assets/autumnleaf.svg'
-import DropdownMenu from './DropdownMenu'
+import mainlogo from '../Assets/mainlogo.svg'
+import DropdownMenu from '../DropdownMenu'
+
+import { useRecoilState } from "recoil";
+import { isAuthenticatedState } from '../GlobalStates.jsx';
 
 
 const H1=styled.h1`
- color:#EFEFEF;
+ color:${props => props.theme.white};
  font-weight:300;
 `
 const Logo=styled.img` 
     height:4rem;
     justify-self:center;
     align-self:center;
+    &:hover{
+        cursor:pointer;
+    }
 
 `
 
 const Navigation = styled.div`
-    background-color:#606338;
+    background-color:${props => props.theme.green};
     display:grid;
     grid-template-columns:1fr 1fr 1fr;
     padding:.2rem 3rem;
@@ -30,59 +38,63 @@ const LinksContainer = styled.div`
     justify-content:center;
 
 `;
-// const Li = styled.li`
-//     list-style:none;
-//     color:#EFEFEF;
-//     text-decoration:none;
-//     margin-right:4rem;
-//     &:hover{
-//         color:#a9c9c2;
-//     }
-// `;
 
-// const NavLinkStyled = styled(NavLink)`
-//     text-decoration:none;
-//     color:#d6c5b7;
-//     &.active{
-//         color:white;
-//         border-bottom:1px solid white;
-//     }
-//     &.selected{
-//         color:white;
-//     }
-
-// `;
 
 const Header = () => {
 
+    const [isAuthenticated, setIsAuthenticated]=useRecoilState(isAuthenticatedState)
+ 
+    const history=useHistory()
+    const goToAllEquipment=()=>{
 
-   const links=[
+        history.push('/allequipment')
+    }
+
+    const logOut=()=>{
+        setIsAuthenticated(false);
+        history.push('/')
+    }
+
+   const linksEquipment = [
        {
-           text:'All utrustning',
-           link:'/allequipment'
+           linkText:'All utrustning',
+           linkAdress:'/allequipment'
        },
        {
-           text:'Lägg till utrustning',
-           link:'/addequipment',
-        
+           linkText:'Lägg till utrustning',
+           linkAdress:'/addequipment',
        },
        {
-        text:'Packlistor',
-        link:'./packinglists'
-
+        linkText:'Packlistor',
+        linkAdress:'./packinglists'
        }
-     
    ]
+   
+   const linksAdventure = [
+    {
+        linkText:'Alla äventyr',
+        linkAdress:'/alladventures'
+    },
+    {
+        linkText:'Lägg till äventyr',
+        linkAdress:'/addnewadventure',
+    },
+    {
+     linkText:'Äventyret',
+     linkAdress:'./specificadventure'
+    }
+]
 
 
     return(
         <Navigation>
-            {/* <H1> <NavLinkStyled to='/' exact activeClassName="selected"> React Router</NavLinkStyled></H1> */}
+
             <H1>Mitt liv på utsidan</H1>
-            <Logo src={autumnleaf}></Logo>
+            <Logo src={mainlogo} onClick={goToAllEquipment}></Logo>
             <LinksContainer>
-                <DropdownMenu  menuHeadline={'Utrustning'} links={links}/>
-                <DropdownMenu  menuHeadline={'Äventyr'} linkOptions={['Mina äventyr', 'Skapa nytt äventyr']}/>
+            <button onClick={logOut}>Logga ut</button>
+                <DropdownMenu  menuHeadline={'Utrustning'} links={linksEquipment}/>
+                <DropdownMenu  menuHeadline={'Äventyr'} links={linksAdventure}/>
                
                 {/* <Li onClick={()=>console.log('click')}>Utrustning</Li>
                 <Li>Äventyr</Li> */}

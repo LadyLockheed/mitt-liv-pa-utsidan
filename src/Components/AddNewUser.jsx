@@ -1,7 +1,10 @@
 // import react from 'react'
 import styled from 'styled-components'
-import autumnleaf from './Assets/autumnleaf.svg'
-import backarrow from './Assets/backarrow.svg'
+import mainlogo from '../Assets/mainlogo.svg'
+import backarrow from '../Assets/backarrow.svg'
+import {Link} from 'react-router-dom'
+import { isAuthenticatedState } from '../GlobalStates.jsx';
+import { useRecoilState } from "recoil";
 
 const LoginSquare=styled.div` 
     height:314px;
@@ -15,12 +18,13 @@ const LoginSquare=styled.div`
     grid-template-columns:1fr 1fr;
     grid-template-rows:1fr 1fr 1fr 1fr;
     padding-left:2rem;
+    border-radius:5px;
    
    
 
 `;
 const H1=styled.h1` 
-    color:#D38324;
+    color:${props => props.theme.orange};
     font-weight:300;
     font-size:2.5rem;
     margin-top:1.5rem;
@@ -46,31 +50,28 @@ const Input=styled.input`
     border:none;
     width:90%;
     margin-bottom:1rem;
+    border-radius:5px;
 
 `;
 const Button=styled.button` 
     display:block;
     margin:auto;
-    background-color:#D38324;
+    background-color:${props => props.theme.orange};
     border:none;
     border-radius:5px;
-    color:#F4F4F4;
+    color:${props => props.theme.white};
     padding:.5rem;
     cursor:pointer;
-    
-    
 
 `;
 
 const NewUserLink=styled.p`
     text-align:center;
 
-
 `
 const Logo=styled.img` 
-    width:5rem;
-    heigh:5rem;
-    border:1px solid pink;
+    width:6rem;
+    heigh:6rem;
     justify-self:center;
     margin-top:1rem;
 
@@ -80,31 +81,33 @@ const BackarrowIcon=styled.img`
     width:auto;
 
 `
+const LinkStyled = styled(Link)`
+    text-decoration:none;
+    color:${props => props.theme.black};
 
-const Login = (props) => {
 
-    //lägg till variabel för userauthenticated
+`;
+const AddNewUser = () => {
 
-    const {headline, labelTop, labelBottom, buttonText, displayBackArrow} = props;
-    console.log(displayBackArrow)
 
     return(
 
       
         <LoginSquare>
 
-            <H1>{headline}</H1>
+            <H1>Skapa ny användare</H1>
             
             <InputSection>
-                <Label>{labelTop}</Label>
+                <Label>Välj användarnamn</Label>
                 <Input type='text'></Input>
-                <Label>{labelBottom}</Label>
+                <Label>Välj lösenord</Label>
                 <Input type='text'></Input>
-                <Button>{buttonText}</Button>
-               {displayBackArrow ? <BackarrowIcon src={backarrow}></BackarrowIcon> : <NewUserLink>Ny användare</NewUserLink> } 
+                <Button>Lägg till ny användare</Button>
+              
+               <LinkStyled to='/'><BackarrowIcon src={backarrow}></BackarrowIcon></LinkStyled>  
                 
             </InputSection>
-            <Logo src={autumnleaf}></Logo>
+            <Logo src={mainlogo}></Logo>
             
 
             
@@ -117,4 +120,4 @@ const Login = (props) => {
     )
 }
 
-export default Login
+export default AddNewUser

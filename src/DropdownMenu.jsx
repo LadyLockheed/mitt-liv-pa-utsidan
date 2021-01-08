@@ -7,15 +7,14 @@ const DropdownContainer = styled.div`
     position:relative;
     margin-left:4rem;
     z-index:2;
-    border:1px solid blue;
 
     &:hover{
-        cursor:pointer;
+      cursor:pointer;
     }
 
 `;
 const DropdownHeader = styled.p`
-    color:#EFEFEF;
+    color:${props => props.theme.white};
     font-size:1.2rem;
     padding-left:.5rem;
     padding-right:.5rem;
@@ -25,6 +24,7 @@ const DropdownListContainer = styled.div`
     position:absolute;
     left:-0.4rem;
     width:110%;
+    ${'' /* display:block; */}
    
 `;
 const DropdownList = styled.ul`
@@ -50,6 +50,19 @@ const ListItem = styled.li`
   &:hover{
       background-color:white;
   }
+
+`;
+
+const LinkStyled = styled(Link)`
+    text-decoration:none;
+    color:${props => props.theme.black};
+    &.active{
+        color:white;
+        border-bottom:1px solid white;
+    }
+    &.selected{
+        color:white;
+    }
 
 `;
 
@@ -87,13 +100,15 @@ const DropdownMenu=(props)=>{
 
     return(
         <DropdownContainer ref={ref}>
-            <DropdownHeader onClick={toggling} >{menuHeadline}</DropdownHeader>
+            <DropdownHeader onClick={toggling}>{menuHeadline}</DropdownHeader>
                 {isOpen && (
                    
                     <DropdownListContainer>
                         <DropdownList>
                             {links.map((link)=>(
-                                <ListItem key={link.text}><Link to={link.link}>{link.text}</Link></ListItem>
+                                <ListItem key={link.linkText} onClick={()=>setIsOpen(!isOpen)}>
+                                  <LinkStyled to={link.linkAdress}>{link.linkText}</LinkStyled>
+                                </ListItem>
                                 
                             ))}
                         </DropdownList>

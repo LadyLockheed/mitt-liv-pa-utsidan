@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import FrostedBackground from './FrostedBackground';
+import FrostedBackground from '../Shared/FrostedBackground';
 
 
 const H1=styled.h1`
@@ -14,7 +14,7 @@ const H1=styled.h1`
 
 const Equipment=()=>{
 
- 
+ console.log('equipment')
 
 
     return (
