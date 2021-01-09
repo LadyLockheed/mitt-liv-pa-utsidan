@@ -4,19 +4,23 @@ import styled from 'styled-components';
 const Container=styled.div`
     
     background: inherit;
-    ${'' /* width: 40rem; */}
-    width:60%;
-    min-height: 20rem;
+  
+    width:50%;
+    min-height: 70vh;
     box-shadow:0 0 1rem 0 rgba(0,0,0, .2);
     position: relative;
     margin-left:auto;
     margin-right:auto;
-    margin-top:3rem;
+    margin-top:2rem;
     z-index:1;
     overflow:hidden;
-    ${'' /* border:50px solid rgba(233,235,218,0.8); */}
     border-radius:5px;
-    text-align:center;
+    
+
+    @media screen and (max-width: 750px) {
+        width:95%;
+    }
+  
     
 
     &:before{
@@ -34,12 +38,20 @@ const Container=styled.div`
     }
 
 ` 
+const Headline=styled.h1`
+    color:${props=>props.theme.black};
+    font-size:2rem;
+    font-weight:bold;
+    text-align:center;
+`
 const FrostedBackground=(props)=>{
 
 return(
 
     <Container>
-        {props.headline}
+        <Headline>
+            {props.headline}
+        </Headline>
 
        {props.children}
        

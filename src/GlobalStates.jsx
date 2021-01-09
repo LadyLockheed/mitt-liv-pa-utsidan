@@ -22,7 +22,7 @@ export const AllEquipment = atom({
     {equipment:'Tält Unna',
     category:'living',
     weight:2400,
-    info:'Bästa tältet. 4 säsongers, går att vika undan golvet om man behöver plats för blöt utrustning. Sätt i tältbågen närmast öppningen först.'
+    info:'Bästa tältet. 4 säsongers, går att vika undan golvet om man behöver plats för blöt utrustning. Sätt i tältbågen närmast öppningen först.fdfdsfds gfgfgfdgf gdfgfdgf gfdgfdg gfd gfdg fdg fdgfd gf fgd gfd gfd gfd gfd gfd fgfdgfdgfd gfd gfdgfd gfdgfdgfd fdgfd gg dfgfd gfdg df'
     },
     {equipment:'Optimus Crux Weekend kök',
     category:'cooking',
