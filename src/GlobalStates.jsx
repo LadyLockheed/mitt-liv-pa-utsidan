@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import {useEffect} from 'react'
+
 
 export const currentContactState = atom({
   key: "currenContactState",
@@ -8,7 +8,7 @@ export const currentContactState = atom({
 
 export const isAuthenticatedState = atom({
   key:'isAuthenticatedState',
-  default:true
+  default:false
 })
 
 export const AllEquipment = atom({

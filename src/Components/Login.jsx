@@ -4,6 +4,7 @@ import mainlogo from '../Assets/mainlogo.svg'
 import {Link, useHistory} from 'react-router-dom'
 import { isAuthenticatedState } from '../GlobalStates.jsx';
 import { useRecoilState } from "recoil";
+import { Button } from './Shared/ButtonsAndSuch'
 
 const LoginSquare=styled.div` 
     height:314px;
@@ -52,16 +53,9 @@ const Input=styled.input`
     border-radius:5px;
 
 `;
-const Button=styled.button` 
+const LoginButton=styled(Button)` 
     display:block;
     margin:auto;
-    background-color:${props => props.theme.orange};
-    border:none;
-    border-radius:5px;
-    color:${props => props.theme.white};
-    padding:.5rem;
-    cursor:pointer;
-
 `;
 
 const NewUserLink=styled.p`
@@ -75,14 +69,9 @@ const Logo=styled.img`
     margin-top:1rem;
 
 `
-const BackarrowIcon=styled.img` 
-    height:1.3rem;
-    width:auto;
-
-`
 const LinkStyled = styled(Link)`
-    text-decoration:none;
-    color:${props => props.theme.black};
+    text-decoration: none;
+    color: ${props => props.theme.black};
 
 
 `;
@@ -109,7 +98,7 @@ const Login = () => {
                 <Input type='text'></Input>
                 <Label>Lösen</Label>
                 <Input type='text'></Input>
-                <Button onClick={getLoggedIn}>Logga in</Button>
+                <LoginButton onClick={getLoggedIn}>Logga in</LoginButton>
               
                 <LinkStyled to='/addnewuser'><NewUserLink>Ny användare</NewUserLink></LinkStyled>
                 

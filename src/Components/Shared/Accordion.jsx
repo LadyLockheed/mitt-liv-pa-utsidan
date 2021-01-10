@@ -79,7 +79,7 @@ const CategoryDot=styled.div`
 
             if(prop.categoryColor === 'cooking') return '#6E67C0'
 
-            if(prop.categoryColor === 'cooking') return '#6E67C0'
+            if(prop.categoryColor === 'electronics') return '#C0B267'
 
             if(prop.categoryColor === 'hygiene') return '#67C0B0'
 

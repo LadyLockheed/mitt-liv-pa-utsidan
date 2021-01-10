@@ -10,27 +10,48 @@ import { useRecoilState } from "recoil";
 import { isAuthenticatedState } from '../GlobalStates.jsx';
 
 
-const H1=styled.h1`
- color:${props => props.theme.white};
- font-weight:300;
-`
-const Logo=styled.img` 
-    height:4rem;
-    justify-self:center;
-    align-self:center;
-    &:hover{
-        cursor:pointer;
-    }
-
-`
-
 const Navigation = styled.div`
-    background-color:${props => props.theme.green};
-    display:grid;
-    grid-template-columns:1fr 1fr 1fr;
-    padding:.2rem 3rem;
+    background-color: ${props => props.theme.green};
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: .2rem 3rem;
     
 `;
+
+const H1=styled.h1`
+    color: ${props => props.theme.white};
+    font-weight: 300;
+    font-size: 1rem;
+
+    @media only screen and (min-width: 600px){
+        border:2px solid red;
+        font-weight: 300;
+        font-size: 2rem;
+        
+    }
+
+    @media only screen and (min-width: 997){
+        border:2px solid blue;
+        font-weight: 300;
+        font-size: 2rem;
+        
+    }
+
+
+`
+const Logo=styled.img` 
+    height: 4rem;
+    justify-self: center;
+    align-self: center;
+
+    &:hover{
+        cursor: pointer;
+    }
+
+
+`
+
+
 
 const LinksContainer = styled.div`
     display:flex;

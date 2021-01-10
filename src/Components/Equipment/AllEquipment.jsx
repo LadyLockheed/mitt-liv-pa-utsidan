@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import Accordion from '../Shared/Accordion'
 import FrostedBackground from '../Shared/FrostedBackground'
 
