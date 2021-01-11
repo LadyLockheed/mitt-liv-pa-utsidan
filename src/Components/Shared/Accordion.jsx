@@ -121,7 +121,7 @@ const BottomRowWrapper = styled.div`
     grid-column: 1/3;
     display:grid;
     grid-template-columns: 6fr 1fr;
-    margin-bottom: 0.6rem;
+    margin-bottom: 1rem;
     
 `;
 const Info = styled.div`
@@ -161,7 +161,7 @@ const EditIcon = styled.img`
 const Accordion=()=>{
 
     const allEquipment=useRecoilValue(AllEquipment)
-    const [ open, setOpen ] = useState(true);
+    const [ open, setOpen ] = useState(false);
     const handleClick = () => {
         console.log('cklick')
     };

@@ -1,54 +1,61 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
 const DropdownContainer = styled.div`
-    position:relative;
-    margin-left:4rem;
-    z-index:2;
+  position: relative;
+  margin-left: 3rem;
+  ${'' /* z-index: 2; */}
 
-    &:hover{
-      cursor:pointer;
-    }
+  &:hover {
+    cursor:pointer;
+  }
 
-`;
-const DropdownHeader = styled.p`
-    color:${props => props.theme.white};
-    font-size:1.2rem;
-    padding-left:.5rem;
-    padding-right:.5rem;
 
 `;
+const DropdownHeadline = styled.p`
+
+    color: ${props => props.theme.white};
+    font-size: 1.2rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+
+`;
+
+
 const DropdownListContainer = styled.div`
-    position:absolute;
-    left:-0.4rem;
-    width:110%;
-    ${'' /* display:block; */}
+
+  z-index:2;
+  position: absolute;
+  left: -0.4rem;
+  width: 110%;
+  ${'' /* display:block; */}
    
 `;
 const DropdownList = styled.ul`
-    background-color: rgba(186, 188, 171, 0.8);
-    font-size: .9rem;
-    padding-inline-start:0;
-    text-align:center;
-    border-radius:5px;
+  background-color: rgba(186, 188, 171, 0.8);
+  font-size: .9rem;
+  padding-inline-start:0;
+  text-align:center;
+  border-radius:3px;
+  margin-top: 0.3rem;
 `;
 const ListItem = styled.li`
-    list-style: none;
-    margin-bottom: 0.8em;
-    padding:0.2rem;
-    border-radius:5px;
-   
-    &:first-child{
-      padding-top:1rem;
-    }
-    &:last-child{
-      padding-bottom:1rem;
-    }
+  list-style: none;
+  margin-bottom: 0.8em;
+  padding: 0.2rem;
+  border-radius: 3px;
+  
+  &:first-child{
+    padding-top: 1rem;
+  }
+  &:last-child{
+    padding-bottom: 1rem;
+  }
     
   &:hover{
-      background-color:white;
+    background-color: white;
   }
 
 `;
@@ -100,7 +107,8 @@ const DropdownMenu=(props)=>{
 
     return(
         <DropdownContainer ref={ref}>
-            <DropdownHeader onClick={toggling}>{menuHeadline}</DropdownHeader>
+            <DropdownHeadline onClick={toggling}>{menuHeadline}</DropdownHeadline>
+           
                 {isOpen && (
                    
                     <DropdownListContainer>

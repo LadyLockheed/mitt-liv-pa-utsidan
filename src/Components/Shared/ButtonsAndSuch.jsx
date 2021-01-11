@@ -8,7 +8,18 @@ export const Button = styled.button`
     border-radius: 3px;
     border: none;
     cursor: pointer;
-    padding: 0.4rem 1.5rem;
+    padding: 0.5rem 1.6rem;
+    font-size: 1rem;
    
     
 `
+
+export const theme = {
+    black:'#303030',
+    orange:'#D38324',
+    green:'#606338',
+    beige:'#E9EBDA',
+    white:'#F9F9F9',
+    grey:'#EFEFEF',
+    darkgrey:'#BABCAB'
+  }

@@ -30,13 +30,13 @@ import SpecificAdventure from './Adventure/SpecificAdventure'
 
 
 
-const MyApp=styled.div`
+const MyApp = styled.div`
     box-sizing:border-box;
     padding: 0;
     margin: 0;
     height:100%;
     min-height:100vh;
-    background-image:url(${props=> props.isAuthenticated ? `${mainImage}` : `${image}`});
+    background-image:url(${props => props.isAuthenticated ? `${mainImage}` : `${image}`});
     background-position:left;
     background-repeat: no-repeat;
     background-size: cover;
@@ -63,7 +63,7 @@ const Application=()=>{
                         <Route path='/addnewuser'>
                             <AddNewUser/>
                         </Route>
-                        <Route path='/'>
+                        <Route exact path='/'>
                             <Login/>
                         </Route>
                     </>
