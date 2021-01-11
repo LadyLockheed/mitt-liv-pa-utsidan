@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Route, Switch } from 'react-router-dom';
 
 //global states
-import { isAuthenticatedState} from '../GlobalStates.jsx';
+import { isAuthenticatedState} from './Shared/GlobalStates';
 import { useRecoilValue } from "recoil";
 
 //routes
@@ -13,11 +13,14 @@ import ProtectedRoute from './Shared/ProtectedRoute'
 import landingImage from '../Assets/landingpageDSC00149.JPG'
 import mainImage from '../Assets/mainDSC00103.JPG'
 import image from '../Assets/DSC00009.JPG'
+import imagelake from '../Assets/DSC_1663.JPG'
+import imagestorm from '../Assets/DSC_1540.JPG'
+import imagetent from '../Assets/DSC_1347.JPG'
 
 //general components
 import Header from './Header';
-import Login from './Login';
-import AddNewUser from './AddNewUser'
+import Login from './Login/Login';
+import AddNewUser from './Login/AddNewUser'
 //Equipment components
 import Equipment from './Equipment/Equipment'
 import AllEquipment from './Equipment/AllEquipment'
@@ -36,7 +39,7 @@ const MyApp = styled.div`
     margin: 0;
     height:100%;
     min-height:100vh;
-    background-image:url(${props => props.isAuthenticated ? `${mainImage}` : `${image}`});
+    background-image:url(${props => props.isAuthenticated ? `${imagetent}` : `${image}`});
     background-position:left;
     background-repeat: no-repeat;
     background-size: cover;

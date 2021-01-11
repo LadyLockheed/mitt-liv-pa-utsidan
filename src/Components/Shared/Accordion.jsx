@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
-import { AllEquipment } from '../../GlobalStates';
-import { useRecoilValue } from 'recoil';
+import { AllEquipment } from './GlobalStates';
+import { useRecoilState } from 'recoil';
 import dropDownArrow from '../../Assets/dropdownarrow.svg'
 import editIcon from '../../Assets/editIcon.svg'
 import trashcanIcon from '../../Assets/trashcanIcon.svg'
@@ -26,7 +26,11 @@ import trashcanIcon from '../../Assets/trashcanIcon.svg'
 // `;
 
 const Wrapper = styled.div`
-    margin: 1rem 2rem 2rem 2rem;
+    margin: 1rem 1rem 2rem 1rem;
+
+    @media screen and (min-width:600px;){
+        margin: 1rem 2rem 2rem 2rem;
+    }
 
 `;
 const ItemWrapper = styled.div`
@@ -96,6 +100,13 @@ const Name = styled.p`
     text-align: left;
     grid-column: 2/12;
     font-weight: bold;
+    font-size:0.8rem;
+    
+
+    @media screen and (min-width: 600px){
+       
+        font-size:1rem;
+    }
  
 `; 
 const Weight = styled.p` 
@@ -122,6 +133,7 @@ const BottomRowWrapper = styled.div`
     display:grid;
     grid-template-columns: 6fr 1fr;
     margin-bottom: 1rem;
+    ${'' /* display: ${props => !props.isOpen && 'none'} */}
     
 `;
 const Info = styled.div`
@@ -131,7 +143,11 @@ const Info = styled.div`
     text-align: left;
     padding: 0.5rem;
     background-color: ${props=> props.theme.beige};
-    margin-left: 1.5rem;
+   
+
+    @media screen and (min-width: 600px;){
+        margin-left: 1.5rem;
+    }
     
 
 `;
@@ -160,10 +176,36 @@ const EditIcon = styled.img`
 
 const Accordion=()=>{
 
-    const allEquipment=useRecoilValue(AllEquipment)
-    const [ open, setOpen ] = useState(false);
-    const handleClick = () => {
-        console.log('cklick')
+    const [allEquipment, setAllEquipment]=useRecoilState(AllEquipment)
+    const [ isOpen, setIsOpen ] = useState(true);
+
+    //lägger till egenska isExpanded på varje equipmentobjekt och sätter den till false
+    //resettar efter man har använt toggleOpen
+    useEffect(()=>{
+
+        setAllEquipment(allEquipment.map(equipment =>{
+
+            return{...equipment, isExpanded:false}
+        }))
+
+    },[])
+    
+    const toggleOpen = (item) => {
+       
+        setAllEquipment(allEquipment.map((equipment)=>{
+            if(equipment != item ){
+                return equipment
+            }
+            else{
+               //isExpanded finns ej från början, men skapas nu.
+
+               //gör ny lista med objekt som innehåller item.id och item.expanded
+               //ändra ej i all equipment
+                return {...equipment, isExpanded:!equipment.isExpanded }
+
+            }
+        }))
+
     };
    
 
@@ -178,19 +220,19 @@ const Accordion=()=>{
                             <CategoryDot categoryColor={item.category}></CategoryDot>
                             <Name>{item.equipment}</Name>
                             <Weight>{item.weight}g</Weight>
-                            <DropDownArrow src={dropDownArrow} onClick={handleClick}></DropDownArrow>
+                            <DropDownArrow src={dropDownArrow} onClick={()=> toggleOpen(item)}></DropDownArrow>
                         </TopRowWrapper>
-                        {open &&
+                        {item.isExpanded &&
                         
-                        <BottomRowWrapper>
-                            <Info>{item.info}</Info>
-                            <IconWrapper>
-                                <TrachcanIcon src={trashcanIcon}></TrachcanIcon>
-                                <EditIcon src={editIcon}></EditIcon>
-                            </IconWrapper>
-        
-                        </BottomRowWrapper>
-                    }
+                            <BottomRowWrapper isOpen={isOpen}>
+                                <Info>{item.info}</Info>
+                                <IconWrapper>
+                                    <TrachcanIcon src={trashcanIcon}></TrachcanIcon>
+                                    <EditIcon src={editIcon}></EditIcon>
+                                </IconWrapper>
+            
+                            </BottomRowWrapper>
+                        }
             
         
                     </ItemWrapper>

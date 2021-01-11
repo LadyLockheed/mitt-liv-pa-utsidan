@@ -1,31 +1,33 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import { useRecoilState } from "recoil";
+import { isAuthenticatedState } from '../Shared/GlobalStates'
+import { Button } from '../Shared/ButtonsAndSuch'
 
 
 const StyledMenu = styled.nav`
-display: flex;
-    flex-direction: column;
-    justify-content: center;
- 
-  background: ${props => props.theme.darkgrey};
-  height: 91vh;
-  text-align: left;
-  padding: 2rem;
-  position: fixed;
-  top: 0;
-  right: 0;
-  transition: transform 0.3s ease-in-out;
-  transform: translateX(-100%);
-  transform: ${({ isOpen }) => isOpen ? 'translateX(0)' : 'translate(100%)'};
- 
-  z-index:9;
-
-  div {
-
     display: flex;
     flex-direction: column;
     justify-content: center;
+ 
+    background: ${props => props.theme.darkgrey};
+    height: 91vh;
+    text-align: left;
+    padding: 2rem;
+    position: fixed;
+    top: 0;
+    right: 0;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-100%);
+    transform: ${({ isOpen }) => isOpen ? 'translateX(0)' : 'translate(100%)'};
+    z-index:9;
+
+  div {
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         border-bottom:1px solid black;
     }
   
@@ -33,7 +35,7 @@ display: flex;
 `;
 
 const LinkStyled = styled(Link)`
-    text-decoration:none;
+    text-decoration: none;
     text-transform: uppercase;
     color: ${props => props.theme.black};
     transition: color 0.3s linear;
@@ -49,9 +51,21 @@ const LinkStyled = styled(Link)`
 
 `;
 
+const LogOutButton = styled(Button)`
+    margin-top:0.5rem;
+`
+
+
+
 const MenuFromSide = ({ isOpen, setIsOpen }) => {
 
-        
+    const [isAuthenticated, setIsAuthenticated] = useRecoilState(isAuthenticatedState)
+ 
+    const history=useHistory()
+    const logOut=()=>{
+        setIsAuthenticated(false);
+        history.push('/')
+    }
 
     return (
 
@@ -72,6 +86,8 @@ const MenuFromSide = ({ isOpen, setIsOpen }) => {
 
             {/* <LinkStyled to='/specificadventure' onClick={()=>setIsOpen(!isOpen)}>Äventyret</LinkStyled> */}
         </div>
+
+        <LogOutButton onClick={logOut}>Logga ut</LogOutButton>
     
     </StyledMenu>
     )

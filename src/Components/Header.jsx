@@ -9,7 +9,7 @@ import Burger from './Menu/Burger'
 import MenuFromSide from './Menu/MenuFromSide'
 
 import { useRecoilState } from "recoil";
-import { isAuthenticatedState } from '../GlobalStates.jsx';
+import { isAuthenticatedState } from './Shared/GlobalStates.jsx';
 
 
 const Navigation = styled.div`
@@ -77,41 +77,38 @@ const Header = () => {
         history.push('/allequipment')
     }
 
-    const logOut=()=>{
-        setIsAuthenticated(false);
-        history.push('/')
-    }
+  
 
 
-   const linksEquipment = [
-       {
-           linkText:'All utrustning',
-           linkAdress:'/allequipment'
-       },
-       {
-           linkText:'Lägg till utrustning',
-           linkAdress:'/addequipment',
-       },
-       {
-            linkText:'Packlistor',
-            linkAdress:'/packinglists'
-       }
-   ]
+//    const linksEquipment = [
+//        {
+//            linkText:'All utrustning',
+//            linkAdress:'/allequipment'
+//        },
+//        {
+//            linkText:'Lägg till utrustning',
+//            linkAdress:'/addequipment',
+//        },
+//        {
+//             linkText:'Packlistor',
+//             linkAdress:'/packinglists'
+//        }
+//    ]
    
-   const linksAdventure = [
-    {
-        linkText:'Alla äventyr',
-        linkAdress:'/alladventures'
-    },
-    {
-        linkText:'Lägg till äventyr',
-        linkAdress:'/addnewadventure',
-    },
-    {
-        linkText:'Äventyret',
-        linkAdress:'/specificadventure'
-    }
-]
+//    const linksAdventure = [
+//     {
+//         linkText:'Alla äventyr',
+//         linkAdress:'/alladventures'
+//     },
+//     {
+//         linkText:'Lägg till äventyr',
+//         linkAdress:'/addnewadventure',
+//     },
+//     {
+//         linkText:'Äventyret',
+//         linkAdress:'/specificadventure'
+//     }
+// ]
 
     const [isOpen, setIsOpen]=useState(false)
     return(

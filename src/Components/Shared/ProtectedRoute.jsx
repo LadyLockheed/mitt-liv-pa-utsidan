@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-import { isAuthenticatedState} from '../../GlobalStates.jsx';
+import { isAuthenticatedState} from './GlobalStates.jsx';
 import { useRecoilState } from "recoil";
 
 const ProtectedRoute = (props) => {

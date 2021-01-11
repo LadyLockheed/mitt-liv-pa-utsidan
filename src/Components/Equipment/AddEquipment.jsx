@@ -12,9 +12,9 @@ const Label = styled.label`
     font-weight: bold;
     display: block;
     text-align: left;
-    margin-bottom: 0.1rem;
+    margin-bottom: 0.3rem;
     margin-top: 0.5rem;
-
+    text-transform: uppercase;
 
 `
 const InputField = styled.input`
@@ -24,6 +24,11 @@ const InputField = styled.input`
     padding: 0.5rem;
    
 `
+const ValidateMessage = styled.span `
+    color:red;
+    ${'' /* visibility: hidden; */}
+    margin-left: 0.5rem;
+`;
 const RadioButtonsOuterWrapper = styled.div `
    
     display:grid;
@@ -56,8 +61,7 @@ const SubmitButton = styled(Button)`
 
 
 const AddEquipment=()=>{
-   
-
+  
     return(
        
         <FrostedBackground headline={'Lägg till ny utrustning'}>
@@ -66,6 +70,7 @@ const AddEquipment=()=>{
 
                 <Label htmlFor='equipment'>Utrustning</Label>
                 <InputField type='text' id='equipment'/>
+                <ValidateMessage >Validering</ValidateMessage>
 
                 <Label>Kategori</Label>
 
@@ -123,9 +128,13 @@ const AddEquipment=()=>{
                 </RadioButtonsInnerWrapper>
 
             </RadioButtonsOuterWrapper>
+            <ValidateMessage>Validering</ValidateMessage>
+
 
                 <Label htmlFor='weight'>Vikt (gram)</Label>
                 <InputField type='number' id='weight'/>
+                <ValidateMessage>Validering</ValidateMessage>
+
 
                 <Label htmlFor='info'>Info</Label>
                 <TextArea id='info' rows='4'></TextArea>
