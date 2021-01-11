@@ -10,11 +10,11 @@ import { useRecoilValue } from "recoil";
 import ProtectedRoute from './Shared/ProtectedRoute'
 
 //images/assets
-import landingImage from '../Assets/landingpageDSC00149.JPG'
-import mainImage from '../Assets/mainDSC00103.JPG'
+// import landingImage from '../Assets/landingpageDSC00149.JPG'
+// import mainImage from '../Assets/mainDSC00103.JPG'
 import image from '../Assets/DSC00009.JPG'
-import imagelake from '../Assets/DSC_1663.JPG'
-import imagestorm from '../Assets/DSC_1540.JPG'
+// import imagelake from '../Assets/DSC_1663.JPG'
+// import imagestorm from '../Assets/DSC_1540.JPG'
 import imagetent from '../Assets/DSC_1347.JPG'
 
 //general components

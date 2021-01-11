@@ -6,24 +6,6 @@ import dropDownArrow from '../../Assets/dropdownarrow.svg'
 import editIcon from '../../Assets/editIcon.svg'
 import trashcanIcon from '../../Assets/trashcanIcon.svg'
 
-// const AccordionWrapper = styled.div`
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     background-color: var(--Secondary-color-dark);
-//     border-radius: 10px;
-//     height: auto;
-//     padding: 2%;
-//     text-align: center;
-//     transition: all 0.6s ease-in-out;
-// `;
-
-// const InternalWrapper = styled.div`
-//     width: 100%;
-//     max-height: ${(props) => (props.open ? '100%' : '0')};
-//     ${'' /* transition: all 1s ease-in-out; */}
-//     overflow: hidden;
-// `;
 
 const Wrapper = styled.div`
     margin: 1rem 1rem 2rem 1rem;
@@ -102,9 +84,7 @@ const Name = styled.p`
     font-weight: bold;
     font-size:0.8rem;
     
-
     @media screen and (min-width: 600px){
-       
         font-size:1rem;
     }
  
@@ -128,12 +108,10 @@ const DropDownArrow = styled.img`
  
 `;
 const BottomRowWrapper = styled.div` 
-   
     grid-column: 1/3;
-    display:grid;
+    display: grid;
     grid-template-columns: 6fr 1fr;
     margin-bottom: 1rem;
-    ${'' /* display: ${props => !props.isOpen && 'none'} */}
     
 `;
 const Info = styled.div`
@@ -144,12 +122,10 @@ const Info = styled.div`
     padding: 0.5rem;
     background-color: ${props=> props.theme.beige};
    
-
     @media screen and (min-width: 600px;){
         margin-left: 1.5rem;
     }
     
-
 `;
 const IconWrapper = styled.div`
     margin-top: 0.2rem;
@@ -157,9 +133,7 @@ const IconWrapper = styled.div`
     justify-content: end;
     max-height: 3.5rem;
  
-
 `
-
 const TrachcanIcon = styled.img`
     height: 1.5rem;
     width: auto;
@@ -178,11 +152,11 @@ const Accordion=()=>{
 
     const [allEquipment, setAllEquipment]=useRecoilState(AllEquipment)
     const [ isOpen, setIsOpen ] = useState(true);
-
+    console.log(allEquipment)
     //lägger till egenska isExpanded på varje equipmentobjekt och sätter den till false
     //resettar efter man har använt toggleOpen
     useEffect(()=>{
-
+        console.log(allEquipment)
         setAllEquipment(allEquipment.map(equipment =>{
 
             return{...equipment, isExpanded:false}
@@ -208,7 +182,7 @@ const Accordion=()=>{
 
     };
    
-
+    
     return(
 
        

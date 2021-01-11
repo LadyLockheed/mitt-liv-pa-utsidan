@@ -15,6 +15,8 @@ const Label = styled.label`
     margin-bottom: 0.3rem;
     margin-top: 0.5rem;
     text-transform: uppercase;
+    
+
 
 `
 const InputField = styled.input`
@@ -22,6 +24,11 @@ const InputField = styled.input`
     border-radius: 3px;
     border: none;
     padding: 0.5rem;
+    border: 1px solid rgba(197,197,197,0.30);
+    background-color: ${props => props.theme.white};
+    &:focus {
+        outline: none;
+    }
    
 `
 const ValidateMessage = styled.span `
@@ -70,7 +77,7 @@ const AddEquipment=()=>{
 
                 <Label htmlFor='equipment'>Utrustning</Label>
                 <InputField type='text' id='equipment'/>
-                <ValidateMessage >Validering</ValidateMessage>
+                <ValidateMessage>Validering</ValidateMessage>
 
                 <Label>Kategori</Label>
 

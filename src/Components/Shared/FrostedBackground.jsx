@@ -44,6 +44,7 @@ const Headline=styled.h1`
     font-weight:bold;
     text-align:center;
     text-transform: uppercase;
+    letter-spacing: 0.2rem;
 
     @media screen and ( min-width: 600px) {
 

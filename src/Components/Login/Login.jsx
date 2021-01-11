@@ -19,8 +19,6 @@ const LoginSquare=styled.div`
     grid-template-rows:1fr 1fr 1fr 1fr;
     padding-left:2rem;
     border-radius:5px;
-   
-   
 
 `;
 const H1=styled.h1` 
@@ -46,11 +44,16 @@ const Label=styled.label`
 `;
 const Input=styled.input`  
     ${'' /* border-radius:5px; */}
-    padding:.5rem;
+    padding:.4rem;
     border:none;
     width:90%;
     margin-bottom:1rem;
     border-radius:3px;
+    border: 1px solid rgba(197,197,197,0.30);
+
+    &:focus {
+        outline: none;
+    }
 
 `;
 const LoginButton=styled(Button)` 

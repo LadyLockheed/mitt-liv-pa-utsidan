@@ -21,5 +21,6 @@ export const theme = {
     beige:'#E9EBDA',
     white:'#F9F9F9',
     grey:'#EFEFEF',
-    darkgrey:'#BABCAB'
+    darkgrey:'#BABCAB',
+    mediumbeige: '#DBDDCD'
   }

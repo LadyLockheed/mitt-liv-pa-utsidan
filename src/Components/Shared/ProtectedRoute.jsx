@@ -6,9 +6,7 @@ import { useRecoilState } from "recoil";
 
 const ProtectedRoute = (props) => {
     const [isAuthenticated, setIsAuthenticated] = useRecoilState(isAuthenticatedState);
-    console.log(isAuthenticated)
-    console.log(props)
-    console.log('protectedroute')
+
    
         const Component = props.component;
        
