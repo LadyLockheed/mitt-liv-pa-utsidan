@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { Link, useHistory } from 'react-router-dom'
 import { useRecoilState } from "recoil";
 import { isAuthenticatedState } from '../Shared/GlobalStates'
-import { Button } from '../Shared/ButtonsAndSuch'
 import LogOutIcon from '../../Assets/logouticon.svg'
 
 
@@ -58,6 +57,13 @@ const LogOutWrapper = styled.div `
 
 const LogOutButton = styled.span`
    padding:1rem;
+   transition: color 0.3s linear;
+
+   &:hover {
+      color:${props => props.theme.white}; 
+    }
+
+
   
  
 `

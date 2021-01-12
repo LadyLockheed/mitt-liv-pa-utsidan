@@ -133,12 +133,6 @@ const AddNewUser = () => {
                 
             </InputSection>
             <Logo src={mainLogo}></Logo>
-            
-
-            
-            
-          
-            
 
         </LoginSquare>
   
