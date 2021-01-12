@@ -25,10 +25,10 @@ const ItemWrapper = styled.div`
     padding: 1rem;
 
     &:nth-child(odd) {
-        background-color:rgba(219,221,205,0.5);
+        background-color:rgb(219,221,205);
     }
     &:nth-child(even) {
-        background-color:rgba(233,235,218,0.5);
+        background-color:rgb(233,235,218);
     }
 
     display:grid;
@@ -42,6 +42,7 @@ const SeasonIcon = styled.img `
     height:1.5rem;
     width: auto;
     grid-column: 1/2;
+    
 `;
 const InfoText = styled.p`
     font-weight:bold;
@@ -63,7 +64,12 @@ const PackingLists=()=>{
     const packingLists=useRecoilValue(Adventures)
     console.log(packingLists)
 
- 
+    const icons ={
+        summer: {summer},
+        winter: {winter},
+        autumn: {autumn},
+        spring: {spring}
+    }
 
     return(
         <FrostedBackground headline={'Packlistor'}>
@@ -72,8 +78,8 @@ const PackingLists=()=>{
             {packingLists.map((item, index) =>{
                 return(
                 <ItemWrapper key={item.adventureName}>
-                    <SeasonIcon src={item.season ==='summer'? {summer}: {winter}}/>
-                    <SeasonIcon src={autumn}/>
+                  
+                    <SeasonIcon src={autumn} foo={icons} />
                     <InfoText>
                         {item.adventureName}, {item.days}<span> dygn</span> 
                         </InfoText>

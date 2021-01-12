@@ -11,7 +11,6 @@ const StyledMenu = styled.nav`
     display: flex;
     flex-direction: column;
     justify-content: center;
-
     background: ${props => props.theme.darkgrey};
     height: 91vh;
     text-align: left;
@@ -23,22 +22,13 @@ const StyledMenu = styled.nav`
     transform: translateX(-100%);
     transform: ${({ isOpen }) => isOpen ? 'translateX(0)' : 'translate(100%)'};
     z-index:9;
-
-  ${'' /* div {
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        border-bottom:1px solid black;
-    } */}
   
-
 `;
 const LinksWrapper = styled.div `
-      display: flex;
-        flex-direction: column;
-        justify-content: center;
-        border-bottom:1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom:1px solid black;
 `;
 
 const LinkStyled = styled(Link)`

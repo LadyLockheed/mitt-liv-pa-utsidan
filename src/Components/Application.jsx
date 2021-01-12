@@ -32,7 +32,6 @@ import AddNewAdventure from './Adventure/AddNewAdventure'
 import SpecificAdventure from './Adventure/SpecificAdventure'
 
 
-
 const MyApp = styled.div`
     box-sizing:border-box;
     padding: 0;
