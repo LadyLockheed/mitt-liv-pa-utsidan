@@ -7,21 +7,26 @@ import mainLogo from '../Assets/mainLogo.svg'
 import Burger from './Menu/Burger'
 import MenuFromSide from './Menu/MenuFromSide'
 
-
 const Navigation = styled.div`
     background-color: ${props => props.theme.green};
-    display: flex;
-    padding: 0.2rem 3rem;
+    ${'' /* display: flex; */}
+    padding: 0.5rem 3rem;
     position: relative;
+    display:grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items:center;
 
 `;
 const H1 = styled.h1`
     color: ${props => props.theme.white};
     font-weight: 300;
     font-size: 1rem;
-    align-self: center;
+    ${'' /* align-self: center; */}
+    grid-column:1/3;
+    
     margin:0;
     display: none;
+
 
     @media screen and (min-width: 600px){
         font-size: 1.5rem;
@@ -42,6 +47,10 @@ const H1 = styled.h1`
 const Logo = styled.img` 
     height: 4rem;
     margin: auto;
+    grid-column:3/4;
+
+
+    
 
     &:hover {
         cursor: pointer;

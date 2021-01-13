@@ -5,33 +5,84 @@ import {Link, useHistory} from 'react-router-dom'
 import { isAuthenticatedState } from '../Shared/GlobalStates';
 import { useSetRecoilState } from "recoil";
 import { Button } from '../Shared/ButtonsAndSuch'
-import FrostedBackground from '../Shared/FrostedBackground'
 
-const LoginSquare = styled.div` 
+
+const Container = styled.div`
+    
+    height: 414px;
+    width: 80%;
+    background: inherit;
+    box-shadow:0 0 1rem 0 rgba(0,0,0, .2);
+    position: relative;
+    margin-left:auto;
+    margin-right:auto;
+    z-index:1;
+    overflow:hidden;
+    border-radius:5px;
+    padding: 1rem;
     display:grid;
     grid-template-columns: 1fr;
     justify-content: center;
-    height: 414px;
-    width: 80%;
-    padding: 1rem;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     background-color: rgba(233,235,218,0.8);
     border-radius: 3px;
-
-    @media screen and (min-width: 600px) {
+  
+    ${'' /* @media screen and (min-width: 600px) {
         height: 314px;
         width: 518px;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr;
         padding-left: 2rem;
+    } */}
+    
+    &:before{
+        content: '';
+        background: inherit; 
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0; 
+        bottom: 0;
+        box-shadow: inset 0 0 0 2000px rgba(255,255,255,0.3);
+        margin:-20px;
+        filter: blur(15px);
+        z-index:-1;
+    }
+    @media screen and (min-width: 600px) {
+        width: 45%;
+        height: 45vh;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        padding-left: 2rem;
+       
     }
 
 `;
+
+// const LoginSquare = styled.div` 
+//     display:grid;
+//     grid-template-columns: 1fr;
+//     justify-content: center;
+//     height: 414px;
+//     width: 80%;
+//     padding: 1rem;
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     background-color: rgba(233,235,218,0.8);
+//     border-radius: 3px;
+
+//     @media screen and (min-width: 600px) {
+//         height: 314px;
+//         width: 518px;
+//         grid-template-columns: 1fr 1fr;
+//         grid-template-rows: 1fr 1fr 1fr 1fr;
+//         padding-left: 2rem;
+//     }
+
+// `;
 const H1 = styled.h1` 
-    color: ${props => props.theme.orange};
+    color: ${props => props.theme.green};
     font-weight: 300;
     font-size: 1.7rem;
     margin-top: 1.5rem;
@@ -40,8 +91,13 @@ const H1 = styled.h1`
     
     @media screen and (min-width: 600px){
         grid-column: 1/3;
-        font-size: 2.5rem;
+        font-size: 2.3rem;
         text-align: left;
+    }
+
+    @media screen and (max-width:722px){
+        font-size:2rem;
+        
     }
 `;
 const InputSection = styled.section` 
@@ -53,8 +109,8 @@ const InputSection = styled.section`
 `;
 const Label = styled.label` 
    display: block;
-   color: ${props => props.theme.orange};
-   font-weight: normal;
+   color: ${props => props.theme.black};
+  ${'' /* font-weight:bold; */}
 
 `;
 const Input = styled.input`  
@@ -73,10 +129,8 @@ const LoginButton = styled(Button)`
     display: block;
     margin: auto;
 `;
-const NewUserLink = styled.p`
-    text-align: center;
 
-`;
+
 const Logo = styled.img` 
     width: 4rem;
     height: auto;
@@ -89,6 +143,10 @@ const Logo = styled.img`
     }
 
 `;
+const NewUserLink = styled.p`
+    text-align: center;
+
+`;
 const LinkStyled = styled(Link)`
     text-decoration: none;
     color: ${props => props.theme.black};
@@ -96,7 +154,20 @@ const LinkStyled = styled(Link)`
     transition: color 0.3s linear;
 
     &:hover {
-        color: ${props => props.theme.red};
+        color: ${props => props.theme.white};
+    }
+
+`;
+
+//Den gär fixar problemet med att hela bakgrunden åker ner ju mer margin-top
+//jag har på den frostade rutan.
+const InvisibleProblemFixer = styled.div`
+    width:100%;
+    height:4rem;
+
+    @media screen and (min-width:600px){
+
+        height:10rem;
     }
 
 `;
@@ -112,9 +183,9 @@ const Login = () => {
     }
     
     return(
-
-        <FrostedBackground>
-        <LoginSquare>
+<>
+       <InvisibleProblemFixer></InvisibleProblemFixer>
+        <Container>
           
             <H1>Mitt liv på utsidan</H1>
           
@@ -133,9 +204,9 @@ const Login = () => {
 
            
 
-        </LoginSquare>
-        </FrostedBackground>
+        </Container>
   
+  </>
     )
 }
 

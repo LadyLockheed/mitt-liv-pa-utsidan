@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Container=styled.div`
+const Container = styled.div`
     
     background: inherit;
-  
     width:50%;
     min-height: 70vh;
     box-shadow:0 0 1rem 0 rgba(0,0,0, .2);
@@ -21,7 +20,6 @@ const Container=styled.div`
         width:95%;
     }
   
-    
 
     &:before{
         content: '';
