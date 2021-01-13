@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react'
+import React, { useEffect, useState} from 'react'
 import styled from 'styled-components'
 import { AllEquipment } from './GlobalStates';
 import { useRecoilState } from 'recoil';
@@ -18,17 +18,12 @@ const ItemWrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding:0rem 1rem 0rem 1rem;
-    ${'' /* &:nth-child(odd) {
-        background-color:${props => props.theme.white};
-    }
-    &:nth-child(even) {
-        background-color:${props => props.theme.grey};
-    } */}
+
     &:nth-child(odd) {
-        background-color:rgb(219,221,205);
+        background-color:#D4DBD4;
     }
     &:nth-child(even) {
-        background-color:rgb(233,235,218);
+        background-color:#E7EEE2;
     }
     &:first-child {
         border-radius:5px 5px 0px 0px;
@@ -40,11 +35,10 @@ const ItemWrapper = styled.div`
 
 const TopRowWrapper = styled.div` 
     grid-column: 1/4;
-    ${'' /* grid-row:1/2; */}
     display: grid;
     grid-template-columns: repeat(14, 1fr);
     align-items: center;
-    ${'' /* margin: auto 1rem; */}
+   
 `
 const CategoryDot=styled.div` 
     
@@ -53,6 +47,7 @@ const CategoryDot=styled.div`
     border-radius: 6px;
     display: inline-block;
     grid-column: 1/2;
+    margin-right:0.7rem;
     background-color: ${(prop) => 
         {
             if(prop.categoryColor === 'living') return '#D38324';
@@ -82,12 +77,19 @@ const Name = styled.p`
 const Weight = styled.p` 
     color: ${props=> props.theme.black};
     grid-column: 12/13;
+    font-size:0.9rem;
+   
+    @media screen and (min-width:350px){
+        font-weight:1rem;
+        
+    }
 `;
 const DropDownArrow = styled.img`
     height: 0.7rem;
     width: auto;
     justify-self: end;
     grid-column: 13/15;
+    transform: rotate(${props => props.upsideDown ? `180deg` : `0deg`});
    
     padding: 0.5rem 0rem 0.5rem 0.5rem;
     &:hover {
@@ -104,11 +106,11 @@ const BottomRowWrapper = styled.div`
 `;
 const Info = styled.div`
     border: 1px solid #E2E2E2;
-    border-radius: 5px;
+    border-radius: 3px;
     box-shadow: 4px 4px 4px 1px rgba(197,197,197,0.30);
     text-align: left;
     padding: 0.5rem;
-    background-color: ${props=> props.theme.beige};
+    background-color: #F5F8F4;
    
     @media screen and (min-width: 600px;){
         margin-left: 1.5rem;
@@ -119,97 +121,129 @@ const IconWrapper = styled.div`
     margin-top: 0.2rem;
     display: grid;
     justify-content: end;
-    max-height: 3.5rem;
- 
-`
-const TrachcanIcon = styled.img`
-    height: 1.5rem;
-    width: auto;
-    margin-bottom: 0.5rem;
+    
 `;
 const EditIcon = styled.img`
     height: 1.2rem;
     width: auto;
-   
+    margin-bottom: 1rem;
+    
 `;
+const TrachcanIcon = styled.img`
+    height: 1.5rem;
+    width: auto;
+    align-self:end;
+    
+`;
+
 
 
 
 const Accordion=()=>{
 
 
-    useEffect(()=>{
+    // useEffect(()=>{
         
-        getAllEquipment();
+    //     getAllEquipment();
       
 
-    },[])
+    // },[])
 
-    async function getAllEquipment() {
+    // async function getAllEquipment() {
         
-        await axios.get('/api/allEquipment')
-            .then(res => {
+    //     await axios.get('/api/allEquipment')
+    //         .then(res => {
 
-                console.log(res.data)
-            })
-            .catch(err => {
-                console.log('Something went wrong', err)
-            })
-    }
+    //             console.log(res.data)
+    //         })
+    //         .catch(err => {
+    //             console.log('Something went wrong', err)
+    //         })
+    // };
 
     const [allEquipment, setAllEquipment]=useRecoilState(AllEquipment)
-   
-    // console.log(allEquipment)
-    //lägger till egenska isExpanded på varje equipmentobjekt och sätter den till false
-    //resettar efter man har använt toggleOpen
+    const [expandedItems, setExpandedItems] = useState([]);
+    
     useEffect(()=>{
-        // console.log(allEquipment)
-        setAllEquipment(allEquipment.map(equipment =>{
+        //skapar kopia av allEquipment så att ändringarna inte sker i originallistan
+        setExpandedItems(allEquipment.map(equipment =>{
 
             return{...equipment, isExpanded:false}
         }))
 
     },[])
-    
+   
     const toggleOpen = (item) => {
-       
-        setAllEquipment(allEquipment.map((equipment)=>{
+    
+        setExpandedItems(expandedItems.map((equipment)=>{
+            
             if(equipment !== item ){
                 return equipment
+            } else {
+                return {...equipment, isExpanded:!equipment.isExpanded}
             }
-            else{
-               //isExpanded finns ej från början, men skapas nu.
-
-               //gör ny lista med objekt som innehåller item.id och item.expanded
-               //ändra ej i all equipment
-                return {...equipment, isExpanded:!equipment.isExpanded }
-
-            }
+                
+            
         }))
+    }
 
-    };
+        
+
+    
+    // console.log(allEquipment)
+    //lägger till egenska isExpanded på varje equipmentobjekt och sätter den till false
+    //resettar efter man har använt toggleOpen
+    // useEffect(()=>{
+     
+    //     setAllEquipment(allEquipment.map(equipment =>{
+
+    //         return{...equipment, isExpanded:false}
+    //     }))
+
+    // },[])
+    //TODO implementera nåt liknande för att vända på pilen
+ 
+
+    // const toggleOpen = (item) => {
+       
+    //     setAllEquipment(allEquipment.map((equipment)=>{
+    //         if(equipment !== item ){
+    //             return equipment
+    //         }
+    //         else{
+    //            //isExpanded finns ej från början, men skapas nu.
+                
+    //            //gör ny lista med objekt som innehåller item.id och item.expanded
+    //            //ändra ej i all equipment
+    //             return {...equipment, isExpanded:!equipment.isExpanded }
+
+    //         }
+    //     }))
+
+    // };
    
     
     return(
 
        
        <Wrapper>
-        {allEquipment.map((item, index)=>{
+        {expandedItems.map((item, index)=>{
             return (
                     <ItemWrapper key={item.equipment+index}>
                         <TopRowWrapper>
                             <CategoryDot categoryColor={item.category}></CategoryDot>
                             <Name>{item.equipment}</Name>
                             <Weight>{item.weight}g</Weight>
-                            <DropDownArrow src={dropDownArrow} onClick={()=> toggleOpen(item)}></DropDownArrow>
+                            <DropDownArrow src={dropDownArrow} onClick={()=> toggleOpen(item)} upsideDown={item.isExpanded}></DropDownArrow>
                         </TopRowWrapper>
                         {item.isExpanded &&
                         
                             <BottomRowWrapper>
                                 <Info>{item.info}</Info>
                                 <IconWrapper>
-                                    <TrachcanIcon src={trashcanIcon}></TrachcanIcon>
                                     <EditIcon src={editIcon}></EditIcon>
+                                    <TrachcanIcon src={trashcanIcon}></TrachcanIcon>
+                                    
                                 </IconWrapper>
             
                             </BottomRowWrapper>
