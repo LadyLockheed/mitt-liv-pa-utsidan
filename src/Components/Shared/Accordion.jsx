@@ -5,29 +5,25 @@ import { useRecoilState } from 'recoil';
 import dropDownArrow from '../../Assets/dropdownarrow.svg'
 import editIcon from '../../Assets/editIcon.svg'
 import trashcanIcon from '../../Assets/trashcanIcon.svg'
+import axios from 'axios'
 
 
 const Wrapper = styled.div`
     margin: 1rem 1rem 2rem 1rem;
-
     @media screen and (min-width:600px;){
         margin: 1rem 2rem 2rem 2rem;
     }
-
 `;
 const ItemWrapper = styled.div`
-
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding:0rem 1rem 0rem 1rem;
-
     ${'' /* &:nth-child(odd) {
         background-color:${props => props.theme.white};
     }
     &:nth-child(even) {
         background-color:${props => props.theme.grey};
     } */}
-
     &:nth-child(odd) {
         background-color:rgb(219,221,205);
     }
@@ -40,14 +36,10 @@ const ItemWrapper = styled.div`
     &:last-child {
         border-radius:0px 0px 5px 5px;
     }
-
-
-
 `;
 
 const TopRowWrapper = styled.div` 
     grid-column: 1/4;
-
     ${'' /* grid-row:1/2; */}
     display: grid;
     grid-template-columns: repeat(14, 1fr);
@@ -61,29 +53,18 @@ const CategoryDot=styled.div`
     border-radius: 6px;
     display: inline-block;
     grid-column: 1/2;
-
     background-color: ${(prop) => 
         {
             if(prop.categoryColor === 'living') return '#D38324';
-
             if(prop.categoryColor === 'clothes') return '#67C070';
-
             if(prop.categoryColor === 'sleeping') return '#678AC0';
-
             if(prop.categoryColor === 'fun') return '#BF67C0'
-
             if(prop.categoryColor === 'cooking') return '#6E67C0'
-
             if(prop.categoryColor === 'electronics') return '#C0B267'
-
             if(prop.categoryColor === 'hygiene') return '#67C0B0'
-
             if(prop.categoryColor === 'storage') return '#D15933'
-
             if(prop.categoryColor === 'other') return '#BABCAB'
-
         }
-
     };
 `
 const Name = styled.p`
@@ -101,7 +82,6 @@ const Name = styled.p`
 const Weight = styled.p` 
     color: ${props=> props.theme.black};
     grid-column: 12/13;
-
 `;
 const DropDownArrow = styled.img`
     height: 0.7rem;
@@ -110,7 +90,6 @@ const DropDownArrow = styled.img`
     grid-column: 13/15;
    
     padding: 0.5rem 0rem 0.5rem 0.5rem;
-
     &:hover {
         cursor: pointer;
     }
@@ -147,7 +126,6 @@ const TrachcanIcon = styled.img`
     height: 1.5rem;
     width: auto;
     margin-bottom: 0.5rem;
-
 `;
 const EditIcon = styled.img`
     height: 1.2rem;
@@ -159,13 +137,33 @@ const EditIcon = styled.img`
 
 const Accordion=()=>{
 
+
+    useEffect(()=>{
+        console.log('useEffect')
+        getAllEquipment();
+      
+
+    },[])
+
+    async function getAllEquipment() {
+        
+        await axios.get('/api/allEquipment')
+            .then(res => {
+
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.log('Something went wrong', err)
+            })
+    }
+
     const [allEquipment, setAllEquipment]=useRecoilState(AllEquipment)
     const [ isOpen, setIsOpen ] = useState(true);
-    console.log(allEquipment)
+    // console.log(allEquipment)
     //lägger till egenska isExpanded på varje equipmentobjekt och sätter den till false
     //resettar efter man har använt toggleOpen
     useEffect(()=>{
-        console.log(allEquipment)
+        // console.log(allEquipment)
         setAllEquipment(allEquipment.map(equipment =>{
 
             return{...equipment, isExpanded:false}
@@ -272,6 +270,3 @@ export default Accordion
 //         </Container>
 //     )
 // }
-
-
-

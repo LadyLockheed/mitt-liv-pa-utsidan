@@ -70,7 +70,12 @@ const PackingLists=()=>{
         autumn: {autumn},
         spring: {spring}
     }
-
+    let calculatedIcon = icons.autumn;
+    const seasonIcon=(season)=>{
+        //if satser kolla vilken season
+        //returnerea namn på iconen
+    }
+    
     return(
         <FrostedBackground headline={'Packlistor'}>
             <Wrapper>
@@ -79,7 +84,7 @@ const PackingLists=()=>{
                 return(
                 <ItemWrapper key={item.adventureName}>
                   
-                    <SeasonIcon src={autumn} foo={icons} />
+                    <SeasonIcon src={seasonIcon(item.season)} foo={icons} />
                     <InfoText>
                         {item.adventureName}, {item.days}<span> dygn</span> 
                         </InfoText>

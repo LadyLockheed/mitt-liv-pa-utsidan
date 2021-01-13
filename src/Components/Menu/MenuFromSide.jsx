@@ -28,6 +28,8 @@ const LinksWrapper = styled.div `
     flex-direction: column;
     justify-content: center;
     border-bottom:1px solid black;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
 `;
 
 const LinkStyled = styled(Link)`
@@ -89,7 +91,7 @@ const MenuFromSide = ({ isOpen, setIsOpen }) => {
     return (
 
         <StyledMenu isOpen={isOpen} >
-        <p>Utrustning</p>
+        {/* <p>Utrustning</p> */}
         <LinksWrapper>
             <LinkStyled to='/allequipment' onClick={()=>setIsOpen(!isOpen)}>All utrustning</LinkStyled>
 
@@ -97,7 +99,7 @@ const MenuFromSide = ({ isOpen, setIsOpen }) => {
 
             <LinkStyled to='/packinglists' onClick={()=>setIsOpen(!isOpen)}>Packlistor</LinkStyled>
         </LinksWrapper>
-        <p>Äventyr</p>
+        {/* <p>Äventyr</p> */}
         <LinksWrapper>
             <LinkStyled to='/alladventures' onClick={()=>setIsOpen(!isOpen)}>Alla äventyr</LinkStyled>
 

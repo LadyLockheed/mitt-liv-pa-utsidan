@@ -22,7 +22,7 @@ import Header from './Header';
 import Login from './Login/Login';
 import AddNewUser from './Login/AddNewUser'
 //Equipment components
-import Equipment from './Equipment/Equipment'
+
 import AllEquipment from './Equipment/AllEquipment'
 import PackingLists from './Equipment/PackingLists'
 import AddEquipment from './Equipment/AddEquipment'
