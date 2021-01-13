@@ -1,11 +1,6 @@
 import { atom } from "recoil";
 
 
-export const currentContactState = atom({
-  key: "currenContactState",
-  default: 1,
-});
-
 export const isAuthenticatedState = atom({
   key:'isAuthenticatedState',
   default:false

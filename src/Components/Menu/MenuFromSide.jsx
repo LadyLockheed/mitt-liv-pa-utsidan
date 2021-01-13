@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link, useHistory } from 'react-router-dom'
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { isAuthenticatedState } from '../Shared/GlobalStates'
 import LogOutIcon from '../../Assets/logouticon.svg'
 
@@ -80,11 +80,13 @@ const LogoutIcon = styled.img`
 
 const MenuFromSide = ({ isOpen, setIsOpen }) => {
 
-    const [isAuthenticated, setIsAuthenticated] = useRecoilState(isAuthenticatedState)
+    
+
+    const setIsAuthenticatedState = useSetRecoilState(isAuthenticatedState)
  
     const history=useHistory()
     const logOut=()=>{
-        setIsAuthenticated(false);
+        setIsAuthenticatedState(false);
         history.push('/')
     }
 

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import mainLogo from '../../Assets/mainLogo.svg'
 import {Link, useHistory} from 'react-router-dom'
 import { isAuthenticatedState } from '../Shared/GlobalStates';
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { Button } from '../Shared/ButtonsAndSuch'
 import FrostedBackground from '../Shared/FrostedBackground'
 
@@ -102,11 +102,12 @@ const LinkStyled = styled(Link)`
 `;
 const Login = () => {
 
-    const [isAuthenticated, setIsAuthenticated]=useRecoilState(isAuthenticatedState)
-
+    
+    const setIsAuthenticatedState = useSetRecoilState(isAuthenticatedState)
+  
     const history=useHistory();
     const getLoggedIn=()=>{
-        setIsAuthenticated(true);
+        setIsAuthenticatedState(true);
         history.push('/allequipment')
     }
     

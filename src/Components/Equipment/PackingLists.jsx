@@ -70,7 +70,7 @@ const PackingLists=()=>{
         autumn: {autumn},
         spring: {spring}
     }
-    let calculatedIcon = icons.autumn;
+    // let calculatedIcon = icons.autumn;
     const seasonIcon=(season)=>{
         //if satser kolla vilken season
         //returnerea namn på iconen

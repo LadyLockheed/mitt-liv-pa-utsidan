@@ -11,11 +11,11 @@ import ProtectedRoute from './Shared/ProtectedRoute'
 
 //images/assets
 // import landingImage from '../Assets/landingpageDSC00149.JPG'
-// import mainImage from '../Assets/mainDSC00103.JPG'
-import image from '../Assets/DSC00009.JPG'
+// import imageTentSolo from '../Assets/mainDSC00103.JPG'
+import imagePinkField from '../Assets/DSC00009.JPG'
 // import imagelake from '../Assets/DSC_1663.JPG'
-import imagestorm from '../Assets/DSC_1540.JPG'
-import imagetent from '../Assets/DSC_1347.JPG'
+import imageStorm from '../Assets/DSC_1540.JPG'
+// import imageTent from '../Assets/DSC_1347.JPG'
 
 //general components
 import Header from './Header';
@@ -38,7 +38,7 @@ const MyApp = styled.div`
     margin: 0;
     height:100%;
     min-height:100vh;
-    background-image:url(${props => props.isAuthenticated ? `${imagestorm}` : `${image}`});
+    background-image:url(${props => props.isAuthenticated ? `${imageStorm}` : `${imagePinkField}`});
     background-position:left;
     background-repeat: no-repeat;
     background-size: cover;

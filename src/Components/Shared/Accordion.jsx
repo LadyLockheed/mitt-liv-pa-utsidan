@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useEffect} from 'react'
 import styled from 'styled-components'
 import { AllEquipment } from './GlobalStates';
 import { useRecoilState } from 'recoil';
@@ -139,7 +139,7 @@ const Accordion=()=>{
 
 
     useEffect(()=>{
-        console.log('useEffect')
+        
         getAllEquipment();
       
 
@@ -158,7 +158,7 @@ const Accordion=()=>{
     }
 
     const [allEquipment, setAllEquipment]=useRecoilState(AllEquipment)
-    const [ isOpen, setIsOpen ] = useState(true);
+   
     // console.log(allEquipment)
     //lägger till egenska isExpanded på varje equipmentobjekt och sätter den till false
     //resettar efter man har använt toggleOpen
@@ -174,7 +174,7 @@ const Accordion=()=>{
     const toggleOpen = (item) => {
        
         setAllEquipment(allEquipment.map((equipment)=>{
-            if(equipment != item ){
+            if(equipment !== item ){
                 return equipment
             }
             else{
@@ -205,7 +205,7 @@ const Accordion=()=>{
                         </TopRowWrapper>
                         {item.isExpanded &&
                         
-                            <BottomRowWrapper isOpen={isOpen}>
+                            <BottomRowWrapper>
                                 <Info>{item.info}</Info>
                                 <IconWrapper>
                                     <TrachcanIcon src={trashcanIcon}></TrachcanIcon>
@@ -232,41 +232,3 @@ const Accordion=()=>{
 
 export default Accordion
 
-
-// const Accordion=({items, ...props})=>{
-
-//     const [isOpened, setIsOpened]=uesState({})
-
-//     const toggleIsOpened=(index)=>()=>{
-//         setIsOpened(prevState=>({...prevState, [index]: !prevState[index]}));
-//     }
-
-//     return(
-
-//         <Container {...props}>
-
-//         {items.map((item, index)=>(
-
-//             <li key={item.title}>
-//                 <QuestionDiv>
-
-//                     <TitleQueistion onClick={toggleIsOpened(index)}>
-//                         <Text>{item.title}</Text>
-//                         <Arrow isOpen={isOpened[index]}>
-//                             <ArrowDown/>
-//                         </Arrow>
-//                     </TitleQueistion>
-//                     <Collapse isOpened={isOpened[index] || false}>
-
-//                         <TextQuestion className='gfgfd'></TextQuestion>
-//                     </Collapse>
-//                 </QuestionDiv>
-
-
-//             </li>
-//         ))}
-
-
-//         </Container>
-//     )
-// }
