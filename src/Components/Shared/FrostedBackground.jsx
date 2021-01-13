@@ -33,7 +33,7 @@ const Container=styled.div`
         bottom: 0;
         box-shadow: inset 0 0 0 2000px rgba(255,255,255,0.3);
         margin:-20px;
-        filter: blur(10px);
+        filter: blur(15px);
         z-index:-1;
     }
 

@@ -14,7 +14,7 @@ import ProtectedRoute from './Shared/ProtectedRoute'
 // import mainImage from '../Assets/mainDSC00103.JPG'
 import image from '../Assets/DSC00009.JPG'
 // import imagelake from '../Assets/DSC_1663.JPG'
-// import imagestorm from '../Assets/DSC_1540.JPG'
+import imagestorm from '../Assets/DSC_1540.JPG'
 import imagetent from '../Assets/DSC_1347.JPG'
 
 //general components
@@ -38,7 +38,7 @@ const MyApp = styled.div`
     margin: 0;
     height:100%;
     min-height:100vh;
-    background-image:url(${props => props.isAuthenticated ? `${imagetent}` : `${image}`});
+    background-image:url(${props => props.isAuthenticated ? `${imagestorm}` : `${image}`});
     background-position:left;
     background-repeat: no-repeat;
     background-size: cover;
@@ -65,44 +65,21 @@ const Application=()=>{
                         <Route path='/addnewuser'>
                             <AddNewUser/>
                         </Route>
-                        <Route exact path='/'>
+                        <Route exact={true} path='/'>
                             <Login/>
                         </Route>
                     </>
                 }
-                
-                {/* <Route path='/addnewuser'>
-
-                    <Login 
-                        headline={'Skapa ny användare'} 
-                        labelTop={'Välj användarnamn'} 
-                        labelBottom={'Välj lösenord'}
-                        buttonText={'Klar!'}
-                       
-                        displayBackArrow={true} />
-
-                </Route>
-
-                <Route exact path='/'>
-                    <Login 
-                        headline={'Mitt liv på utsidan'} 
-                        labelTop={'Login'} 
-                        labelBottom={'Lösen'}
-                        buttonText={'Logga in'}
-                        displayBackArrow={false}
-                    /> 
-                </Route> */}
-               
-                <Route path="/equipment">
-                    <Equipment/>
-                </Route>
-
+            
                 <ProtectedRoute path="/allequipment" component={AllEquipment}/>
                 <ProtectedRoute path="/packinglists" component={PackingLists}/>
                 <ProtectedRoute path="/addequipment" component={AddEquipment}/>
                 <ProtectedRoute path="/alladventures" component={AllAdventures}/>
                 <ProtectedRoute path="/addnewadventure" component={AddNewAdventure}/>
                 <ProtectedRoute path="/specifikadventure" component={SpecificAdventure}/>
+                <Route>
+                            <Login/>
+                        </Route>
    
           
             </Switch>

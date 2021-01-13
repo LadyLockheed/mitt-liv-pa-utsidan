@@ -19,6 +19,12 @@ const LoginSquare = styled.div`
     transform: translate(-50%, -50%);
     background-color: rgba(233,235,218,0.8);
     border-radius: 3px;
+    ${'' /* animation: fadeIn ease 1.5s;
+
+    @keyframes fadeIn {
+        0% {opacity:0;}
+        100% {opacity:1;}
+    } */}
     
     @media screen and (min-width: 600px) {
         height: 314px;

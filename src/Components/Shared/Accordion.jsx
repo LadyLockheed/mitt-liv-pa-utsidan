@@ -21,11 +21,18 @@ const ItemWrapper = styled.div`
     grid-template-columns: 1fr 1fr;
     padding:0rem 1rem 0rem 1rem;
 
-    &:nth-child(odd) {
+    ${'' /* &:nth-child(odd) {
         background-color:${props => props.theme.white};
     }
     &:nth-child(even) {
         background-color:${props => props.theme.grey};
+    } */}
+
+    &:nth-child(odd) {
+        background-color:rgb(219,221,205);
+    }
+    &:nth-child(even) {
+        background-color:rgb(233,235,218);
     }
     &:first-child {
         border-radius:5px 5px 0px 0px;
@@ -33,6 +40,8 @@ const ItemWrapper = styled.div`
     &:last-child {
         border-radius:0px 0px 5px 5px;
     }
+
+
 
 `;
 
