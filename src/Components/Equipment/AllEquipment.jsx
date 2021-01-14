@@ -28,6 +28,13 @@ const IsLoadingSpinner = styled.img `
 
 `;
 
+const ErrorInfo = styled.p `
+    margin-top: 2rem;
+    text-align:center;
+    font-weight: bold;
+    margin-bottom:0;
+`;
+
 
 
 
@@ -43,31 +50,41 @@ const AllEquipment=()=>{
 
     async function getAllEquipment() {
         setIsLoading(true)
+        setDisplayErrorInfo(false)
         await axios.get('/api/allEquipment')
         .then(res => {
-            // console.log(res.data)
+
             setAllEquipment(res.data)
             setIsLoading(false)
         })
         .catch(err => {
             console.log('Something went wrong', err)
+            setDisplayErrorInfo(true)
         })
     };
 
     // const [allEquipment, setAllEquipment]=useRecoilState(AllEquipment)
     //denna ska bytas ut mot nåt från recoil
-    const [allEquipment, setAllEquipment]= useState([])
+    const [allEquipment, setAllEquipment] = useState([])
   
-    const [isLoading, setIsLoading]=useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+
+    const [displayErrorInfo, setDisplayErrorInfo] = useState(false)
     
    
     return(
        
         <FrostedBackground headline={'All utrustning'}>
-        {isLoading ? <LoadingWrapper> <LoadingText>Hämtar all utrustning</LoadingText>
-            <IsLoadingSpinner src={spinnerDayNight} alt="loading..."/>
-        </LoadingWrapper> :
+
+            {displayErrorInfo && <ErrorInfo>Nån gick vilse. Kolla kompassen och försök igen</ErrorInfo>}
+
+            {isLoading ? 
+            <LoadingWrapper> 
+                <LoadingText>Hämtar all utrustning</LoadingText>
+                <IsLoadingSpinner src={spinnerDayNight} alt="loading..."/>
+            </LoadingWrapper> :
             <Accordion equipmentList={allEquipment}/> }
+
         </FrostedBackground>
         
         

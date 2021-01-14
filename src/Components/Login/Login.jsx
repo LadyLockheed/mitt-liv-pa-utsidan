@@ -4,7 +4,7 @@ import mainLogo from '../../Assets/mainLogo.svg'
 import {Link, useHistory} from 'react-router-dom'
 import { isAuthenticatedState } from '../Shared/GlobalStates';
 import { useSetRecoilState } from "recoil";
-import { Button } from '../Shared/ButtonsAndSuch'
+import { Button, SecondaryButton } from '../Shared/ButtonsAndSuch'
 
 
 const Container = styled.div`
@@ -196,7 +196,9 @@ const Login = () => {
                 <Input type='text'></Input>
                 <LoginButton onClick={getLoggedIn}>Logga in</LoginButton>
               
-                <LinkStyled to='/addnewuser'><NewUserLink>Ny användare</NewUserLink></LinkStyled>
+                {/* <LinkStyled to='/addnewuser'><NewUserLink>Ny användare</NewUserLink></LinkStyled> */}
+                <LinkStyled to='/addnewuser'><SecondaryButton>Ny användare</SecondaryButton></LinkStyled>
+
                 
             </InputSection>
 

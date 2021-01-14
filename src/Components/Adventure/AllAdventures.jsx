@@ -4,6 +4,7 @@ import AnimatedCampfireSmaller from '../../Assets/animatedCampfireSmaller.gif'
 import styled from 'styled-components'
 import FrostedBackground from '../Shared/FrostedBackground'
 
+
 const Campfire = styled.img`
     height:7rem;
     width:auto;

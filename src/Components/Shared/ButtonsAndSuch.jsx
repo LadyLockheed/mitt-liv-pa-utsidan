@@ -14,6 +14,18 @@ export const Button = styled.button`
     
 `
 
+export const SecondaryButton = styled.button` 
+    background-color: rgba(0,0,0,0.1);
+    color: ${props => props.theme.white};
+    border-radius: 3px;
+    border: 3px solid ${props => props.theme.orange};
+    cursor: pointer;
+    padding: 0.5rem 1.6rem;
+    font-size: 1rem;
+   
+    
+`
+
 export const theme = {
     black:'#303030',
     orange:'#D38324',
@@ -25,4 +37,4 @@ export const theme = {
     mediumbeige: '#DBDDCD',
     red:'#D15933',
     yellow: '#D3AC24'
-  }
+}

@@ -1,11 +1,9 @@
 import React, { useEffect, useState} from 'react'
 import styled from 'styled-components'
-import { AllEquipment } from './GlobalStates';
-import { useRecoilState } from 'recoil';
 import dropDownArrow from '../../Assets/dropdownarrow.svg'
 import editIcon from '../../Assets/editIcon.svg'
 import trashcanIcon from '../../Assets/trashcanIcon.svg'
-import axios from 'axios'
+import AlertModal from './AlertModal'
 
 
 const Wrapper = styled.div`
@@ -142,11 +140,13 @@ const TrachcanIcon = styled.img`
 
 
 const Accordion=({equipmentList})=>{
-    console.log(equipmentList)
+
+
+    const [expandedItems, setExpandedItems] = useState([]);
+    const [displayModal, setDisplayModal] = useState(false)
+ 
 
     
-    // const [allEquipment, setAllEquipment]=useRecoilState(AllEquipment)
-    const [expandedItems, setExpandedItems] = useState([]);
     
     useEffect(()=>{
         //skapar kopia av allEquipment så att ändringarna inte sker i originallistan
@@ -158,7 +158,7 @@ const Accordion=({equipmentList})=>{
     },[])
    
     const toggleOpen = (item) => {
-    
+        setDisplayModal(false);
         setExpandedItems(expandedItems.map((equipment)=>{
             
             if(equipment !== item ){
@@ -171,51 +171,25 @@ const Accordion=({equipmentList})=>{
         }))
     }
 
-        
-
-    
-    // console.log(allEquipment)
-    //lägger till egenska isExpanded på varje equipmentobjekt och sätter den till false
-    //resettar efter man har använt toggleOpen
-    // useEffect(()=>{
-     
-    //     setAllEquipment(allEquipment.map(equipment =>{
-
-    //         return{...equipment, isExpanded:false}
-    //     }))
-
-    // },[])
-    //TODO implementera nåt liknande för att vända på pilen
  
+    const deleteEquipment = () =>{
+        setDisplayModal(false)
+        console.log('Equipment deleted')
+    }
 
-    // const toggleOpen = (item) => {
-       
-    //     setAllEquipment(allEquipment.map((equipment)=>{
-    //         if(equipment !== item ){
-    //             return equipment
-    //         }
-    //         else{
-    //            //isExpanded finns ej från början, men skapas nu.
-                
-    //            //gör ny lista med objekt som innehåller item.id och item.expanded
-    //            //ändra ej i all equipment
-    //             return {...equipment, isExpanded:!equipment.isExpanded }
-
-    //         }
-    //     }))
-
-    // };
-   
-    
+    const editEquipment = (equipment) =>{
+        console.log('equipment edited')
+        console.log(equipment)
+        
+    }
     return(
-
-       
-       <Wrapper>
+   
+        <Wrapper>
         {expandedItems.map((item, index)=>{
             return (
                     <ItemWrapper key={item.equipment+index} >
                         <TopRowWrapper onClick={()=>toggleOpen(item)}>
-                            <CategoryDot categoryColor={item.category}></CategoryDot>
+                            <CategoryDot categoryColor={item.category}/>
                             <Name>{item.equipment}</Name>
                             <Weight>{item.weight}g</Weight>
                             <DropDownArrow src={dropDownArrow}  isUpsideDown={item.isExpanded}></DropDownArrow>
@@ -225,8 +199,18 @@ const Accordion=({equipmentList})=>{
                             <BottomRowWrapper>
                                 <Info>{item.info}</Info>
                                 <IconWrapper>
-                                    <EditIcon src={editIcon}></EditIcon>
-                                    <TrachcanIcon src={trashcanIcon}></TrachcanIcon>
+
+                                    <EditIcon src={editIcon} onClick={() => editEquipment(item._id)}/>
+                                    
+                                    <TrachcanIcon src={trashcanIcon} onClick={()=> setDisplayModal(!displayModal)}></TrachcanIcon>
+
+                                    {displayModal && 
+                                    <AlertModal 
+                                    setDisplayModal = {setDisplayModal} 
+                                    displayModal = {displayModal}
+                                    headline = {'Are u sure?'}
+                                    confirmFunction = {deleteEquipment}/>
+                                    }
                                     
                                 </IconWrapper>
             
@@ -238,11 +222,9 @@ const Accordion=({equipmentList})=>{
                 )
         })}
 
-          
-
        </Wrapper>
-
-
+       
+   
       
     )
 }

@@ -3,10 +3,11 @@ import { Adventures } from '../Shared/GlobalStates';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components'
 import FrostedBackground from '../Shared/FrostedBackground'
-import autumn from '../../Assets/autumnleaf.svg'
-import summer from '../../Assets/summerSun.svg'
-import winter from '../../Assets/winterFlakeIcon.svg'
-import spring from '../../Assets/springFlowerIcon.svg'
+// import autumnIcon from '../../Assets/autumnleaf.svg'
+import autumnIcon from '../../Assets/autumnLeafIcon.svg'
+import summerIcon from '../../Assets/summerSunIcon.svg'
+import winterIcon from '../../Assets/winterSnowFlaceIcon.svg'
+import springIcon from '../../Assets/springBranchIcon.svg'
 
 
 const Wrapper = styled.div`
@@ -18,9 +19,7 @@ const Wrapper = styled.div`
 
 `;
 const ItemWrapper = styled.div`
-    ${'' /* border: 1px solid pink; */}
-    ${'' /* background-color: ${props => props.theme.white}; */}
-    ${'' /* background-color:rgba(186, 188, 171, 0.8) */}
+
     background-color:rgba(233,235,218,0.8);
     padding: 1rem;
 
@@ -56,24 +55,19 @@ const WeightText = styled.p`
 `;
 
 
-
-
 const PackingLists=()=>{
     
 
     const packingLists=useRecoilValue(Adventures)
     console.log(packingLists)
 
-    const icons ={
-        summer: {summer},
-        winter: {winter},
-        autumn: {autumn},
-        spring: {spring}
-    }
-    // let calculatedIcon = icons.autumn;
-    const seasonIcon=(season)=>{
-        //if satser kolla vilken season
-        //returnerea namn på iconen
+    const calculatedIcon = (season) => {
+
+        if (season === 'autumn') return autumnIcon;
+        if (season === 'summer') return summerIcon
+        if (season === 'winter') return winterIcon
+        if (season === 'spring') return springIcon
+
     }
     
     return(
@@ -84,7 +78,7 @@ const PackingLists=()=>{
                 return(
                 <ItemWrapper key={item.adventureName}>
                   
-                    <SeasonIcon src={seasonIcon(item.season)} foo={icons} />
+                    <SeasonIcon src={calculatedIcon(item.season)} />
                     <InfoText>
                         {item.adventureName}, {item.days}<span> dygn</span> 
                         </InfoText>
