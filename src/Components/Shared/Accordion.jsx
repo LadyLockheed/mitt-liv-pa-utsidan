@@ -18,6 +18,7 @@ const ItemWrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding:0rem 1rem 0rem 1rem;
+    cursor:pointer;
 
     &:nth-child(odd) {
         background-color:#D4DBD4;
@@ -78,6 +79,7 @@ const Weight = styled.p`
     color: ${props=> props.theme.black};
     grid-column: 12/13;
     font-size:0.9rem;
+    margin-left:0.2rem;
    
     @media screen and (min-width:350px){
         font-weight:1rem;
@@ -87,11 +89,11 @@ const Weight = styled.p`
 const DropDownArrow = styled.img`
     height: 0.7rem;
     width: auto;
-    justify-self: end;
-    grid-column: 13/15;
-    transform: rotate(${props => props.upsideDown ? `180deg` : `0deg`});
+    
+    grid-column: 14/15;
+    transform: rotate(${props => props.isUpsideDown ? `180deg` : `0deg`});
    
-    padding: 0.5rem 0rem 0.5rem 0.5rem;
+    padding:${props => props.isUpsideDown ? '0.5rem 0.5rem 0.5rem 0rem' : '0.5rem 0rem 0.5rem 0.5rem'};
     &:hover {
         cursor: pointer;
     }
@@ -139,34 +141,16 @@ const TrachcanIcon = styled.img`
 
 
 
-const Accordion=()=>{
+const Accordion=({equipmentList})=>{
+    console.log(equipmentList)
 
-
-    // useEffect(()=>{
-        
-    //     getAllEquipment();
-      
-
-    // },[])
-
-    // async function getAllEquipment() {
-        
-    //     await axios.get('/api/allEquipment')
-    //         .then(res => {
-
-    //             console.log(res.data)
-    //         })
-    //         .catch(err => {
-    //             console.log('Something went wrong', err)
-    //         })
-    // };
-
-    const [allEquipment, setAllEquipment]=useRecoilState(AllEquipment)
+    
+    // const [allEquipment, setAllEquipment]=useRecoilState(AllEquipment)
     const [expandedItems, setExpandedItems] = useState([]);
     
     useEffect(()=>{
         //skapar kopia av allEquipment så att ändringarna inte sker i originallistan
-        setExpandedItems(allEquipment.map(equipment =>{
+        setExpandedItems(equipmentList.map(equipment =>{
 
             return{...equipment, isExpanded:false}
         }))
@@ -229,12 +213,12 @@ const Accordion=()=>{
        <Wrapper>
         {expandedItems.map((item, index)=>{
             return (
-                    <ItemWrapper key={item.equipment+index}>
-                        <TopRowWrapper>
+                    <ItemWrapper key={item.equipment+index} >
+                        <TopRowWrapper onClick={()=>toggleOpen(item)}>
                             <CategoryDot categoryColor={item.category}></CategoryDot>
                             <Name>{item.equipment}</Name>
                             <Weight>{item.weight}g</Weight>
-                            <DropDownArrow src={dropDownArrow} onClick={()=> toggleOpen(item)} upsideDown={item.isExpanded}></DropDownArrow>
+                            <DropDownArrow src={dropDownArrow}  isUpsideDown={item.isExpanded}></DropDownArrow>
                         </TopRowWrapper>
                         {item.isExpanded &&
                         

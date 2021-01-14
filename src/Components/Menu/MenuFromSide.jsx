@@ -109,6 +109,9 @@ const MenuFromSide = ({ isOpen, setIsOpen }) => {
 
             {/* <LinkStyled to='/specificadventure' onClick={()=>setIsOpen(!isOpen)}>Äventyret</LinkStyled> */}
         </LinksWrapper>
+
+        <LinkStyled to='/gallery' onClick={()=>setIsOpen(!isOpen)}>Gallery</LinkStyled>
+        
         <LogOutWrapper onClick={logOut}>
             <LogoutIcon src={LogOutIcon}/>
             <LogOutButton >Logga ut</LogOutButton>

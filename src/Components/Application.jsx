@@ -31,6 +31,8 @@ import AllAdventures from './Adventure/AllAdventures'
 import AddNewAdventure from './Adventure/AddNewAdventure'
 import SpecificAdventure from './Adventure/SpecificAdventure'
 
+import Gallery from '../Components/Gallery'
+
 
 const MyApp = styled.div`
     box-sizing:border-box;
@@ -77,9 +79,8 @@ const Application=()=>{
                 <ProtectedRoute path="/alladventures" component={AllAdventures}/>
                 <ProtectedRoute path="/addnewadventure" component={AddNewAdventure}/>
                 <ProtectedRoute path="/specifikadventure" component={SpecificAdventure}/>
-                <Route>
-                            <Login/>
-                        </Route>
+                <ProtectedRoute path="/gallery" component={Gallery}/>
+             
    
           
             </Switch>

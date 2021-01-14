@@ -125,7 +125,7 @@ export const AllEquipment = atom({
     {equipment:'Tält Unna',
     category:'living',
     weight:2400,
-    info:'Bästa tältet. 4 säsongers, går att vika undan golvet om man behöver plats för blöt utrustning. Sätt i tältbågen närmast öppningen först.fdfdsfds gfgfgfdgf gdfgfdgf gfdgfdg gfd gfdg fdg fdgfd gf fgd gfd gfd gfd gfd gfd fgfdgfdgfd gfd gfdgfd gfdgfdgfd fdgfd gg dfgfd gfdg df',
+    info:'Bästa tältet. 4 säsongers, går att vika undan golvet om man behöver plats för blöt utrustning. Sätt i tältbågen närmast öppningen först. Går bra att koppla loss ena hörnet  på innertältet för att laga mat i dåligt väder eller lägga blöta saker där. Torka av insidan av yttertält, plocka isär inner och ytter vid nedpackning.',
     id: 2
     },
     {equipment:'Optimus Crux Weekend kök',

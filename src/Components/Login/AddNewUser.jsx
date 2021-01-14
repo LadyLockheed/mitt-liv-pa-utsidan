@@ -46,11 +46,11 @@ const Container = styled.div`
         z-index:-1;
     }
     @media screen and (min-width: 600px) {
-        width: 45%;
+        width: 35%;
         height: 45vh;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr;
-        padding-left: 2rem;
+        padding-left: 2.5rem;
        
     }
 
@@ -88,12 +88,20 @@ const H1 = styled.h1`
     
     @media screen and (min-width: 600px){
         grid-column: 1/3;
-        font-size: 2.3rem;
+        font-size: 1.4rem;
         text-align: left;
+       
     }
 
-    @media screen and (max-width:722px){
+    @media screen and (min-width:900px){
+        font-size:1.7rem;
+       
+        
+    }
+
+    @media screen and (min-width:1440px){
         font-size:2rem;
+       
         
     }
 `;
@@ -147,7 +155,7 @@ const LinkStyled = styled(Link)`
     
     display:block;
     margin:auto;
-    margin-top:1rem;
+    margin-top:2rem;
      
 
 `;
@@ -158,8 +166,8 @@ const BackarrowIcon = styled.img`
     margin:auto;
   
     @media screen and (min-width:600px){
-       margin-top:2rem; 
        margin: unset;
+
     }
 
 `;
@@ -192,7 +200,7 @@ const AddNewUser = () => {
                 <Input type='text'></Input>
                 <Label>Välj lösenord</Label>
                 <Input type='text'></Input>
-                <AddNewUserButton>Lägg till ny användare</AddNewUserButton>
+                <AddNewUserButton>Skapa</AddNewUserButton>
               
                <LinkStyled to='/'><BackarrowIcon src={backarrow}></BackarrowIcon></LinkStyled>  
                 

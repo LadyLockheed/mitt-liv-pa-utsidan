@@ -48,7 +48,7 @@ const Container = styled.div`
         z-index:-1;
     }
     @media screen and (min-width: 600px) {
-        width: 45%;
+        width: 30%;
         height: 45vh;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr;

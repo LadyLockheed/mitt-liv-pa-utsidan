@@ -6,7 +6,11 @@ import { Button } from '../Shared/ButtonsAndSuch'
 
 const Wrapper=styled.div`
    
-    margin: 1rem 2rem 2rem 2rem
+    margin: 1rem 2rem 2rem 2rem;
+    background-color:#D4DBD4;
+    margin:1rem;
+    padding:1rem;
+    border-radius:3px;
 `
 const Label = styled.label` 
     font-weight: bold;
@@ -20,7 +24,7 @@ const Label = styled.label`
 
 `
 const InputField = styled.input`
-    width: 98%;
+    width: 96%;
     border-radius: 3px;
     border: none;
     padding: 0.5rem;
@@ -41,6 +45,10 @@ const RadioButtonsOuterWrapper = styled.div `
     display:grid;
     grid-template-columns: 1fr 1fr;
 
+    @media screen and (min-width: 600px){
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
 `;
 
 const RadioButtonsInnerWrapper = styled.div `
@@ -51,11 +59,17 @@ const RadioButton = styled.input`
 `;
 const RadioButtonLabel = styled.label `
     display:block;
+    font-size:0.9rem;
+
+    @media screen and (min-width: 600px){
+        font-size:1rem;
+    }
 
 `
 const TextArea = styled.textarea`
     width: 100%;
     border-radius: 3px;
+    border: none;
     resize: none;
 `;
 
@@ -98,7 +112,9 @@ const AddEquipment=()=>{
                             <RadioButton type='radio' id='sleeping' name='category' value='sleeping'/>
                             Sova
                         </RadioButtonLabel>
+                    </RadioButtonsInnerWrapper>
 
+                    <RadioButtonsInnerWrapper>
                         <RadioButtonLabel htmlFor='clothes'>
                             <RadioButton type='radio' id='clothes' name='category' value='clothes'/>
                             Kläder
@@ -108,14 +124,16 @@ const AddEquipment=()=>{
                             <RadioButton type='radio' id='electronics' name='category' value='electronics'/>
                             Elektronik
                         </RadioButtonLabel>
-
-                    </RadioButtonsInnerWrapper>
-
-                    <RadioButtonsInnerWrapper>
                         <RadioButtonLabel htmlFor='fun'>
                             <RadioButton type='radio' id='fun' name='category' value='fun'/>
                             Nöje
                         </RadioButtonLabel>
+
+
+                    </RadioButtonsInnerWrapper>
+
+                    <RadioButtonsInnerWrapper>
+                        
 
                         <RadioButtonLabel htmlFor='cooking'>
                             <RadioButton type='radio' id='cooking' name='category' value='cooking'/>

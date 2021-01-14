@@ -13,7 +13,7 @@ const Container = styled.div`
     margin-top:2rem;
     z-index:1;
     overflow:hidden;
-    border-radius:5px;
+    border-radius:3px;
     
 
     @media screen and (max-width: 750px) {
