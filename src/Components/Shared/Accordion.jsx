@@ -121,12 +121,14 @@ const IconWrapper = styled.div`
     margin-top: 0.2rem;
     display: grid;
     justify-content: end;
+    margin-right:0.4rem;
     
 `;
 const EditIcon = styled.img`
     height: 1.2rem;
     width: auto;
     margin-bottom: 1rem;
+   
     
 `;
 const TrachcanIcon = styled.img`
@@ -145,9 +147,6 @@ const Accordion=({equipmentList})=>{
     const [expandedItems, setExpandedItems] = useState([]);
     const [displayModal, setDisplayModal] = useState(false)
  
-
-    
-    
     useEffect(()=>{
         //skapar kopia av allEquipment så att ändringarna inte sker i originallistan
         setExpandedItems(equipmentList.map(equipment =>{
@@ -173,7 +172,7 @@ const Accordion=({equipmentList})=>{
 
  
     const deleteEquipment = () =>{
-        setDisplayModal(false)
+        // setDisplayModal(false)
         console.log('Equipment deleted')
     }
 

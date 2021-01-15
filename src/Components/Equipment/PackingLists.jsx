@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Adventures } from '../Shared/GlobalStates';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components'
@@ -57,9 +57,28 @@ const WeightText = styled.p`
 
 const PackingLists=()=>{
     
+    // useEffect(()=>{
+        
+    //     getAllEquipment();
+      
+    // },[])
+
+    // async function getAllEquipment() {
+    //     setIsLoading(true)
+    //     setDisplayErrorInfo(false)
+    //     await axios.get('/api/allEquipment')
+    //     .then(res => {
+
+    //         setAllEquipment(res.data)
+    //         setIsLoading(false)
+    //     })
+    //     .catch(err => {
+    //         console.log('Something went wrong', err)
+    //         setDisplayErrorInfo(true)
+    //     })
+    // };
 
     const packingLists=useRecoilValue(Adventures)
-    console.log(packingLists)
 
     const calculatedIcon = (season) => {
 

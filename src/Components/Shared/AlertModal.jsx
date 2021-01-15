@@ -67,7 +67,12 @@ const AlertModal = (props) => {
 
 
     const {displayModal, setDisplayModal, headline, confirmFunction} = props
+
     
+    const handleConfirm = () => {
+        setDisplayModal(false);
+        confirmFunction()
+    }
    
 
     return (
@@ -76,8 +81,8 @@ const AlertModal = (props) => {
 
             <InnerWrapper>
                 <Headline>{headline}</Headline>
-                <CloseButton onClick={()=> setDisplayModal(false)}>X</CloseButton>
-                <ConfirmButton onClick={()=> confirmFunction()}>Hell yeah</ConfirmButton>
+                <CloseButton onClick={()=> setDisplayModal(false)}>x</CloseButton>
+                <ConfirmButton onClick={handleConfirm}>Hell yeah</ConfirmButton>
                 <RegretButton onClick={()=> setDisplayModal(false)}>Mjaeh</RegretButton>
             </InnerWrapper>
             

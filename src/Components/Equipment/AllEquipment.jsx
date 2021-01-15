@@ -70,6 +70,8 @@ const AllEquipment=()=>{
     const [isLoading, setIsLoading] = useState(false)
 
     const [displayErrorInfo, setDisplayErrorInfo] = useState(false)
+
+   
     
    
     return(

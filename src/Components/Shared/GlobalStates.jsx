@@ -8,6 +8,14 @@ export const isAuthenticatedState = atom({
   default:false
 })
 
+export const ongoingAddingAdventure = atom({
+  key:'ongoingAddingAdventure',
+  default:{}
+
+})
+
+
+
 export const Adventures = atom({
   key:'Adventures',
   default:[
@@ -16,24 +24,27 @@ export const Adventures = atom({
       season: 'summer',
       distance: '150',
       days: '14.5',
-      weight:'20'
-      // packinglist:[
-      //   {equipment:'Sovsäck Marmot Never Summer',
-      //   category:'sleeping',
-      //   weight:1002,
-      //   info:'Väldigt fluffig. Orange färg. Billigare än sommarsäcken'
-      //   },
-      //   {equipment:'Tält Unna',
-      //   category:'living',
-      //   weight:2400,
-      //   info:'Bästa tältet. 4 säsongers, går att vika undan golvet om man behöver plats för blöt utrustning. Sätt i tältbågen närmast öppningen först.fdfdsfds gfgfgfdgf gdfgfdgf gfdgfdg gfd gfdg fdg fdgfd gf fgd gfd gfd gfd gfd gfd fgfdgfdgfd gfd gfdgfd gfdgfdgfd fdgfd gg dfgfd gfdg df'
-      //   },
-      //   {equipment:'Optimus Crux Weekend kök',
-      //   category:'cooking',
-      //   weight:420,
-      //   info:'Packa allting i nätförvaringspåsen.'
-      //   }
-      // ]
+      weight:'20',
+      notes: 'Långt, ont i fötterna',
+      dateStarting: '02-07-2018',
+      dateAdded: '02-07-2018',
+      packinglist:[
+        {equipment:'Sovsäck Marmot Never Summer',
+        category:'sleeping',
+        weight:1002,
+        info:'Väldigt fluffig. Orange färg. Billigare än sommarsäcken'
+        },
+        {equipment:'Tält Unna',
+        category:'living',
+        weight:2400,
+        info:'Bästa tältet. 4 säsongers, går att vika undan golvet om man behöver plats för blöt utrustning. Sätt i tältbågen närmast öppningen först.fdfdsfds gfgfgfdgf gdfgfdgf gfdgfdg gfd gfdg fdg fdgfd gf fgd gfd gfd gfd gfd gfd fgfdgfdgfd gfd gfdgfd gfdgfdgfd fdgfd gg dfgfd gfdg df'
+        },
+        {equipment:'Optimus Crux Weekend kök',
+        category:'cooking',
+        weight:420,
+        info:'Packa allting i nätförvaringspåsen.'
+        }
+      ]
 
     },
     {
@@ -42,6 +53,9 @@ export const Adventures = atom({
       distance: '0',
       days: '1',
       weight:'13',
+      notes: 'Fina stigar',
+      dateStarting: '12-12-2020',
+      dateAdded: '02-07-2018',
       packinglist:[
         {equipment:'Turkos hoodie',
         category:'clothes',
@@ -67,6 +81,9 @@ export const Adventures = atom({
       distance: '42',
       days: '2',
       weight:'16',
+      notes: 'Tradition att gå här varje vår',
+      dateStarting: '03-05-2019',
+      dateAdded: '02-07-2018',
       packinglist:[
         {equipment:'Turkos hoodie',
         category:'clothes',
@@ -92,6 +109,9 @@ export const Adventures = atom({
       distance: '15',
       days: '1',
       weight: '13',
+      notes: 'Första tältplatsen på kartan var en bra tältplats',
+      dateStarting: '03-10-2019',
+      dateAdded: '02-07-2018',
       packinglist:[
         {equipment:'Turkos hoodie',
         category:'clothes',
