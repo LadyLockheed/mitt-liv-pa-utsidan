@@ -105,7 +105,7 @@ const MenuFromSide = ({ isOpen, setIsOpen }) => {
         <LinksWrapper>
             <LinkStyled to='/alladventures' onClick={()=>setIsOpen(!isOpen)}>Alla äventyr</LinkStyled>
 
-            <LinkStyled to='/addnewadventure' onClick={()=>setIsOpen(!isOpen)}>Lägg till <br/> nytt äventyr</LinkStyled>
+            <LinkStyled to='/addadventure' onClick={()=>setIsOpen(!isOpen)}>Lägg till <br/> nytt äventyr</LinkStyled>
 
             {/* <LinkStyled to='/specificadventure' onClick={()=>setIsOpen(!isOpen)}>Äventyret</LinkStyled> */}
         </LinksWrapper>

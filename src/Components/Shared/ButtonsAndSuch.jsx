@@ -41,9 +41,10 @@ export const InputField = styled.input`
     width: 96%;
     border-radius: 3px;
     border: none;
-    padding: 0.5rem;
+    padding: 0.3rem;
     border: 1px solid rgba(197,197,197,0.30);
     background-color: ${props => props.theme.white};
+    border:2px solid ${props => props.isValid ? `${props.theme.orange}` : `${props.theme.white}`};
 
     &:focus {
         outline: none;
@@ -54,9 +55,12 @@ export const InputField = styled.input`
 export const SelectInput = styled.select `
     border-radius: 3px;
     border: none;
-    padding: 0.5rem;
-    border: 1px solid rgba(197,197,197,0.30);
+    font-family: 'Quicksand', sans-serif;
+    font-size:1rem;
+    padding: 0.3rem;
+    ${'' /* border: 1px solid rgba(197,197,197,0.30); */}
     background-color: ${props => props.theme.white};
+    border:2px solid ${props => props.isValid ? `${props.theme.orange}` : `${props.theme.grey}`};
 
     &:focus {
         outline: none;
@@ -66,6 +70,13 @@ export const SelectInput = styled.select `
         padding:0.3rem;
         
     }
+   
+`;
+
+export const ValidateMessage = styled.span `
+    color:${props => props.theme.red};
+    visibility: ${props => props.displayMessage ? 'visible' : 'hidden'};
+    margin-left: 0.5rem;
 `;
   
 
@@ -81,5 +92,6 @@ export const theme = {
     darkgrey:'#BABCAB',
     mediumbeige: '#DBDDCD',
     red:'#D15933',
-    yellow: '#D3AC24'
+    yellow: '#D3AC24',
+    mintGreen: '#D4DBD4'
 }

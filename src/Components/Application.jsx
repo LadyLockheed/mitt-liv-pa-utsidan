@@ -28,7 +28,7 @@ import PackingLists from './Equipment/PackingLists'
 import AddEquipment from './Equipment/AddEquipment'
 //Adventure components
 import AllAdventures from './Adventure/AllAdventures'
-import AddNewAdventure from './Adventure/AddNewAdventure'
+import AddAdventure from './Adventure/AddAdventure/AddAdventure'
 import SpecificAdventure from './Adventure/SpecificAdventure'
 
 import Gallery from '../Components/Gallery'
@@ -77,7 +77,7 @@ const Application=()=>{
                 <ProtectedRoute path="/packinglists" component={PackingLists}/>
                 <ProtectedRoute path="/addequipment" component={AddEquipment}/>
                 <ProtectedRoute path="/alladventures" component={AllAdventures}/>
-                <ProtectedRoute path="/addnewadventure" component={AddNewAdventure}/>
+                <ProtectedRoute path="/addadventure" component={AddAdventure}/>
                 <ProtectedRoute path="/specifikadventure" component={SpecificAdventure}/>
                 <ProtectedRoute path="/gallery" component={Gallery}/>
              
