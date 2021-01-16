@@ -20,7 +20,7 @@ export const SecondaryButton = styled.button`
     border-radius: 3px;
     border: 3px solid ${props => props.theme.orange};
     cursor: pointer;
-    padding: 0.5rem 1.6rem;
+    padding: 0.5rem 1.4rem;
     font-size: 1rem;
    
     

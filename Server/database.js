@@ -5,8 +5,8 @@ const collectionName = 'equipment';
 
 //Collections:
 //User- name, id (genererat av mongodb), password
-//Equipment - namn, vikt, notes, kategori
-//Adventure - name, season, distance , days (dygn)/duration, date-added, date-starting, date-ending (räkna ut med antalet dygn, behöver ej ha i databasen, kan ränka ut i frontend (se moment.js)), packinglist (array med equipment-id), notes
+//Equipment - namn, vikt, notes, kategori, user
+//Adventure - name, season, distance , days (dygn)/duration, user date-added, date-starting, date-ending (räkna ut med antalet dygn, behöver ej ha i databasen, kan ränka ut i frontend (se moment.js)), packinglist (array med equipment-id), notes
 //eventuellt egen collection för packinglists
  
 function get(filter, callback){

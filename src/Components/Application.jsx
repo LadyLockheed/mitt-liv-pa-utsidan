@@ -52,10 +52,6 @@ const Application=()=>{
 
     const isAuthenticated = useRecoilValue(isAuthenticatedState);
   
-   
-    //TODO validering på login
-  
-
     return(
         <MyApp isAuthenticated={isAuthenticated}>
         

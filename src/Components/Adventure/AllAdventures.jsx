@@ -13,7 +13,7 @@ const Campfire = styled.img`
 const AllAdventure=()=>{
 
     return(
-
+  
         <div>
            AllAdventures
         <FrostedBackground headline={'Alla äventyr'}>

@@ -3,11 +3,11 @@ import styled from 'styled-components'
 import mainLogo from '../../Assets/mainLogo.svg'
 import backarrow from '../../Assets/backarrow.svg'
 import { Link } from 'react-router-dom'
-import { Button } from '../Shared/ButtonsAndSuch'
+import { Button, InputField, SecondaryButton } from '../Shared/ButtonsAndSuch'
 
 const Container = styled.div`
     
-    height: 414px;
+    height: 80vh;
     width: 80%;
     background: inherit;
     box-shadow:0 0 1rem 0 rgba(0,0,0, .2);
@@ -23,15 +23,7 @@ const Container = styled.div`
     padding: 1rem;
     background-color: rgba(233,235,218,0.8);
     border-radius: 3px;
-  
-    ${'' /* @media screen and (min-width: 600px) {
-        height: 314px;
-        width: 518px;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr 1fr 1fr;
-        padding-left: 2rem;
-    } */}
-    
+
     &:before{
         content: '';
         background: inherit; 
@@ -46,94 +38,117 @@ const Container = styled.div`
         z-index:-1;
     }
     @media screen and (min-width: 600px) {
-        width: 35%;
+        width: 60%;
         height: 45vh;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr;
-        padding-left: 2.5rem;
+        padding-left: 2rem;
        
+    }
+    @media screen and (min-width: 1024px) {
+       width: 40%;
+
     }
 
 `;
-// const LoginSquare = styled.div` 
-//     display:grid;
-//     grid-template-columns: 1fr;
-//     justify-content: center;
-//     height: 414px;
-//     width: 80%;
-//     padding: 1rem;
-//     position: absolute;
-//     top: 50%;
-//     left: 50%;
-//     transform: translate(-50%, -50%);
-//     background-color: rgba(233,235,218,0.8);
-//     border-radius: 3px;
-    
-//     @media screen and (min-width: 600px) {
-//         height: 314px;
-//         width: 518px;
-//         grid-template-columns: 1fr 1fr;
-//         grid-template-rows: 1fr 1fr 1fr 1fr;
-//         padding-left: 2rem;
-//     }
 
-// `;
 const H1 = styled.h1` 
     color: ${props => props.theme.green};
     font-weight: 300;
-    font-size: 1.7rem;
+    font-size: 1.9rem;
     margin-top: 1.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
     text-align: center;
     
+
     @media screen and (min-width: 600px){
         grid-column: 1/3;
-        font-size: 1.4rem;
+        font-size: 2.3rem;
         text-align: left;
-       
+        margin-bottom: 1rem;
     }
 
-    @media screen and (min-width:900px){
-        font-size:1.7rem;
-       
-        
-    }
-
-    @media screen and (min-width:1440px){
+    @media screen and (max-width:722px){
         font-size:2rem;
-       
         
     }
 `;
 
 const InputSection = styled.section` 
-    margin:auto;
+    ${'' /* margin:auto; */}
     @media screen and (min-width: 600px){
         grid-row: 2/5;
-        margin: unset;
+        ${'' /* margin: unset; */}
     }
 
 `;
 const Label = styled.label` 
    display: block;
+   ${'' /* font-weight: bold; */}
    color: ${props => props.theme.black};
+   margin-bottom: 0.3rem;
 
 `;
-const Input = styled.input`  
-    padding: 0.4rem;
-    border: none;
-    width: 90%;
-    margin-bottom: 1rem;
-    border-radius: 3px;
-    border: 1px solid rgba(197,197,197,0.30);
+// const Input = styled.input`  
+//     padding: 0.4rem;
+//     border: none;
+//     width: 90%;
+//     margin-bottom: 1rem;
+//     border-radius: 3px;
+//     border: 1px solid rgba(197,197,197,0.30);
 
-    &:focus {
-        outline: none;
+//     &:focus {
+//         outline: none;
+//     }
+// `;
+
+const Input = styled(InputField)`
+    margin-bottom: 0.5rem;
+
+`;
+
+const ButtonsWrapper = styled.div`
+    width: 60%;
+    margin:auto;
+    margin-top: 1rem;
+
+    @media screen and (min-width: 600px) {
+        width: 100%;
+        margin-top: 0.5rem;
+
     }
-`;
+    @media screen and (min-width: 700px) {
+       width: 80%;
+       
+    }
+    @media screen and (min-width: 1024px) {
+       width: 80%;
+       
+    }
+
+`
 const AddNewUserButton = styled(Button)` 
     display: block;
     margin: auto;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    color: ${props => props.theme.white};
+
+`;
+const LinkStyled = styled(Link)`
+    text-decoration:none;
+    
+`;
+const BackButton = styled(SecondaryButton)`
+    display: block;
+    margin: auto;
+    width: 100%;
+
+`;
+const ArrowBackIcon = styled.img`
+    height: 0.5rem;
+    width: auto;
+    margin-bottom:0.1rem;
 
 `;
 
@@ -149,33 +164,13 @@ const Logo = styled.img`
     }
 
 `
-const LinkStyled = styled(Link)`
-    text-decoration:none;
-    color:${props => props.theme.black};
-    
-    display:block;
-    margin:auto;
-    margin-top:2rem;
-     
 
-`;
-const BackarrowIcon = styled.img` 
-    height:1.3rem;
-    width:auto;
-    display:block;
-    margin:auto;
-  
-    @media screen and (min-width:600px){
-       margin: unset;
 
-    }
-
-`;
 //Den gär fixar problemet med att hela bakgrunden åker ner ju mer margin-top
 //jag har på den frostade rutan.
 const InvisibleProblemFixer = styled.div`
     width:100%;
-    height:4rem;
+    height:3rem;
 
     @media screen and (min-width:600px){
 
@@ -200,14 +195,25 @@ const AddNewUser = () => {
                 <Input type='text'></Input>
                 <Label>Välj lösenord</Label>
                 <Input type='text'></Input>
-                <AddNewUserButton>Skapa</AddNewUserButton>
-              
-               <LinkStyled to='/'><BackarrowIcon src={backarrow}></BackarrowIcon></LinkStyled>  
+
+                <ButtonsWrapper>
+                    <AddNewUserButton>Skapa</AddNewUserButton>
                 
+                    <LinkStyled to='/'>
+                        <BackButton> 
+                            <ArrowBackIcon src={backarrow}/> Gå tillbaka</BackButton>
+                    </LinkStyled>  
+                </ButtonsWrapper>
             </InputSection>
             <Logo src={mainLogo}></Logo>
 
         </Container>
+        {/* <FrostedStartSquare 
+        headline = {'Skapa ny användare'}
+        labelTop = {'Välj användarnamn'}
+        labelBottom = {'Välj lösenord'}
+        validateTopInput = { 'Användare finns redan' }    
+        /> */}
         </>
   
     )

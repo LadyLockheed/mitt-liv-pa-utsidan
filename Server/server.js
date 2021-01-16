@@ -23,13 +23,24 @@ app.use(cors());
 // middlewares
 app.use(express.static(path.join(__dirname, '/../build')))
  
+
+
+app.get('/api/allUsers', (req, res) => {
+
+    getAllUsers(dataOrError => {
+        res.send(dataOrError);
+    })
+})
  
 app.get('/api/allEquipment', (req, res) => {
-
+    console.log(res)
+    console.log(req)
     getAllEquipment(dataOrError => {
         res.send(dataOrError);
     })
 })
+
+
 
 
 // app.get('/', (request,response) => {
