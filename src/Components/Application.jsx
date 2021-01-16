@@ -33,6 +33,8 @@ import SpecificAdventure from './Adventure/SpecificAdventure'
 
 import Gallery from '../Components/Gallery'
 
+import StartPage from './Login/StartPage'
+
 
 const MyApp = styled.div`
     box-sizing:border-box;
@@ -60,11 +62,18 @@ const Application=()=>{
             <Switch>
                 {!isAuthenticated && 
                     <>
-                        <Route path='/addnewuser'>
+                        {/* <Route path='/addnewuser'>
                             <AddNewUser/>
                         </Route>
                         <Route exact={true} path='/'>
                             <Login/>
+                        </Route> */}
+
+                        {/* <Route path='/addnewuser'>
+                            <AddNewUser/>
+                        </Route> */}
+                        <Route exact={true} path='/'>
+                            <StartPage/>
                         </Route>
                     </>
                 }
