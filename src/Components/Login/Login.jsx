@@ -1,4 +1,3 @@
-
 import  { useState } from 'react'
 import {  useHistory } from 'react-router-dom'
 import { isAuthenticatedState } from '../Shared/GlobalStates';
@@ -9,7 +8,7 @@ import FrostedForm from './FrostedForm'
 
 
 
-const LoginTest = ({setDisplayLogin}) => {
+const Login = ({setDisplayLogin}) => {
 
     const setIsAuthenticatedState = useSetRecoilState(isAuthenticatedState)
   
@@ -101,4 +100,4 @@ const LoginTest = ({setDisplayLogin}) => {
 
 }
 
-export default LoginTest
+export default Login

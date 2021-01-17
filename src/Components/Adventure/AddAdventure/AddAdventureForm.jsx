@@ -47,7 +47,7 @@ const ArrowForwardIcon = styled.img `
 `;
 
 
-const AddNewAdventure=()=>{
+const AddNewAdventure=({setNewAdventure})=>{
 
     const [adventure, setAdventure] = useState('')
 	const [season, setSeason] = useState('')
@@ -59,7 +59,13 @@ const AddNewAdventure=()=>{
     const [validateDateStarting, setValidateDateStarting] = useState(false)
     const [validateDays, setValidateDays] = useState(false)
 
- 
+    let newAdventure = {
+        adventure: adventure,
+        season: season,
+        dateStarting: dateStarting,
+        days: days
+    }
+
     const handleValidation = () => {
         
         if (adventure.length < 1 ||  season === 'season' || season === '' || days < 1 || dateStarting.length < 1) {
@@ -90,8 +96,9 @@ const AddNewAdventure=()=>{
 
         if (allIsValid){
 
-            console.log('posta equipment, lägg till spinner (då ser man inte heller ev validerade fält)')
+           return setNewAdventure({...newAdventure, dateEnding: calculateEndDate(newAdventure)})
         }
+
         else{
             console.log('inte godkänt enligt handlesubmit')
             return
@@ -171,3 +178,63 @@ const AddNewAdventure=()=>{
 }
 
 export default AddNewAdventure
+
+const calculateEndDate = (adventure) =>{
+
+    let day = parseInt(adventure.dateStarting.slice(8,10))
+    let month = parseInt(adventure.dateStarting.slice(5,7))
+    let year = parseInt(adventure.dateStarting.slice(0,4))
+    let duration = parseInt(adventure.days)
+
+    switch( month ){
+        
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
+            if(day + duration > 31){
+                month = month + 1
+                day = (day + duration) - 31
+                
+            }
+            else {
+                day = day + duration
+            }
+            
+        break;
+
+        case 2:
+        if(day + duration > 28){
+            month = month + 1
+            day = (day + duration) - 28
+        
+        }
+        break;
+
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+            if( day + duration > 30){
+                month = month + 1
+                day = (day + duration) - 30
+            }
+
+    }
+
+    if (month > 12){
+        year = year + (month - 12)
+    }
+
+    if (day < 10 ){
+        day = `0${day}`
+    }
+    if (month < 10) {
+        month = `0${month}`
+    }
+    return  `${year}-${month}-${day}`
+
+    }

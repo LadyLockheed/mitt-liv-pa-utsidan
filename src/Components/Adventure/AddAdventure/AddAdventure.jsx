@@ -1,17 +1,22 @@
-import React from 'react'
-import styled from 'styled-components'
+import React,  { useState } from 'react'
+
 import AddAdventureForm from './AddAdventureForm'
+import AllEquipment from '../../Equipment/AllEquipment'
 
 
 
 const AddAdventure = () => {
 
+    const [newAdventure, setNewAdventure] = useState(null)
+    console.log(newAdventure)
+
     return (
         <div>
-
-            <AddAdventureForm/> 
+            {!newAdventure ? <AddAdventureForm setNewAdventure = {setNewAdventure} /> : <AllEquipment/> }
+            
         </div>
     )
 }
 
 export default AddAdventure
+

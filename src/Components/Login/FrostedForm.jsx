@@ -46,7 +46,7 @@ const Container = styled.div`
   
     @media screen and (min-width: 1024px) {
        width: 50%;
-       border: 1px solid blue;
+      
        height: 50vh;
        
     }
@@ -135,6 +135,7 @@ const ArrowIcon = styled.img`
     width: auto;
     margin-bottom:0.1rem;
     margin-left: 0.3rem;
+    margin-right: 0.3rem;
 
 `;
 

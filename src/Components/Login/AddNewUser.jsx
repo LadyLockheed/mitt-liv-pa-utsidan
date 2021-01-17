@@ -3,7 +3,7 @@ import arrowBackwardIcon from '../../Assets/backarrow.svg'
 import FrostedForm from './FrostedForm'
 
 
-const AddNewUserTest = ({setDisplayLogin}) =>{
+const AddNewUser = ({setDisplayLogin}) =>{
 
 
     const [newUser, setNewUser] = useState('');
@@ -11,8 +11,7 @@ const AddNewUserTest = ({setDisplayLogin}) =>{
 
     const [validateNewUser, setValidateNewUser] = useState(false)
     const [validateNewPassword, setValidateNewPassword] = useState(false)
-    console.log(validateNewUser)
-    console.log(validateNewPassword)
+
     const resetValidation = () => {
        
         setValidateNewUser(false); 
@@ -87,4 +86,4 @@ const AddNewUserTest = ({setDisplayLogin}) =>{
 
 }
 
-export default AddNewUserTest
+export default AddNewUser

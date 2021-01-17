@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Adventures } from '../Shared/GlobalStates';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components'
 import FrostedBackground from '../Shared/FrostedBackground'
-// import autumnIcon from '../../Assets/autumnleaf.svg'
 import autumnIcon from '../../Assets/autumnLeafIcon.svg'
 import summerIcon from '../../Assets/summerSunIcon.svg'
 import winterIcon from '../../Assets/winterSnowFlaceIcon.svg'
@@ -19,7 +18,9 @@ const Wrapper = styled.div`
 
 `;
 const ItemWrapper = styled.div`
-
+    display:grid;
+    align-items: center;
+    grid-template-columns: repeat(14, 1fr);
     background-color:rgba(233,235,218,0.8);
     padding: 1rem;
 
@@ -29,10 +30,16 @@ const ItemWrapper = styled.div`
     &:nth-child(even) {
         background-color:rgb(233,235,218);
     }
+    &:first-child {
+        border-radius: 3px 3px 0px 0px;
+    }
+    &:last-child {
+        border-radius: 0px 0px 3px 3px;
+    }
 
-    display:grid;
-    align-items: center;
-    grid-template-columns: repeat(14, 1fr);
+    &:hover {
+        cursor:pointer;
+    }
 
 
 `;
@@ -45,13 +52,18 @@ const SeasonIcon = styled.img `
 `;
 const InfoText = styled.p`
     font-weight:bold;
-    tex-transform: uppercase;
+    ${'' /* text-transform: uppercase; */}
     text-align: left;
-    grid-column: 2/12;
+    grid-column: 3/12;
  
 `;
 const WeightText = styled.p`
-    grid-column: 13/15;
+    grid-column: 12/15;
+
+    @media screen and (min-width: 600px){
+
+        grid-column: 13/15;
+    }
 `;
 
 
@@ -78,7 +90,7 @@ const PackingLists=()=>{
     //     })
     // };
 
-    const packingLists=useRecoilValue(Adventures)
+    const packingLists = useRecoilValue(Adventures)
 
     const calculatedIcon = (season) => {
 
@@ -95,7 +107,7 @@ const PackingLists=()=>{
        
             {packingLists.map((item, index) =>{
                 return(
-                <ItemWrapper key={item.adventureName}>
+                <ItemWrapper key={item.adventureName + index}>
                   
                     <SeasonIcon src={calculatedIcon(item.season)} />
                     <InfoText>

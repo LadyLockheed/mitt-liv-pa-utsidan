@@ -19,8 +19,8 @@ import imagePinkField from '../Assets/DSC00009.JPG'
 
 //general components
 import Header from './Header';
-import Login from './Login/Login';
-import AddNewUser from './Login/AddNewUser'
+import StartPage from './Login/index'
+
 //Equipment components
 
 import AllEquipment from './Equipment/AllEquipment'
@@ -31,9 +31,7 @@ import AllAdventures from './Adventure/AllAdventures'
 import AddAdventure from './Adventure/AddAdventure/AddAdventure'
 import SpecificAdventure from './Adventure/SpecificAdventure'
 
-import Gallery from '../Components/Gallery'
 
-import StartPage from './Login/StartPage'
 
 
 const MyApp = styled.div`
@@ -84,7 +82,7 @@ const Application=()=>{
                 <ProtectedRoute path="/alladventures" component={AllAdventures}/>
                 <ProtectedRoute path="/addadventure" component={AddAdventure}/>
                 <ProtectedRoute path="/specifikadventure" component={SpecificAdventure}/>
-                <ProtectedRoute path="/gallery" component={Gallery}/>
+               
              
    
           
