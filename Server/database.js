@@ -1,7 +1,7 @@
 const {MongoClient} = require('mongodb')
 const url = 'mongodb://localhost:27017';
 const dbName = 'MittLivPaUtsidan';
-const collectionName = 'equipment';
+// const collectionName = 'equipment';
 
 //Collections:
 //User- name, id (genererat av mongodb), password
@@ -9,9 +9,9 @@ const collectionName = 'equipment';
 //Adventure - name, season, distance , days (dygn)/duration, user date-added, date-starting, date-ending (räkna ut med antalet dygn, behöver ej ha i databasen, kan ränka ut i frontend (se moment.js)), packinglist (array med equipment-id), notes
 //eventuellt egen collection för packinglists
  
-function get(filter, callback){
-
-
+function get(collection, callback){
+    console.log('vad är du callback: ', collection)
+    // console.log(collection)
 MongoClient.connect( url, { useUnifiedTopology : true }, async (error, client)=>{ 
 
     if(error){
@@ -20,7 +20,7 @@ MongoClient.connect( url, { useUnifiedTopology : true }, async (error, client)=>
         return;
     }
 
-    const theCollection = client.db(dbName).collection(collectionName); 
+    const theCollection = client.db(dbName).collection(collection); 
 
     try{
         const cursor = theCollection.find();
@@ -28,8 +28,8 @@ MongoClient.connect( url, { useUnifiedTopology : true }, async (error, client)=>
         callback(array);
 
     } catch(error){
-        console.log('Wrong query, error: ', error.message);
-        callback('Wrong query'); 
+        console.log('Fel query, error: ', error.message);
+        callback('Fel query'); 
 
     } finally{
         client.close();
@@ -37,11 +37,18 @@ MongoClient.connect( url, { useUnifiedTopology : true }, async (error, client)=>
 })
 }
 
-function getAllEquipment (callback) {
+function getAllEquipment (collection, callback) {
     
-    get({}, callback)
+    get(collection, callback)
+}
+
+
+function getAllUsers (collection, callback) {
+    
+    get(collection, callback)
 }
 
 module.exports = {
-    getAllEquipment
+    getAllEquipment,
+    getAllUsers
 }

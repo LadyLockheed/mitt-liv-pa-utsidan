@@ -9,11 +9,11 @@ import FrostedForm from './FrostedForm'
 
 
 const Login = ({setDisplayLogin}) => {
-
+    //ska ta in props allUSers som index har hämtat
     const setIsAuthenticatedState = useSetRecoilState(isAuthenticatedState)
   
    
-    const history=useHistory();
+    const history = useHistory();
     // const [allUsers, setAllUsers] = useState([])
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('')
@@ -29,16 +29,16 @@ const Login = ({setDisplayLogin}) => {
     }
 
     const handleValidation = () => {
+
         //jämför user med listan med users
         if(user.length < 1 || password.length < 1 ){
 
-            console.log('nånting blev ej godkänt')
             if( user.length < 1 ) {setValidateUser(true)}
             if( password.length < 1 ) {setValidatePassword(true)}
             return false
         }
         else {
-            console.log('allt godkänt')
+            
             return true
         }
        
@@ -47,7 +47,7 @@ const Login = ({setDisplayLogin}) => {
 
     const handleSubmit = () => {
         //resetar så att validering kan börja om ifall man enbart fyllt i vissa fält rätt
-        console.log('click')
+        
         resetValidation();
 
        let allIsValid =  handleValidation();
@@ -61,7 +61,6 @@ const Login = ({setDisplayLogin}) => {
             history.push('/allequipment')
         }
         else{
-            console.log('inloggningen misslyckades')
           
             return
         }

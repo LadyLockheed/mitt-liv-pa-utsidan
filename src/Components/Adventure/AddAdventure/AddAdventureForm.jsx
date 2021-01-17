@@ -222,6 +222,9 @@ const calculateEndDate = (adventure) =>{
                 month = month + 1
                 day = (day + duration) - 30
             }
+        break;
+        default:
+            console.log('nånting default')
 
     }
 

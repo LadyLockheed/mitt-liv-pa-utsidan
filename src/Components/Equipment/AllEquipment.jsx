@@ -58,8 +58,9 @@ const AllEquipment=()=>{
             setIsLoading(false)
         })
         .catch(err => {
-            console.log('Something went wrong', err)
+            console.log('Meddelande från frontend: nånting gick fel', err)
             setDisplayErrorInfo(true)
+            setIsLoading(false)
         })
     };
 

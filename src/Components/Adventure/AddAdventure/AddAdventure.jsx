@@ -8,7 +8,7 @@ import AllEquipment from '../../Equipment/AllEquipment'
 const AddAdventure = () => {
 
     const [newAdventure, setNewAdventure] = useState(null)
-    console.log(newAdventure)
+
 
     return (
         <div>

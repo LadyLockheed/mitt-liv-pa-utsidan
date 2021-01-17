@@ -4,13 +4,13 @@ const bodyParser = require('body-parser');
 const path = require('path')
 // const { cloudinary } = require('./cloudinary')
 const cors = require('cors');
-const { getAllEquipment } = require('./database.js');
+const { getAllEquipment, getAllUsers } = require('./database.js');
 
 
 
 const port = 1337; // Port number
 
-console.log('i server.js')
+
 
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
@@ -24,28 +24,21 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, '/../build')))
  
 
-
 app.get('/api/allUsers', (req, res) => {
-
-    getAllUsers(dataOrError => {
+    let collection = 'users'
+    getAllUsers(collection,  dataOrError => {
         res.send(dataOrError);
     })
 })
  
 app.get('/api/allEquipment', (req, res) => {
-    console.log(res)
-    console.log(req)
-    getAllEquipment(dataOrError => {
+    let collection = 'equipment'
+    getAllEquipment(collection, dataOrError => {
         res.send(dataOrError);
     })
 })
 
 
-
-
-// app.get('/', (request,response) => {
-//    response.send('The cake is a lie')
-// })
  
 app.listen(port, () => {
    console.log('Web server listening on port ' + port)
