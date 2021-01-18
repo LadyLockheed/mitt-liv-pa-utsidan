@@ -1,7 +1,10 @@
 const {MongoClient} = require('mongodb')
-const url = 'mongodb://localhost:27017';
-const dbName = 'MittLivPaUtsidan';
-// const collectionName = 'equipment';
+// const url = 'mongodb://localhost:27017';
+
+// const dbName = 'MittLivPaUtsidan';
+const dbName = 'MyLifeOnTheOutside';
+// const url='mongodb+srv://berrasBoatsDatabase:berrasBoatsServerside@karinfrontend.foi9f.gcp.mongodb.net/berrasBoatsDatabase?retryWrites=true&w=majority'
+const url = 'mongodb+srv://MyLifeOnTheOutside:MyL1f3OnTh3Outs1d3@karinfrontend.foi9f.gcp.mongodb.net/MyLifeOnTheOutside?retryWrites=true&w=majority'
 
 //Collections:
 //User- name, id (genererat av mongodb), password
@@ -10,7 +13,7 @@ const dbName = 'MittLivPaUtsidan';
 //eventuellt egen collection för packinglists
  
 function get(collection, callback){
-    console.log('vad är du callback: ', collection)
+ 
     // console.log(collection)
 MongoClient.connect( url, { useUnifiedTopology : true }, async (error, client)=>{ 
 

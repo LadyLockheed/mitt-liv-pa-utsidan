@@ -169,7 +169,7 @@ const InvisibleProblemFixer = styled.div`
 const FrostedStartSquare = (props) => {
 
 
- const { headline, topLabel, bottomLabel, topInputValue, topInputSetValue, topInputValidation, bottomInputValidation, topInputValidationMessage, bottomInputValidationMessage, handleSubmit, topButtonText, bottomButtonText, arrowIcon, positionArrowIconOnRight, bottomInputValue, bottomInputSetValue, setDisplayLogin } = props
+ const { headline, topLabel, bottomLabel, topInputValue, topInputSetValue, topInputValidation, bottomInputValidation, topInputValidationMessage, bottomInputValidationMessage, handleSubmit, topButtonText, bottomButtonText, arrowIcon, positionArrowIconOnRight, bottomInputValue, bottomInputSetValue, setDisplayLogin, typeOnBottomInputfield } = props
 
 
     return (
@@ -191,9 +191,9 @@ const FrostedStartSquare = (props) => {
                 <ValidateMessage 
                 displayMessage = {topInputValidation }> {topInputValidationMessage} </ValidateMessage>
 
-                <Label htmlFor =  { bottomLabel }> { bottomLabel } </Label>
+                <Label htmlFor =  { bottomLabel } > { bottomLabel } </Label>
                 <Input 
-                type='text'
+                type = {typeOnBottomInputfield}
                 id = { bottomLabel }
                 value = { bottomInputValue }
                 onChange = { event=>bottomInputSetValue(event.target.value) }

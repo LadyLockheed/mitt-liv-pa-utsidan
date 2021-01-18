@@ -11,10 +11,10 @@ const AddAdventure = () => {
 
 
     return (
-        <div>
+        <>
             {!newAdventure ? <AddAdventureForm setNewAdventure = {setNewAdventure} /> : <AllEquipment/> }
             
-        </div>
+        </>
     )
 }
 

@@ -2,52 +2,49 @@ import { useState, useEffect } from 'react'
 import AddNewUser from './AddNewUser'
 import Login from './Login'
 import axios from 'axios'
+import { allUsersState } from '../Shared/GlobalStates'
+import { useRecoilState } from 'recoil'
+// import {currentUserState } from '../Shared/GlobalStates'
+// import {useRecoilValue} from 'recoil'
 // import LoginTest from './LoginTest'
 // import AddNewUserTest from './AddNewUserTest'
 
 const StartPage = () =>{
 
     const [displayLogin, setDisplayLogin] = useState(true)
+    const [allUsers, setAllUsers] = useRecoilState(allUsersState)
 
-   //hämta alla user
-   //ska de hämtas här eller i login?
-   //var hämtar jag allEquipment? Borde göra det i Login? Och sen lägga upp i recoil.
 
-    const [users, setUsers] = useState([])
-    console.log(users)
+    console.log('allUsers: ',allUsers)
 
     useEffect(()=>{
-        
+        console.log('hämtar all users')
         getAllUsers();
       
     },[])
 
     async function getAllUsers() {
-        // setIsLoading(true)
-        // setDisplayErrorInfo(false)
+
         await axios.get('/api/allUsers')
         .then(res => {
-
-           console.log(res.data)
-           setUsers(res.data)
-            // setIsLoading(false)
+           
+           setAllUsers(res.data)
+           
         })
         .catch(err => {
             console.log('Something went wrong', err)
-            // setDisplayErrorInfo(true)
+          
         })
     };
-
-   
 
    
     return (
         <>
 
             {displayLogin ? 
-            <Login setDisplayLogin={setDisplayLogin}/> 
+            <Login setDisplayLogin = {setDisplayLogin} allUsers = {allUsersState}/> 
             :  
-            <AddNewUser setDisplayLogin = {setDisplayLogin}/>}
+            <AddNewUser setDisplayLogin = {setDisplayLogin} />}
 
         </>
     )

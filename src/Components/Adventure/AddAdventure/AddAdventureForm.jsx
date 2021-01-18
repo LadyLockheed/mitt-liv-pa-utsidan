@@ -195,7 +195,7 @@ const calculateEndDate = (adventure) =>{
         case 8:
         case 10:
         case 12:
-            if(day + duration > 31){
+            if(day + duration > 31) {
                 month = month + 1
                 day = (day + duration) - 31
                 
@@ -229,7 +229,9 @@ const calculateEndDate = (adventure) =>{
     }
 
     if (month > 12){
-        year = year + (month - 12)
+        //obs, only count for +1 year, not several. Maybe need to change form.
+        year = year + 1
+        month = month + 1
     }
 
     if (day < 10 ){

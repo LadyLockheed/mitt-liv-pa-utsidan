@@ -1,16 +1,27 @@
 import { useState } from 'react'
 import arrowBackwardIcon from '../../Assets/backarrow.svg'
 import FrostedForm from './FrostedForm'
+import { allUsersState } from '../Shared/GlobalStates'
+import { useRecoilState } from 'recoil'
 
 
-const AddNewUser = ({setDisplayLogin}) =>{
+const AddNewUser = (props) =>{
 
+    const { setDisplayLogin } = props;
+    const [ allUsers, setAllUsers ] = useRecoilState(allUsersState)
 
-    const [newUser, setNewUser] = useState('');
+    const [newUserName, setNewUserName] = useState('')
     const [newPassword, setNewPassword] = useState('')
 
     const [validateNewUser, setValidateNewUser] = useState(false)
     const [validateNewPassword, setValidateNewPassword] = useState(false)
+    const [validateNewUserMessage, setValidateNewUserMessage] = useState('x')
+    const [validateNewPasswordMessage, setValidateNewPasswordMessage] = useState('x')
+
+    let newUser = {
+        userName: newUserName,
+        password:newPassword
+    }
 
     const resetValidation = () => {
        
@@ -18,14 +29,28 @@ const AddNewUser = ({setDisplayLogin}) =>{
         setValidateNewPassword(false)
         
     }
-
+    let userAlreadyExist = allUsers.find(oneUser => oneUser.userName === newUserName)
+    let passwordAlreadyExist = allUsers.find(oneUser => oneUser.password === newPassword)
     const handleValidation = () => {
-        //jämför user med listan med users
-        if(newUser.length < 1 || newPassword.length < 1 ){
+       
+        if(newUserName.length < 1 || newPassword.length < 1 || userAlreadyExist || passwordAlreadyExist ){
 
-            console.log('nånting blev ej godkänt')
-            if( newUser.length < 1 ) { setValidateNewUser(true); }
-            if( newPassword.length < 1 ) { setValidateNewPassword(true) }
+            if( newUserName.length < 1 ) {
+                setValidateNewUser(true); 
+                setValidateNewUserMessage('Glöm inte att välja fancy namn')
+            }
+            else if ( userAlreadyExist ) {
+                setValidateNewUser(true)
+                setValidateNewUserMessage('Användarnamnet finns redan')
+            }
+            if( newPassword.length < 1 ) { 
+                setValidateNewPassword(true) 
+                setValidateNewPasswordMessage('Glöm inte välja klurigt lösen')
+            }
+            else if ( passwordAlreadyExist ) {
+                setValidateNewPassword(true)
+                setValidateNewPasswordMessage('Välj annat lösenord')
+            }
             return false
         }
         else {
@@ -38,18 +63,22 @@ const AddNewUser = ({setDisplayLogin}) =>{
 
     const handleSubmit = () => {
         //resetar så att validering kan börja om ifall man enbart fyllt i vissa fält rätt
-        console.log('click')
+       
         resetValidation();
 
        let allIsValid =  handleValidation();
 
         if (allIsValid){
-
-            console.log('gå tillbaka till login');
+            //gör en post här och ta bort setAllUsers (det görs i index.js)
+            //? hur gör jag så att index.js hämtar alla users igen, login måste veta om det finns nån ny. 
+            //? ev om jag tar bort startpage och låter login hämta alla users och sen
+            //? använder routing för att hoppa fram och tillbaka.
+            setAllUsers([...allUsers, newUser])
             setDisplayLogin(true);
     
         }
         else{
+
             console.log('inloggningen misslyckades')
           
             return
@@ -63,16 +92,17 @@ const AddNewUser = ({setDisplayLogin}) =>{
             headline={'Skapa ny användare'}
 
             topLabel= {'Välj användarnamn'}
-            topInputValue = { newUser }
-            topInputSetValue = { setNewUser }
+            topInputValue = { newUserName }
+            topInputSetValue = { setNewUserName }
             topInputValidation = { validateNewUser }
-            topInputValidationMessage = {'Denna ska bytas ut till variabel'}
+            topInputValidationMessage = { validateNewUserMessage }
 
             bottomLabel = {'Väl lösenord'}
             bottomInputValue = { newPassword }
             bottomInputSetValue = { setNewPassword  }
             bottomInputValidation = {validateNewPassword}
-            bottomInputValidationMessage  = {'Denna ska bytas ut mot variabel'}
+            bottomInputValidationMessage  = { validateNewPasswordMessage }
+            typeOnBottomInputfield = {'text'}
 
             topButtonText = {'Skapa'}
             bottomButtonText = {'Gå tillbaka'}

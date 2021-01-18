@@ -5,6 +5,8 @@ import FrostedBackground from '../Shared/FrostedBackground'
 import axios from 'axios';
 import styled from 'styled-components'
 import spinnerDayNight from '../../Assets/animatedDayNight.gif'
+import {currentUserState } from '../Shared/GlobalStates'
+import {useRecoilValue} from 'recoil'
 
 
 const LoadingWrapper = styled.div `
@@ -39,6 +41,9 @@ const ErrorInfo = styled.p `
 
 
 const AllEquipment=()=>{
+
+    const currentUser = useRecoilValue(currentUserState)
+    console.log('current user: ', currentUser)
    //Här ska jag på nåt sätt ta in allEquipment, antingen från global states 
    //eller så görs fetchen här.
 
