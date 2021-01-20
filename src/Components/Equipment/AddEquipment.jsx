@@ -84,7 +84,8 @@ const AddEquipment=()=>{
        let allIsValid =  handleValidation();
 
         if (allIsValid){
-
+            //lägg till ny equipment till all equipment
+            //lägg till currentUser i det objektet!!!
             console.log('posta equipment, lägg till spinner (då ser man inte heller ev validerade fält)')
         }
         else{

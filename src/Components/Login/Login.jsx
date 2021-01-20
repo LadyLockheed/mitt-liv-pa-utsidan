@@ -1,26 +1,54 @@
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { isAuthenticatedState, currentUserState, allUsersState } from '../Shared/GlobalStates';
-import { useSetRecoilState , useRecoilValue} from "recoil";
+import { useSetRecoilState } from "recoil";
 import arrowForwardIcon from '../../Assets/arrowForward.svg'
 import FrostedForm from './FrostedForm'
+import axios from 'axios'
 
 
+const Login = () => {
 
+    async function authenticateUser(user) {
 
-const Login = (props) => {
-    //ska ta in props allUSers som index har hämtat
-    const { setDisplayLogin } = props
+        try {
+                
+            const response = await axios.post("/api/authenticateUser", {userName: user, password: password})
+              
+                // console.log('response.data: ',response.data)
+            if (!response.data) {
+               
+                setValidateUser(true)
+                setValidatePassword(true)
+                setValidateUserMessage('Användare eller lösenord är fel')
+                setValidatePassWordMessage('Användare eller lösenord är fel')
+                setIsLoggingIn(false)
+            }
+            else {
+                setCurrentUser(response.data)
+                setIsAuthenticatedState(true)
+                history.push('/allequipment')
+            }
+
+        }
+        catch (err) {
+            console.log('Something went wrong', err)
+
+        }
+
+    }
+
 
     const setIsAuthenticatedState = useSetRecoilState(isAuthenticatedState)
     const setCurrentUser = useSetRecoilState(currentUserState)
-    const allUsers = useRecoilValue(allUsersState)
-   
+    const [isLoggingIn, setIsLoggingIn] = useState(false)
+
     const history = useHistory();
 
     const [user, setUser] = useState('');
-    const [password, setPassword] = useState('')
+    const [password, setPassword] = useState('');
 
+    
     const [validateUser, setValidateUser] = useState(false)
     const [validatePassword, setValidatePassword] = useState(false)
     const [validateUserMessage, setValidateUserMessage] = useState('x')
@@ -30,66 +58,43 @@ const Login = (props) => {
 
         setValidateUser(false);
         setValidatePassword(false)
+       
 
     }
 
-    let currentUser = allUsers.find(oneUser => oneUser.userName === user)
-    const handleValidation = () => {
+    
+    const handleLogin = () => {
 
-        if (user.length < 1 || password.length < 1 || !currentUser) {
+        if (user.length < 1 || password.length < 1) {
 
             if (user.length < 1) {
-
                 setValidateUser(true)
                 setValidateUserMessage('Glöm inte att skriva in nåt')
             }
-            else if (!currentUser) {
 
-                setValidateUser(true)
-                setValidatePassword(true)
-                setValidateUserMessage('Användare eller lösenord är fel')
-                setValidatePassWordMessage('Användare eller lösenord är fel')
-            }
             if (password.length < 1) {
-
                 setValidatePassword(true)
                 setValidatePassWordMessage('Glöm inte att skriva in nåt')
             }
-            
-            return false
-        }
-        
-        let isPassWordCorrect = currentUser.password == password
-        
-        if (!isPassWordCorrect) {
-            setValidateUser(true)
-            setValidatePassword(true)
-            setValidatePassWordMessage('Användare eller lösenord är fel')
-            setValidateUserMessage('Användare eller lösenord är fel')
-            return false
-        }
 
-        return true
+            return
+        }
+        setIsLoggingIn(true)
+        authenticateUser(user);
+    
     }
+
+
 
     const handleSubmit = () => {
         //resetar så att validering kan börja om ifall man enbart fyllt i vissa fält rätt
         resetValidation();
         //kollar om allt ifyllt är valid
-        let allIsValid = handleValidation();
-
-        if (allIsValid) {
-            //validering ok
-            //sparar currentUser i globalstates och går in på allEquipmentsidan
-            setCurrentUser(currentUser)
-            setIsAuthenticatedState(true);
-            history.push('/allequipment')
-
-        }
-        //validering ej ok
-        else { return }
+        handleLogin();
 
     }
+
+
 
     return (
 
@@ -111,11 +116,13 @@ const Login = (props) => {
 
             topButtonText={'Logga in'}
             bottomButtonText={'Jag är ny'}
+            disableButton = { isLoggingIn }
 
             arrowIcon={arrowForwardIcon}
             positionArrowIconOnRight={false}
-            setDisplayLogin={() => setDisplayLogin(false)}
+            goToPage={() => history.push('/addnewuser')}
             handleSubmit={handleSubmit}
+           
 
         />
 

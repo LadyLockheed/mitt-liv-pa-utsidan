@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import FrostedBackground from '../Shared/FrostedBackground'
 import { Adventures } from '../Shared/GlobalStates';
 import { useRecoilValue } from 'recoil';
-
+import {useHistory} from 'react-router-dom'
 
 // const Campfire = styled.img`
 //     height:7rem;
@@ -59,73 +59,11 @@ const InfoText = styled.p`
 const AllAdventure=()=>{
 
     const adventures = useRecoilValue(Adventures)
+    const history = useHistory()
+    const goToSpecificAdventure = () => {
 
-
-
-    // const calculateEndDate = () =>{
-
-    //     for (let i = 0; i < adventures.length; i++) {
-
-    //         let day = parseInt(adventures[i].dateStarting.slice(0,2))
-    //         let month = parseInt(adventures[i].dateStarting.slice(3,5))
-    //         let year = parseInt(adventures[i].dateStarting.slice(6,10))
-    //         let duration = parseInt(adventures[i].days)
-
-    //         switch( month ){
-                
-    //             case 1:
-    //             case 3:
-    //             case 5:
-    //             case 7:
-    //             case 8:
-    //             case 10:
-    //             case 12:
-    //                 if(day + duration > 31){
-    //                     month = month + 1
-    //                     day = (day + duration) - 31
-                        
-    //                 }
-    //                 else {
-    //                     day = day + duration
-    //                 }
-                  
-    //             break;
-
-    //             case 2:
-    //             if(day + duration > 28){
-    //                 month = month + 1
-    //                 day = (day + duration) - 28
-             
-    //             }
-    //             break;
-
-    //             case 4:
-    //             case 6:
-    //             case 9:
-    //             case 11:
-    //                 if( day + duration > 30){
-    //                     month = month + 1
-    //                     day = (day + duration) - 30
-    //                 }
-
-    //         }
-    //         if (month > 12){
-    //             year = year + (month - 12)
-    //         }
-
-    //         if (day < 10 ){
-    //             day = `0${day}`
-    //         }
-    //         if (month < 10) {
-    //             month = `0${month}`
-    //         }
-    //         return  `${day}-${month}-${year}`
-
-           
-    //     }
-     
-    // }
-    // calculateEndDate();
+        history.push('/specificadventure')
+    }
 
     return(
   
@@ -139,7 +77,7 @@ const AllAdventure=()=>{
 
             {adventures.map((adventure, index)=> {
                   
-              return ( <AdventureWrapper key = {adventure.adventureName + index}>
+              return ( <AdventureWrapper key = {adventure.adventureName + index} onClick= {goToSpecificAdventure}>
                     <InfoText> { adventure.adventureName } </InfoText>
               
 

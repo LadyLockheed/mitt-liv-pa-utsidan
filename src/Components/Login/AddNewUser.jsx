@@ -2,12 +2,13 @@ import { useState } from 'react'
 import arrowBackwardIcon from '../../Assets/backarrow.svg'
 import FrostedForm from './FrostedForm'
 import { allUsersState } from '../Shared/GlobalStates'
-import { useRecoilState } from 'recoil'
+import { useRecoilState} from 'recoil'
+import { useHistory } from 'react-router-dom'
 
-
-const AddNewUser = (props) =>{
-
-    const { setDisplayLogin } = props;
+const AddNewUser = () =>{
+   
+    
+    let history = useHistory();
     const [ allUsers, setAllUsers ] = useRecoilState(allUsersState)
 
     const [newUserName, setNewUserName] = useState('')
@@ -74,7 +75,7 @@ const AddNewUser = (props) =>{
             //? ev om jag tar bort startpage och låter login hämta alla users och sen
             //? använder routing för att hoppa fram och tillbaka.
             setAllUsers([...allUsers, newUser])
-            setDisplayLogin(true);
+            history.push('/')
     
         }
         else{
@@ -83,9 +84,35 @@ const AddNewUser = (props) =>{
           
             return
         }
-        
-       
+         
     }
+//ska skapa funmtion här för att posta new user
+
+    // async function addHamster(newHamster) {
+    //     try {
+    //         const response = await fetch('/api/addhamster', {
+    //             headers: {
+    //                 'Accept': 'application/json',
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             method: 'POST',
+    //             body: JSON.stringify(newHamster)
+    //         });
+
+    //         const text = await response.text();
+    //         // const data = JSON.parse(text); 
+    //         let dataHamster = JSON.parse(text);
+    //         if (dataHamster.ops.length) {
+    //             setLoading(false)
+    //             props.setDisplayForm(false)
+    //         }
+
+    //     } catch (error) {
+    //         console.log(' addhamster: something went wrong when adding hamster: ', error)
+    //     }
+    // }
+
+
     return(
 
         <FrostedForm
@@ -109,8 +136,9 @@ const AddNewUser = (props) =>{
 
             arrowIcon = { arrowBackwardIcon }
             positionArrowIconOnRight= {true}
-            setDisplayLogin = {() => setDisplayLogin(true)}
-            handleSubmit = {handleSubmit}
+            goToPage = {() => history.push('./')}
+            handleSubmit = { handleSubmit }
+            // disableButton = {}
     />
     )
 

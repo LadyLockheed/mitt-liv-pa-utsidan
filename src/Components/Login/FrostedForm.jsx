@@ -168,8 +168,7 @@ const InvisibleProblemFixer = styled.div`
 
 const FrostedStartSquare = (props) => {
 
-
- const { headline, topLabel, bottomLabel, topInputValue, topInputSetValue, topInputValidation, bottomInputValidation, topInputValidationMessage, bottomInputValidationMessage, handleSubmit, topButtonText, bottomButtonText, arrowIcon, positionArrowIconOnRight, bottomInputValue, bottomInputSetValue, setDisplayLogin, typeOnBottomInputfield } = props
+ const { headline, topLabel, bottomLabel, topInputValue, topInputSetValue, topInputValidation, bottomInputValidation, topInputValidationMessage, bottomInputValidationMessage, handleSubmit, topButtonText, bottomButtonText, arrowIcon, positionArrowIconOnRight, bottomInputValue, bottomInputSetValue, goToPage, typeOnBottomInputfield, disableButton } = props
 
 
     return (
@@ -203,18 +202,22 @@ const FrostedStartSquare = (props) => {
                 displayMessage = { bottomInputValidation }> { bottomInputValidationMessage } </ValidateMessage>
 
                 <ButtonsWrapper>
-                        <TopButton onClick = { handleSubmit }>{topButtonText}</TopButton>
+                        <TopButton 
+                        disabled = { disableButton }
+                        onClick = { handleSubmit }>{topButtonText}</TopButton>
                 
-                    
-                        
                         { positionArrowIconOnRight ? 
-                            <BottomButton onClick= { setDisplayLogin }> 
-                                    <ArrowIcon src={arrowIcon}/>
+                            <BottomButton 
+                            onClick = { goToPage }
+                            disabled = { disableButton }> 
+                                    <ArrowIcon src = {arrowIcon}/>
                                     {bottomButtonText}
                             </BottomButton> :
-                            <BottomButton onClick = {setDisplayLogin}> 
+                            <BottomButton 
+                            onClick = { goToPage }
+                            disabled = { disableButton }> 
                                 {bottomButtonText} 
-                                <ArrowIcon src={arrowIcon}/>
+                                <ArrowIcon src = {arrowIcon}/>
                             </BottomButton>
                          }
      

@@ -19,7 +19,9 @@ import imagePinkField from '../Assets/DSC00009.JPG'
 
 //general components
 import Header from './Header';
-import StartPage from './Login/index'
+import Login from './Login/Login'
+import AddNewUser from './Login/AddNewUser'
+// import LoginTest from './Login/Login'
 
 //Equipment components
 
@@ -30,7 +32,6 @@ import AddEquipment from './Equipment/AddEquipment'
 import AllAdventures from './Adventure/AllAdventures'
 import AddAdventure from './Adventure/AddAdventure/AddAdventure'
 import SpecificAdventure from './Adventure/SpecificAdventure'
-
 
 
 
@@ -51,6 +52,10 @@ const MyApp = styled.div`
 const Application=()=>{
 
     const isAuthenticated = useRecoilValue(isAuthenticatedState);
+    // console.log(isAuthenticated)
+
+
+    
   
     return(
         <MyApp isAuthenticated={isAuthenticated}>
@@ -60,28 +65,29 @@ const Application=()=>{
             <Switch>
                 {!isAuthenticated && 
                     <>
-                        {/* <Route path='/addnewuser'>
+                        <Route path='/addnewuser'>
+                            {/* {!isAuthenticated ? <Redirect to="/"/> :  <AddNewUser/> } */}
                             <AddNewUser/>
                         </Route>
                         <Route exact={true} path='/'>
                             <Login/>
-                        </Route> */}
-
-                        {/* <Route path='/addnewuser'>
-                            <AddNewUser/>
-                        </Route> */}
-                        <Route exact={true} path='/'>
-                            <StartPage/>
                         </Route>
+
+                   
                     </>
                 }
-            
+
+
+
+                {/* <Route path='/allequipment'>
+                            {!isAuthenticated ? <Redirect to="/"/> :  <AllEquipment/> }
+                </Route> */}
                 <ProtectedRoute path="/allequipment" component={AllEquipment}/>
                 <ProtectedRoute path="/packinglists" component={PackingLists}/>
                 <ProtectedRoute path="/addequipment" component={AddEquipment}/>
                 <ProtectedRoute path="/alladventures" component={AllAdventures}/>
                 <ProtectedRoute path="/addadventure" component={AddAdventure}/>
-                <ProtectedRoute path="/specifikadventure" component={SpecificAdventure}/>
+                <ProtectedRoute path="/specificadventure" component={SpecificAdventure}/>
                
              
    
@@ -93,3 +99,6 @@ const Application=()=>{
 }
 
 export default Application
+// {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />}
+// </Route>
+// to: string
