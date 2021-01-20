@@ -11,31 +11,30 @@ const url = 'mongodb+srv://MyLifeOnTheOutside:MyL1f3OnTh3Outs1d3@karinfrontend.f
 //eventuellt egen collection för packinglists
  
 function get(filter, collection, callback){
- 
-    // console.log(collection)
-MongoClient.connect( url, { useUnifiedTopology : true }, async (error, client)=>{ 
+    
+    MongoClient.connect( url, { useUnifiedTopology : true }, async (error, client)=>{ 
 
-    if(error){
-        callback('cant connect to database', error.message)
-        console.log(error)
-        return;
-    }
+        if(error){
+            callback('cant connect to database', error.message)
+            console.log(error)
+            return;
+        }
 
-    const theCollection = client.db(dbName).collection(collection); 
+        const theCollection = client.db(dbName).collection(collection); 
 
-    try{
-        const cursor = theCollection.find(filter);
-        const array = await cursor.toArray();
-        callback(array);
+        try{
+            const cursor = theCollection.find(filter);
+            const array = await cursor.toArray();
+            callback(array);
 
-    } catch(error){
-        console.log('Fel query, error: ', error.message);
-        callback('Fel query'); 
+        } catch(error){
+            console.log('Fel query, error: ', error.message);
+            callback('Fel query'); 
 
-    } finally{
-        client.close();
-    }
-})
+        } finally{
+            client.close();
+        }
+    })
 }
 
 

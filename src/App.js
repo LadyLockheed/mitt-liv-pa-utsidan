@@ -1,5 +1,5 @@
 import Application from './Components/Application'
-import {BrowserRouter as Router} from 'react-router-dom';
+import { BrowserRouter as Router} from 'react-router-dom';
 import { RecoilRoot } from "recoil";
 import { ThemeProvider } from 'styled-components';
 import { theme } from './Components/Shared/ButtonsAndSuch';
@@ -20,9 +20,6 @@ function App() {
       </Router>
   </RecoilRoot>
 
-
-    
-    
   );
 }
 

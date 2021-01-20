@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { isAuthenticatedState } from './GlobalStates.jsx';
@@ -15,7 +14,7 @@ const ProtectedRoute = (props) => {
         return isAuthenticated ? (
             <Component />
         ) : (
-            <Redirect to = {{ pathname: '/' }} />
+            <Redirect to = '/' />
         );
     
 }

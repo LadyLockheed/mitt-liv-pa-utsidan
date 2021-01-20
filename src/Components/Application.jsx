@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import axios from 'axios'
 
 //global states
 import { isAuthenticatedState} from './Shared/GlobalStates';
@@ -21,10 +22,8 @@ import imagePinkField from '../Assets/DSC00009.JPG'
 import Header from './Header';
 import Login from './Login/Login'
 import AddNewUser from './Login/AddNewUser'
-// import LoginTest from './Login/Login'
 
 //Equipment components
-
 import AllEquipment from './Equipment/AllEquipment'
 import PackingLists from './Equipment/PackingLists'
 import AddEquipment from './Equipment/AddEquipment'
@@ -32,6 +31,10 @@ import AddEquipment from './Equipment/AddEquipment'
 import AllAdventures from './Adventure/AllAdventures'
 import AddAdventure from './Adventure/AddAdventure/AddAdventure'
 import SpecificAdventure from './Adventure/SpecificAdventure'
+
+//gör så att alla request kommer skicka med kakor
+//kakorna behövs för sessions
+axios.defaults.withCredentials = true
 
 
 
@@ -47,24 +50,20 @@ const MyApp = styled.div`
     background-size: cover;
     background-attachment: fixed;
 
-` ;
+`;
 
 const Application=()=>{
 
     const isAuthenticated = useRecoilValue(isAuthenticatedState);
     // console.log(isAuthenticated)
 
-
-    
-  
     return(
         <MyApp isAuthenticated={isAuthenticated}>
         
             {isAuthenticated && <Header/>} 
       
             <Switch>
-                {!isAuthenticated && 
-                    <>
+             
                         <Route path='/addnewuser'>
                             {/* {!isAuthenticated ? <Redirect to="/"/> :  <AddNewUser/> } */}
                             <AddNewUser/>
@@ -73,16 +72,13 @@ const Application=()=>{
                             <Login/>
                         </Route>
 
-                   
-                    </>
-                }
+                
+                <Route path='/allequipment'>
+                    {!isAuthenticated ? <Redirect to="/"/> :  <AllEquipment/> }
+                </Route>
 
 
-
-                {/* <Route path='/allequipment'>
-                            {!isAuthenticated ? <Redirect to="/"/> :  <AllEquipment/> }
-                </Route> */}
-                <ProtectedRoute path="/allequipment" component={AllEquipment}/>
+                {/* <ProtectedRoute path="/allequipment" component={AllEquipment}/> */}
                 <ProtectedRoute path="/packinglists" component={PackingLists}/>
                 <ProtectedRoute path="/addequipment" component={AddEquipment}/>
                 <ProtectedRoute path="/alladventures" component={AllAdventures}/>

@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const bodyParser = require('body-parser');
 const path = require('path')
 // const { cloudinary } = require('./cloudinary')
@@ -9,32 +11,65 @@ const { getAllEquipment, getUser } = require('./database.js');
 
 const port = 1337; // Port number
 
+// middlewares
+
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json({limit: '2mb'}));
+
+app.use(session({
+    resave: false,
+    saveUninitialized: false,
+    secret: 'jlfdsfjmjericroe854958409!!',
+    store: new MongoStore({ url: 'mongodb+srv://MyLifeOnTheOutside:MyL1f3OnTh3Outs1d3@karinfrontend.foi9f.gcp.mongodb.net/MyLifeOnTheOutside?retryWrites=true&w=majority' })
+}));
+
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
     next();
 })
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json({limit: '2mb'}));
-app.use(cors());
 
-// middlewares
 app.use(express.static(path.join(__dirname, '/../build')))
- 
 
-// app.get('/api/allUsers', (req, res) => {
-//     let collection = 'users'
-//     getAllUsers(collection,  dataOrError => {
-//         res.send(dataOrError);
-//     })
-// })
- 
+//förhindrar att man kan försöka skicka apirequest utan att vara inloggad
+app.use((req, res, next) => {
+    const url = req.url
+   
+    //släpper igenom isAuthenticated anropet
+   if(url.startsWith('/api') && url != '/api/authenticateUser') {
+
+        if (!req.session.userId){
+            res.status(401).end('Sorry, we cannot do that!')
+            return
+        } 
+    }
+   next()
+})
+
+//hämta bara de med rätt sessionId
 app.get('/api/allEquipment', (req, res) => {
 
     const collection = 'equipment'
+    // const userId = req.session.userId
+    // skocka med userId som props, sök efter objekt med rätt UserId
     getAllEquipment(collection, dataOrError => {
         res.send(dataOrError);
     })
 })
+
+
+// add new equipment, lägger till session id
+// app.post('/api/newEquipment', (req, res)=>{
+//     const collection = 'equipment'
+//     const newEquipment = {...req.body.equipment, userId:req.session.userId}
+
+//     addNewEquipment( newEquipment, collection, dataOrError =>{
+//         res.send(dataOrError)
+//     })
+// })
+
+// app.post(createuser)
+// hacka password här
 
 app.post('/api/authenticateUser', (req, res) => {
 
@@ -44,7 +79,6 @@ app.post('/api/authenticateUser', (req, res) => {
     getUser(userName, collection, dataOrError => {
       
         if(!dataOrError){
-            console.log('hittade ingen med det namnet')
            res.send(null)
         }
         else{
@@ -52,16 +86,19 @@ app.post('/api/authenticateUser', (req, res) => {
             let user = dataOrError[0]
             //fixa hash för password
             if ( user.password === password){
-                console.log('lösenordet stämmer')
+             
+                //sätt user-id här i sessionen
+                req.session.userId = user._id
+                console.log('req.session: ', req.session)
                 const response = {
                     userName: user.userName,
                     id: user._id
                 }
-                console.log('response: ', response)
+               
                 res.send(response)
             }
             else {
-                console.log('lösenordet stämmer inte')
+               
                 res.send(null)
             }
 
@@ -70,6 +107,13 @@ app.post('/api/authenticateUser', (req, res) => {
     })
 })
 
+app.post('/api/logOutSession', (req,res)=>{
+
+    req.session.destroy(() => {
+        res.send('utloggad')
+    })
+
+})
 
 app.listen(port, () => {
    console.log('Web server listening on port ' + port)

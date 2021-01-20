@@ -43,7 +43,7 @@ const FilterWrapper = styled.div`
     border-radius: 3px;
     height: ${props => props.toggleMenu ? 'auto' : '0'};
     width: ${props => props.toggleMenu ? '60%' : '0'};
-    transition: width .5s;
+    transition: width .5s ease-in-out;
     position: absolute;
    
 `;

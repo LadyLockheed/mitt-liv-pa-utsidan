@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { useSetRecoilState } from "recoil";
 import { isAuthenticatedState } from '../Shared/GlobalStates'
 import LogOutIcon from '../../Assets/logouticon.svg'
+import axios from 'axios'
 
 
 const StyledMenu = styled.nav`
@@ -86,9 +87,23 @@ const MenuFromSide = ({ isOpen, setIsOpen }) => {
  
     const history=useHistory()
     const logOut=()=>{
+
+        logOutSession();
         setIsAuthenticatedState(false);
         history.push('/')
     }
+
+    async function logOutSession() {
+
+        try {
+            const response = await axios.post('/api/logOutSession')
+            console.log('log out response: ', response)
+        }
+        catch (err) {
+            console.log('Meddelande från frontend: nånting gick fel', err) 
+        }
+    };
+
 
     return (
 
