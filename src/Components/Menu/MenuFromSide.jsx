@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link, useHistory } from 'react-router-dom'
-import { useSetRecoilState } from "recoil";
-import { isAuthenticatedState } from '../Shared/GlobalStates'
+import { useSetRecoilState, useRecoilValue } from "recoil";
+import { isAuthenticatedState, currentUserState } from '../Shared/GlobalStates'
 import LogOutIcon from '../../Assets/logouticon.svg'
+import userIcon from '../../Assets/userIcon.svg'
 import axios from 'axios'
 
 
@@ -48,43 +49,47 @@ const LinkStyled = styled(Link)`
 
 `;
 const LogOutWrapper = styled.div `
-   ${'' /* justify-self:flex-end; */}
-    display:flex;
-    justify-content:center;
-    align-items: center;
-    cursor:pointer;
-    ${'' /* justify-self:flex-end; */}
     margin-top:2rem;
  
-`
+`;
+const InnerWrapper = styled.div `
+    display:flex;
+    align-items: center;
 
+`;
+const UserName = styled.p `
+    margin-left: 1rem;
+
+`;
+
+const UserIcon = styled.img`
+    height: 1.5rem;
+    width: auto;
+
+`;
 const LogOutButton = styled.span`
    padding:1rem;
    transition: color 0.3s linear;
 
    &:hover {
       color:${props => props.theme.white}; 
+      cursor:pointer;
     }
 
-
-  
- 
 `
-
 const LogoutIcon = styled.img`
     height:1.5rem;
     width:auto;
-   
+    cursor: pointer;
+
 `;
-
-
 
 const MenuFromSide = ({ isOpen, setIsOpen }) => {
 
-    
 
     const setIsAuthenticatedState = useSetRecoilState(isAuthenticatedState)
- 
+    const currentUser = useRecoilValue(currentUserState)
+   
     const history=useHistory()
     const logOut=()=>{
 
@@ -122,14 +127,21 @@ const MenuFromSide = ({ isOpen, setIsOpen }) => {
 
             <LinkStyled to='/addadventure' onClick={()=>setIsOpen(!isOpen)}>Lägg till <br/> nytt äventyr</LinkStyled>
 
-            {/* <LinkStyled to='/specificadventure' onClick={()=>setIsOpen(!isOpen)}>Äventyret</LinkStyled> */}
         </LinksWrapper>
 
        
         
-        <LogOutWrapper onClick={logOut}>
-            <LogoutIcon src={LogOutIcon}/>
-            <LogOutButton >Logga ut</LogOutButton>
+        <LogOutWrapper >
+
+            <InnerWrapper>
+                <UserIcon src= {userIcon}/>
+                <UserName> {currentUser.userName} </UserName>
+            </InnerWrapper>
+            <InnerWrapper onClick = {logOut}>
+                <LogoutIcon src={LogOutIcon}/>
+                <LogOutButton >Logga ut</LogOutButton>
+            </InnerWrapper>
+         
 
         </LogOutWrapper>
         

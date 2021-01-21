@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch} from 'react-router-dom';
 import axios from 'axios'
 
 //global states
@@ -63,31 +63,21 @@ const Application=()=>{
             {isAuthenticated && <Header/>} 
       
             <Switch>
-             
-                        <Route path='/addnewuser'>
-                            {/* {!isAuthenticated ? <Redirect to="/"/> :  <AddNewUser/> } */}
-                            <AddNewUser/>
-                        </Route>
-                        <Route exact={true} path='/'>
-                            <Login/>
-                        </Route>
-
-                
-                <Route path='/allequipment'>
-                    {!isAuthenticated ? <Redirect to="/"/> :  <AllEquipment/> }
+          
+                <Route path='/addnewuser'>
+                    <AddNewUser/>
                 </Route>
-
-
-                {/* <ProtectedRoute path="/allequipment" component={AllEquipment}/> */}
+                <Route exact={true} path='/'>
+                    <Login/>
+                </Route>
+           
+                <ProtectedRoute path="/allequipment" component={AllEquipment}/>
                 <ProtectedRoute path="/packinglists" component={PackingLists}/>
                 <ProtectedRoute path="/addequipment" component={AddEquipment}/>
                 <ProtectedRoute path="/alladventures" component={AllAdventures}/>
                 <ProtectedRoute path="/addadventure" component={AddAdventure}/>
                 <ProtectedRoute path="/specificadventure" component={SpecificAdventure}/>
                
-             
-   
-          
             </Switch>
         </MyApp>
         
@@ -95,6 +85,3 @@ const Application=()=>{
 }
 
 export default Application
-// {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />}
-// </Route>
-// to: string

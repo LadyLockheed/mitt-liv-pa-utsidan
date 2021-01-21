@@ -22,12 +22,10 @@ export const SecondaryButton = styled.button`
     cursor: pointer;
     padding: 0.5rem 1.4rem;
     font-size: 1rem;
-   
-    
+
 `
 
 export const Label = styled.label`
- 
     font-weight: bold;
     display: block;
     text-align: left;

@@ -138,11 +138,7 @@ const TrachcanIcon = styled.img`
     
 `;
 
-
-
-
 const Accordion=({equipmentList})=>{
-
 
     const [expandedItems, setExpandedItems] = useState([]);
     const [displayModal, setDisplayModal] = useState(false)
@@ -165,12 +161,10 @@ const Accordion=({equipmentList})=>{
             } else {
                 return {...equipment, isExpanded:!equipment.isExpanded}
             }
-                
-            
+                  
         }))
     }
 
- 
     const deleteEquipment = () =>{
         // setDisplayModal(false)
         console.log('Equipment deleted')

@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { isAuthenticatedState, currentUserState, allUsersState } from '../Shared/GlobalStates';
+import { isAuthenticatedState, currentUserState } from '../Shared/GlobalStates';
 import { useSetRecoilState } from "recoil";
 import arrowForwardIcon from '../../Assets/arrowForward.svg'
 import FrostedForm from './FrostedForm'
+
 import axios from 'axios'
 
 
@@ -15,7 +16,7 @@ const Login = () => {
                 
             const response = await axios.post("/api/authenticateUser", {userName: user, password: password})
               
-                // console.log('response.data: ',response.data)
+                console.log('response.data: ',response.data)
             if (!response.data) {
                
                 setValidateUser(true)
@@ -42,13 +43,12 @@ const Login = () => {
     const setIsAuthenticatedState = useSetRecoilState(isAuthenticatedState)
     const setCurrentUser = useSetRecoilState(currentUserState)
     const [isLoggingIn, setIsLoggingIn] = useState(false)
-
+    
     const history = useHistory();
 
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
 
-    
     const [validateUser, setValidateUser] = useState(false)
     const [validatePassword, setValidatePassword] = useState(false)
     const [validateUserMessage, setValidateUserMessage] = useState('x')
@@ -84,8 +84,6 @@ const Login = () => {
     
     }
 
-
-
     const handleSubmit = () => {
         //resetar så att validering kan börja om ifall man enbart fyllt i vissa fält rätt
         resetValidation();
@@ -94,18 +92,17 @@ const Login = () => {
 
     }
 
-
-
     return (
+    
 
         <FrostedForm
             headline={'Mitt liv på utsidan'}
 
             topLabel={'Login'}
-            topInputValue={user}
-            topInputSetValue={setUser}
-            topInputValidation={validateUser}
-            topInputValidationMessage={validateUserMessage}
+            topInputValue = { user }
+            topInputSetValue = { setUser }
+            topInputValidation = {validateUser}
+            topInputValidationMessage = {validateUserMessage}
 
             bottomLabel={'Lösenord'}
             bottomInputValue={password}
@@ -116,17 +113,18 @@ const Login = () => {
 
             topButtonText={'Logga in'}
             bottomButtonText={'Jag är ny'}
-            disableButton = { isLoggingIn }
+            isLoggingIn = { isLoggingIn }
 
             arrowIcon={arrowForwardIcon}
             positionArrowIconOnRight={false}
             goToPage={() => history.push('/addnewuser')}
             handleSubmit={handleSubmit}
-           
-
+            
         />
-
+    
     )
+
+    
 
 
 }

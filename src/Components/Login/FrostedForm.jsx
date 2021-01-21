@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import mainLogo from '../../Assets/mainLogo.svg'
 import { Button, InputField, SecondaryButton, ValidateMessage } from '../Shared/ButtonsAndSuch'
+import spinnerDayNight from '../../Assets/animatedDayNight.gif'
 
 const Container = styled.div`
     
@@ -46,13 +47,32 @@ const Container = styled.div`
   
     @media screen and (min-width: 1024px) {
        width: 50%;
-      
        height: 50vh;
        
     }
 
 `;
+const LoadingWrapper = styled.div`
+  
+    display: grid;
+    justify-content: center;
 
+    @media screen and (min-width: 600px) {
+        grid-column: 1/3;
+  
+    }
+ 
+`
+
+const IsLoadingSpinner = styled.img`
+    height:12rem;
+    width:auto;
+
+`;
+const LoadingText = styled.h3`
+    text-align:center;
+
+`
 const H1 = styled.h1` 
     color: ${props => props.theme.green};
     font-weight: 300;
@@ -139,7 +159,6 @@ const ArrowIcon = styled.img`
 
 `;
 
-
 const Logo = styled.img` 
     width: 4rem;
     height: auto;
@@ -168,64 +187,73 @@ const InvisibleProblemFixer = styled.div`
 
 const FrostedStartSquare = (props) => {
 
- const { headline, topLabel, bottomLabel, topInputValue, topInputSetValue, topInputValidation, bottomInputValidation, topInputValidationMessage, bottomInputValidationMessage, handleSubmit, topButtonText, bottomButtonText, arrowIcon, positionArrowIconOnRight, bottomInputValue, bottomInputSetValue, goToPage, typeOnBottomInputfield, disableButton } = props
+    const { headline, topLabel, bottomLabel, topInputValue, topInputSetValue, topInputValidation, bottomInputValidation, topInputValidationMessage, bottomInputValidationMessage, handleSubmit, topButtonText, bottomButtonText, arrowIcon, positionArrowIconOnRight, bottomInputValue, bottomInputSetValue, goToPage, typeOnBottomInputfield, isLoggingIn } = props
 
 
     return (
-    <>
-        <InvisibleProblemFixer></InvisibleProblemFixer>
-        <Container>
+        <>
+            <InvisibleProblemFixer></InvisibleProblemFixer>
+            <Container>
+                {!isLoggingIn ?
+                    <LoadingWrapper>
+                        <LoadingText>...Laddar</LoadingText>
+                        <IsLoadingSpinner src={spinnerDayNight} alt="loading..." />
+                    </LoadingWrapper>
 
-            <H1> { headline } </H1>
-            
-            <InputSection>
-                <Label htmlFor = { topLabel }>{topLabel}</Label>
-                <Input 
-                type='text'
-                id = { topLabel }
-                value = { topInputValue }
-                onChange = {event=>topInputSetValue(event.target.value)}
-                isValid = {topInputValidation}    
-                />
-                <ValidateMessage 
-                displayMessage = {topInputValidation }> {topInputValidationMessage} </ValidateMessage>
+                    :
 
-                <Label htmlFor =  { bottomLabel } > { bottomLabel } </Label>
-                <Input 
-                type = {typeOnBottomInputfield}
-                id = { bottomLabel }
-                value = { bottomInputValue }
-                onChange = { event=>bottomInputSetValue(event.target.value) }
-                isValid = { bottomInputValidation }
-                />
-                <ValidateMessage 
-                displayMessage = { bottomInputValidation }> { bottomInputValidationMessage } </ValidateMessage>
+                    <>
+                        <H1> {headline} </H1>
 
-                <ButtonsWrapper>
-                        <TopButton 
-                        disabled = { disableButton }
-                        onClick = { handleSubmit }>{topButtonText}</TopButton>
-                
-                        { positionArrowIconOnRight ? 
-                            <BottomButton 
-                            onClick = { goToPage }
-                            disabled = { disableButton }> 
-                                    <ArrowIcon src = {arrowIcon}/>
-                                    {bottomButtonText}
-                            </BottomButton> :
-                            <BottomButton 
-                            onClick = { goToPage }
-                            disabled = { disableButton }> 
-                                {bottomButtonText} 
-                                <ArrowIcon src = {arrowIcon}/>
-                            </BottomButton>
-                         }
-     
-                </ButtonsWrapper>
-            </InputSection>
-            <Logo src={mainLogo}></Logo>
+                        <InputSection>
+                            <Label htmlFor={topLabel}>{topLabel}</Label>
+                            <Input
+                                type='text'
+                                id={topLabel}
+                                value={topInputValue}
+                                onChange={event => topInputSetValue(event.target.value)}
+                                isValid={topInputValidation}
+                            />
+                            <ValidateMessage
+                                displayMessage={topInputValidation}> {topInputValidationMessage} </ValidateMessage>
 
-        </Container>
+                            <Label htmlFor={bottomLabel} > {bottomLabel} </Label>
+                            <Input
+                                type={typeOnBottomInputfield}
+                                id={bottomLabel}
+                                value={bottomInputValue}
+                                onChange={event => bottomInputSetValue(event.target.value)}
+                                isValid={bottomInputValidation}
+                            />
+                            <ValidateMessage
+                                displayMessage={bottomInputValidation}> {bottomInputValidationMessage} </ValidateMessage>
+
+                            <ButtonsWrapper>
+                                <TopButton
+                                    disabled={isLoggingIn}
+                                    onClick={handleSubmit}>{topButtonText}</TopButton>
+
+                                {positionArrowIconOnRight ?
+                                    <BottomButton
+                                        onClick={goToPage}
+                                        disabled={isLoggingIn}>
+                                        <ArrowIcon src={arrowIcon} />
+                                        {bottomButtonText}
+                                    </BottomButton> :
+                                    <BottomButton
+                                        onClick={goToPage}
+                                        disabled={isLoggingIn}>
+                                        {bottomButtonText}
+                                        <ArrowIcon src={arrowIcon} />
+                                    </BottomButton>
+                                }
+
+                            </ButtonsWrapper>
+                        </InputSection>
+                        <Logo src={mainLogo}></Logo>
+                    </>
+                }
+            </Container>
         </>
 
     )
