@@ -1,15 +1,19 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import arrowBackwardIcon from '../../Assets/backarrow.svg'
 import FrostedForm from './FrostedForm'
-import { allUsersState } from '../Shared/GlobalStates'
-import { useRecoilState} from 'recoil'
+import axios from 'axios'
 import { useHistory } from 'react-router-dom'
+import { isAuthenticatedState, currentUserState } from '../Shared/GlobalStates';
+import { useSetRecoilState } from "recoil";
 
 const AddNewUser = () =>{
    
     
-    let history = useHistory();
-    const [ allUsers, setAllUsers ] = useRecoilState(allUsersState)
+    const history = useHistory();
+
+    const setIsAuthenticatedState = useSetRecoilState(isAuthenticatedState)
+    const setCurrentUser = useSetRecoilState(currentUserState)
+    const [isAddingNewUser, setIsAddingNewUser] = useState(false)
 
     const [newUserName, setNewUserName] = useState('')
     const [newPassword, setNewPassword] = useState('')
@@ -19,46 +23,75 @@ const AddNewUser = () =>{
     const [validateNewUserMessage, setValidateNewUserMessage] = useState('x')
     const [validateNewPasswordMessage, setValidateNewPasswordMessage] = useState('x')
 
-    let newUser = {
-        userName: newUserName,
-        password:newPassword
+    async function addNewUser() {
+
+        try {
+                
+            const responseNewUser = await axios.post("/api/addNewUser", {newUserName: newUserName, newPassword: newPassword})
+            console.log('response.data i frontend addnewuser: ',responseNewUser)
+            console.log('response.data i frontend addnewuser: ',responseNewUser.data)
+
+           if (!responseNewUser.data){
+               setValidateNewUser(true)
+               setValidateNewUserMessage('Jusernäjm ålrädy täjken')
+           }
+           else{
+               console.log('användaren har lagts till')
+            //    setValidateNewUser(false)
+            //    setAddUserButtonText('Success! En till?')
+            //    setNewUserName('')
+            //    setNewPassword('')
+               const responseLogin = await axios.post("/api/authenticateUser", {userName: newUserName, password: newPassword})
+               if (!responseLogin.data){
+                   console.log('nånting gick fel vid inloggning')
+
+               }
+               else{
+                setCurrentUser(responseLogin.data)
+                setIsAuthenticatedState(true)
+                localStorage.setItem('userName',responseLogin.data.userName)
+            
+                history.push('/allequipment')
+               }
+
+           }
+            setIsAddingNewUser(false)
+
+        }
+        catch (err) {
+            console.log('Something went wrong', err)
+
+        }
+
     }
 
     const resetValidation = () => {
        
         setValidateNewUser(false); 
-        setValidateNewPassword(false)
-        
+        setValidateNewPassword(false) 
     }
-    let userAlreadyExist = allUsers.find(oneUser => oneUser.userName === newUserName)
-    let passwordAlreadyExist = allUsers.find(oneUser => oneUser.password === newPassword)
-    const handleValidation = () => {
+
+    const handleAddNewuser = () => {
        
-        if(newUserName.length < 1 || newPassword.length < 1 || userAlreadyExist || passwordAlreadyExist ){
+        if(newUserName.length < 1 || newPassword.length < 1 ){
 
             if( newUserName.length < 1 ) {
                 setValidateNewUser(true); 
                 setValidateNewUserMessage('Glöm inte att välja fancy namn')
             }
-            else if ( userAlreadyExist ) {
-                setValidateNewUser(true)
-                setValidateNewUserMessage('Användarnamnet finns redan')
-            }
+
             if( newPassword.length < 1 ) { 
                 setValidateNewPassword(true) 
+                
                 setValidateNewPasswordMessage('Glöm inte välja klurigt lösen')
             }
-            else if ( passwordAlreadyExist ) {
-                setValidateNewPassword(true)
-                setValidateNewPasswordMessage('Välj annat lösenord')
-            }
-            return false
+
+            return 
         }
-        else {
-            console.log('allt godkänt')
-            return true
-        }
-       
+    
+       setIsAddingNewUser(true)
+       addNewUser();
+
 
     }
 
@@ -67,50 +100,9 @@ const AddNewUser = () =>{
        
         resetValidation();
 
-       let allIsValid =  handleValidation();
-
-        if (allIsValid){
-            //gör en post här och ta bort setAllUsers (det görs i index.js)
-            //? hur gör jag så att index.js hämtar alla users igen, login måste veta om det finns nån ny. 
-            //? ev om jag tar bort startpage och låter login hämta alla users och sen
-            //? använder routing för att hoppa fram och tillbaka.
-            setAllUsers([...allUsers, newUser])
-            history.push('/')
-    
-        }
-        else{
-
-            console.log('inloggningen misslyckades')
-          
-            return
-        }
+        handleAddNewuser();
          
     }
-//ska skapa funmtion här för att posta new user
-
-    // async function addHamster(newHamster) {
-    //     try {
-    //         const response = await fetch('/api/addhamster', {
-    //             headers: {
-    //                 'Accept': 'application/json',
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             method: 'POST',
-    //             body: JSON.stringify(newHamster)
-    //         });
-
-    //         const text = await response.text();
-    //         // const data = JSON.parse(text); 
-    //         let dataHamster = JSON.parse(text);
-    //         if (dataHamster.ops.length) {
-    //             setLoading(false)
-    //             props.setDisplayForm(false)
-    //         }
-
-    //     } catch (error) {
-    //         console.log(' addhamster: something went wrong when adding hamster: ', error)
-    //     }
-    // }
 
 
     return(
@@ -124,21 +116,22 @@ const AddNewUser = () =>{
             topInputValidation = { validateNewUser }
             topInputValidationMessage = { validateNewUserMessage }
 
-            bottomLabel = {'Väl lösenord'}
+            bottomLabel = {'Välj lösenord'}
             bottomInputValue = { newPassword }
             bottomInputSetValue = { setNewPassword  }
             bottomInputValidation = {validateNewPassword}
             bottomInputValidationMessage  = { validateNewPasswordMessage }
             typeOnBottomInputfield = {'text'}
 
-            topButtonText = {'Skapa'}
+            topButtonText = {'Lägg till'}
             bottomButtonText = {'Gå tillbaka'}
+            isLoading = { isAddingNewUser }
 
             arrowIcon = { arrowBackwardIcon }
             positionArrowIconOnRight= {true}
             goToPage = {() => history.push('./')}
             handleSubmit = { handleSubmit }
-            // disableButton = {}
+            
     />
     )
 

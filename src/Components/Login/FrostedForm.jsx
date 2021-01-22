@@ -187,17 +187,18 @@ const InvisibleProblemFixer = styled.div`
 
 const FrostedStartSquare = (props) => {
 
-    const { headline, topLabel, bottomLabel, topInputValue, topInputSetValue, topInputValidation, bottomInputValidation, topInputValidationMessage, bottomInputValidationMessage, handleSubmit, topButtonText, bottomButtonText, arrowIcon, positionArrowIconOnRight, bottomInputValue, bottomInputSetValue, goToPage, typeOnBottomInputfield, isLoggingIn } = props
+    const { headline, topLabel, bottomLabel, topInputValue, topInputSetValue, topInputValidation, bottomInputValidation, topInputValidationMessage, bottomInputValidationMessage, handleSubmit, topButtonText, bottomButtonText, arrowIcon, positionArrowIconOnRight, bottomInputValue, bottomInputSetValue, goToPage, typeOnBottomInputfield, isLoading } = props
 
 
     return (
         <>
             <InvisibleProblemFixer></InvisibleProblemFixer>
             <Container>
-                {!isLoggingIn ?
+                {isLoading ?
                     <LoadingWrapper>
-                        <LoadingText>...Laddar</LoadingText>
+                       
                         <IsLoadingSpinner src={spinnerDayNight} alt="loading..." />
+                        <LoadingText>...jobbar och sliter</LoadingText>
                     </LoadingWrapper>
 
                     :
@@ -230,19 +231,19 @@ const FrostedStartSquare = (props) => {
 
                             <ButtonsWrapper>
                                 <TopButton
-                                    disabled={isLoggingIn}
+                                    disabled={isLoading}
                                     onClick={handleSubmit}>{topButtonText}</TopButton>
 
                                 {positionArrowIconOnRight ?
                                     <BottomButton
                                         onClick={goToPage}
-                                        disabled={isLoggingIn}>
+                                        disabled={isLoading}>
                                         <ArrowIcon src={arrowIcon} />
                                         {bottomButtonText}
                                     </BottomButton> :
                                     <BottomButton
                                         onClick={goToPage}
-                                        disabled={isLoggingIn}>
+                                        disabled={isLoading}>
                                         {bottomButtonText}
                                         <ArrowIcon src={arrowIcon} />
                                     </BottomButton>

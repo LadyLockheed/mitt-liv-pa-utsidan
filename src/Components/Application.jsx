@@ -1,11 +1,11 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components';
-import { Route, Switch} from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import axios from 'axios'
 
 //global states
 import { isAuthenticatedState} from './Shared/GlobalStates';
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 
 //routes
 import ProtectedRoute from './Shared/ProtectedRoute'
@@ -36,8 +36,6 @@ import SpecificAdventure from './Adventure/SpecificAdventure'
 //kakorna behövs för sessions
 axios.defaults.withCredentials = true
 
-
-
 const MyApp = styled.div`
     box-sizing:border-box;
     padding: 0;
@@ -54,8 +52,26 @@ const MyApp = styled.div`
 
 const Application=()=>{
 
-    const isAuthenticated = useRecoilValue(isAuthenticatedState);
-    // console.log(isAuthenticated)
+    const [isAuthenticated, setIsAuthenticated] = useRecoilState(isAuthenticatedState);
+   
+    const history = useHistory()
+    
+    useEffect(()=>{
+        
+
+        //kollar om session finns i localstorage, om det finns är man fortfarande inloggad och behöver inte logga in igen om man laddar om sidan
+        let loggedInUser = localStorage.getItem('userName')
+        if (loggedInUser){
+        
+            setIsAuthenticated(true)
+            history.push('/allEquipment')
+ 
+        }
+        
+        return
+
+    },[history, setIsAuthenticated])
+    
 
     return(
         <MyApp isAuthenticated={isAuthenticated}>

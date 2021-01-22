@@ -9,52 +9,82 @@ const url = 'mongodb+srv://MyLifeOnTheOutside:MyL1f3OnTh3Outs1d3@karinfrontend.f
 //Equipment - namn, vikt, notes, kategori, user
 //Adventure - name, season, distance , days (dygn)/duration, user date-added, date-starting, date-ending (räkna ut med antalet dygn, behöver ej ha i databasen, kan ränka ut i frontend (se moment.js)), packinglist (array med equipment-id), notes
 //eventuellt egen collection för packinglists
- 
-function get(filter, collection, callback){
-    
-    MongoClient.connect( url, { useUnifiedTopology : true }, async (error, client)=>{ 
 
-        if(error){
-            callback('cant connect to database', error.message)
-            console.log(error)
-            return;
-        }
+async function get(filter, collection) {
 
-        const theCollection = client.db(dbName).collection(collection); 
+    let client;
+    try {
+        client = await MongoClient.connect(url, { useUnifiedTopology: true })
+    }
+    catch {
+        console.log('Could not connect to mongodb ', error.message);
+        throw new Error('Could not connect to mongodb')
+    }
 
-        try{
-            const cursor = theCollection.find(filter);
-            const array = await cursor.toArray();
-            callback(array);
+    const theCollection = client.db(dbName).collection(collection);
 
-        } catch(error){
-            console.log('Fel query, error: ', error.message);
-            callback('Fel query'); 
+    try {
+        const cursor = theCollection.find(filter);
+        const array = await cursor.toArray();
+        return array
 
-        } finally{
-            client.close();
-        }
-    })
+    } catch (error) {
+        console.log('Fel query, error: ', error.message);
+        throw new Error('Fel query')
+
+    } finally {
+        client.close();
+    }
+
 }
 
 
-function getAllEquipment (collection, callback) {
-    
-    get( {}, collection, callback)
+async function post(payload, collection) {
+  
+    let client;
+    try {
+        client = await MongoClient.connect(url, { useUnifiedTopology: true })
+    }
+    catch {
+        console.log('Could not connect to mongodb ', error.message);
+        throw new Error('Could not connect to mongodb')
+    }
+
+    const theCollection = client.db(dbName).collection(collection);
+
+    try {
+        const result = await theCollection.insertOne(payload);
+        return result.ops
+
+    } catch (error) {
+        console.log('Fel query, error: ', error.message);
+        throw new Error('Fel query')
+
+    } finally {
+        client.close();
+    }
+
 }
 
 
-// function getAllUsers (collection, callback) {
-    
-//     get({}, collection, callback )
-// }
+function getAllEquipment(collection) {
 
-function getUser (userName, collection, callback) {
-    get( {userName:userName}, collection, callback)
+    return get({}, collection)
+}
 
+
+function getUser(userName, collection) {
+    return get({ userName: userName }, collection)
+
+}
+
+function addNewUser(newUserName, newPassword, collection) {
+  
+    return post({ userName: newUserName, password: newPassword }, collection)
 }
 
 module.exports = {
     getAllEquipment,
-    getUser
+    getUser,
+    addNewUser
 }

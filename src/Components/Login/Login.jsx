@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { isAuthenticatedState, currentUserState } from '../Shared/GlobalStates';
 import { useSetRecoilState } from "recoil";
@@ -10,13 +10,27 @@ import axios from 'axios'
 
 const Login = () => {
 
-    async function authenticateUser(user) {
+    const setIsAuthenticatedState = useSetRecoilState(isAuthenticatedState)
+    const setCurrentUser = useSetRecoilState(currentUserState)
+
+    const history = useHistory();
+
+    const [isLoggingIn, setIsLoggingIn] = useState(false)
+
+    const [user, setUser] = useState('');
+    const [password, setPassword] = useState('');
+
+    const [validateUser, setValidateUser] = useState(false)
+    const [validatePassword, setValidatePassword] = useState(false)
+    const [validateUserMessage, setValidateUserMessage] = useState('x')
+    const [validatePasswordMessage, setValidatePassWordMessage] = useState('x')
+
+    async function authenticateUser() {
 
         try {
                 
             const response = await axios.post("/api/authenticateUser", {userName: user, password: password})
               
-                console.log('response.data: ',response.data)
             if (!response.data) {
                
                 setValidateUser(true)
@@ -28,41 +42,25 @@ const Login = () => {
             else {
                 setCurrentUser(response.data)
                 setIsAuthenticatedState(true)
+                localStorage.setItem('userName',response.data.userName)
+            
                 history.push('/allequipment')
             }
 
         }
         catch (err) {
             console.log('Something went wrong', err)
-
         }
 
     }
-
-
-    const setIsAuthenticatedState = useSetRecoilState(isAuthenticatedState)
-    const setCurrentUser = useSetRecoilState(currentUserState)
-    const [isLoggingIn, setIsLoggingIn] = useState(false)
-    
-    const history = useHistory();
-
-    const [user, setUser] = useState('');
-    const [password, setPassword] = useState('');
-
-    const [validateUser, setValidateUser] = useState(false)
-    const [validatePassword, setValidatePassword] = useState(false)
-    const [validateUserMessage, setValidateUserMessage] = useState('x')
-    const [validatePasswordMessage, setValidatePassWordMessage] = useState('x')
 
     const resetValidation = () => {
 
         setValidateUser(false);
         setValidatePassword(false)
-       
 
     }
 
-    
     const handleLogin = () => {
 
         if (user.length < 1 || password.length < 1) {
@@ -79,9 +77,9 @@ const Login = () => {
 
             return
         }
+
         setIsLoggingIn(true)
-        authenticateUser(user);
-    
+        authenticateUser();
     }
 
     const handleSubmit = () => {
@@ -89,7 +87,6 @@ const Login = () => {
         resetValidation();
         //kollar om allt ifyllt är valid
         handleLogin();
-
     }
 
     return (
@@ -113,7 +110,7 @@ const Login = () => {
 
             topButtonText={'Logga in'}
             bottomButtonText={'Jag är ny'}
-            isLoggingIn = { isLoggingIn }
+            isLoading = { isLoggingIn }
 
             arrowIcon={arrowForwardIcon}
             positionArrowIconOnRight={false}

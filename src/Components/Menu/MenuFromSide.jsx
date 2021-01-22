@@ -1,12 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link, useHistory } from 'react-router-dom'
-import { useSetRecoilState, useRecoilValue } from "recoil";
-import { isAuthenticatedState, currentUserState } from '../Shared/GlobalStates'
+import { Link } from 'react-router-dom'
+import { useSetRecoilState } from "recoil";
+import { isAuthenticatedState} from '../Shared/GlobalStates'
 import LogOutIcon from '../../Assets/logouticon.svg'
 import userIcon from '../../Assets/userIcon.svg'
 import axios from 'axios'
-
 
 const StyledMenu = styled.nav`
     display: flex;
@@ -20,8 +19,7 @@ const StyledMenu = styled.nav`
     top: 0;
     right: 0;
     transition: transform 0.3s ease-in-out;
-    transform: translateX(-100%);
-    transform: ${({ isOpen }) => isOpen ? 'translateX(0)' : 'translate(100%)'};
+    transform: ${({ isOpen }) => isOpen ? 'translateX(0)' : 'translateX(100%)'};
     z-index:9;
   
 `;
@@ -86,16 +84,15 @@ const LogoutIcon = styled.img`
 
 const MenuFromSide = ({ isOpen, setIsOpen }) => {
 
-
+    
     const setIsAuthenticatedState = useSetRecoilState(isAuthenticatedState)
-    const currentUser = useRecoilValue(currentUserState)
-   
-    const history=useHistory()
-    const logOut=()=>{
+    const currentUser =  localStorage.getItem('userName')
+  
+    const logOut = () => {
 
         logOutSession();
         setIsAuthenticatedState(false);
-        history.push('/')
+        localStorage.removeItem('userName');
     }
 
     async function logOutSession() {
@@ -109,11 +106,9 @@ const MenuFromSide = ({ isOpen, setIsOpen }) => {
         }
     };
 
-
     return (
 
         <StyledMenu isOpen={isOpen} >
-        {/* <p>Utrustning</p> */}
         <LinksWrapper>
             <LinkStyled to='/allequipment' onClick={()=>setIsOpen(!isOpen)}>All utrustning</LinkStyled>
 
@@ -129,13 +124,11 @@ const MenuFromSide = ({ isOpen, setIsOpen }) => {
 
         </LinksWrapper>
 
-       
-        
         <LogOutWrapper >
 
             <InnerWrapper>
                 <UserIcon src= {userIcon}/>
-                <UserName> {currentUser.userName} </UserName>
+                <UserName> { currentUser } </UserName>
             </InnerWrapper>
             <InnerWrapper onClick = {logOut}>
                 <LogoutIcon src={LogOutIcon}/>
@@ -145,7 +138,6 @@ const MenuFromSide = ({ isOpen, setIsOpen }) => {
 
         </LogOutWrapper>
         
-    
     </StyledMenu>
     )
 }

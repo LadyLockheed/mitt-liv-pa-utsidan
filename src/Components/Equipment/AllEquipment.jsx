@@ -5,11 +5,9 @@ import FrostedBackground from '../Shared/FrostedBackground'
 import axios from 'axios';
 import styled from 'styled-components'
 import spinnerDayNight from '../../Assets/animatedDayNight.gif'
-import { currentUserState } from '../Shared/GlobalStates'
-import { useRecoilValue } from 'recoil'
+
 
 const Wrapper = styled.div`
-    border: 1px solid black;
     position: relative;
 `;
 const LoadingWrapper = styled.div`
@@ -41,29 +39,29 @@ const Button = styled.button`
 const FilterWrapper = styled.div` 
     background-color: ${props => props.theme.yellow};
     border-radius: 3px;
-    height: ${props => props.toggleMenu ? 'auto' : '0'};
-    width: ${props => props.toggleMenu ? '60%' : '0'};
-    transition: width .5s ease-in-out;
+    height: auto;
+    width: 60%;
     position: absolute;
+    top: 1rem;
+    left: 0;
+    transform: ${({ toggleMenu }) => toggleMenu ? 'translateX(0)' : 'translateX(-100%)'};
+    transition: transform 0.3s ease-in-out;
    
 `;
 
 const FilterOption = styled.p`
-    visibility: ${props => props.toggleMenu ? 'visible' : 'hidden'};
+    ${'' /* visibility: ${props => props.toggleMenu ? 'visible' : 'hidden'}; */}
     margin-top:none;
     color: ${props => props.toggleMenu ? 'black' : 'pink'};
     transition: color 2s ease;
     cursor: pointer;
     margin-left: 1rem;
-    border: 1px solid black;
     border-radius: 3px;
 `;
-// const DoneButton =styled.button `
-//   visibility: ${props => props.toggleMenu ? 'visible' : 'hidden'};
-// `
+
 const AllEquipment = () => {
 
-    const currentUser = useRecoilValue(currentUserState)
+   
 
     useEffect(() => {
 
@@ -80,6 +78,7 @@ const AllEquipment = () => {
             setAllEquipment(response.data)
             setFilteredEquipmentList(response.data)
             setIsLoading(false)
+            console.log('equipmentlist: ', response.data)
         }
         catch (err) {
             console.log('Meddelande från frontend: nånting gick fel', err)
@@ -88,10 +87,6 @@ const AllEquipment = () => {
         }
     };
 
-
-
-    // const [allEquipment, setAllEquipment]=useRecoilState(AllEquipment)
-    //denna ska bytas ut mot nåt från recoil
     const [allEquipment, setAllEquipment] = useState([])
 
     const [isLoading, setIsLoading] = useState(false)
@@ -105,6 +100,8 @@ const AllEquipment = () => {
         setToggleMenu(!toggleMenu)
 
     }
+
+
 
     const filterFunc = (filter) => {
         console.log('filter: ', filter)
