@@ -66,21 +66,19 @@ async function post(payload, collection) {
 
 }
 
-
-function getAllEquipment(collection) {
-
-    return get({}, collection)
+//TODO ska bara ta in filter (alltså vilken userId det är)
+function getAllEquipment(filterUserId) {
+    return get({}, 'equipment')
 }
 
 
-function getUser(userName, collection) {
-    return get({ userName: userName }, collection)
+function getUser( userName ) {
+    return get({ userName: userName }, 'users')
 
 }
 
-function addNewUser(newUserName, newPassword, collection) {
-  
-    return post({ userName: newUserName, password: newPassword }, collection)
+function addNewUser(newUserName, newPassword) {
+    return post({ userName: newUserName, password: newPassword }, 'users')
 }
 
 module.exports = {

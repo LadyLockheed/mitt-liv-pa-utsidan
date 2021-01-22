@@ -6,9 +6,9 @@ import { useHistory } from 'react-router-dom'
 import { isAuthenticatedState, currentUserState } from '../Shared/GlobalStates';
 import { useSetRecoilState } from "recoil";
 
-const AddNewUser = () =>{
-   
-    
+const AddNewUser = () => {
+
+
     const history = useHistory();
 
     const setIsAuthenticatedState = useSetRecoilState(isAuthenticatedState)
@@ -26,36 +26,34 @@ const AddNewUser = () =>{
     async function addNewUser() {
 
         try {
-                
-            const responseNewUser = await axios.post("/api/addNewUser", {newUserName: newUserName, newPassword: newPassword})
-            console.log('response.data i frontend addnewuser: ',responseNewUser)
-            console.log('response.data i frontend addnewuser: ',responseNewUser.data)
 
-           if (!responseNewUser.data){
-               setValidateNewUser(true)
-               setValidateNewUserMessage('Jusernäjm ålrädy täjken')
-           }
-           else{
-               console.log('användaren har lagts till')
-            //    setValidateNewUser(false)
-            //    setAddUserButtonText('Success! En till?')
-            //    setNewUserName('')
-            //    setNewPassword('')
-               const responseLogin = await axios.post("/api/authenticateUser", {userName: newUserName, password: newPassword})
-               if (!responseLogin.data){
-                   console.log('nånting gick fel vid inloggning')
+            const responseNewUser = await axios.post("/api/addNewUser", { newUserName: newUserName, newPassword: newPassword })
+      
+            if (!responseNewUser.data) {
+                setIsAddingNewUser(false)
+                setValidateNewUser(true)
+                setValidateNewUserMessage('Jusernäjm ålrädy täjken')
+            }
+            else {
+                //loggar in om usern blev tillagd
+                const responseLogin = await axios.post("/api/authenticateUser", { userName: newUserName, password: newPassword })
 
-               }
-               else{
-                setCurrentUser(responseLogin.data)
-                setIsAuthenticatedState(true)
-                localStorage.setItem('userName',responseLogin.data.userName)
-            
-                history.push('/allequipment')
-               }
+                if (!responseLogin.data) {
 
-           }
-            setIsAddingNewUser(false)
+                    console.log('nånting gick fel vid inloggning')
+                    setIsAddingNewUser(false)
+
+                }
+                else {
+                    setCurrentUser(responseLogin.data)
+                    setIsAuthenticatedState(true)
+                    localStorage.setItem('userName', responseLogin.data.userName)
+                    history.push('/allequipment')
+                }
+
+            }
+
+           
 
         }
         catch (err) {
@@ -66,73 +64,73 @@ const AddNewUser = () =>{
     }
 
     const resetValidation = () => {
-       
-        setValidateNewUser(false); 
-        setValidateNewPassword(false) 
+
+        setValidateNewUser(false);
+        setValidateNewPassword(false)
     }
 
     const handleAddNewuser = () => {
-       
-        if(newUserName.length < 1 || newPassword.length < 1 ){
 
-            if( newUserName.length < 1 ) {
-                setValidateNewUser(true); 
+        if (newUserName.length < 1 || newPassword.length < 1) {
+
+            if (newUserName.length < 1) {
+                setValidateNewUser(true);
                 setValidateNewUserMessage('Glöm inte att välja fancy namn')
             }
 
-            if( newPassword.length < 1 ) { 
-                setValidateNewPassword(true) 
-                
+            if (newPassword.length < 1) {
+                setValidateNewPassword(true)
+
                 setValidateNewPasswordMessage('Glöm inte välja klurigt lösen')
             }
 
-            return 
+            return
         }
-    
-       setIsAddingNewUser(true)
-       addNewUser();
+
+        setIsAddingNewUser(true)
+        addNewUser();
 
 
     }
 
     const handleSubmit = () => {
         //resetar så att validering kan börja om ifall man enbart fyllt i vissa fält rätt
-       
+
         resetValidation();
 
         handleAddNewuser();
-         
+
     }
 
 
-    return(
+    return (
 
         <FrostedForm
             headline={'Skapa ny användare'}
 
-            topLabel= {'Välj användarnamn'}
-            topInputValue = { newUserName }
-            topInputSetValue = { setNewUserName }
-            topInputValidation = { validateNewUser }
-            topInputValidationMessage = { validateNewUserMessage }
+            topLabel={'Välj användarnamn'}
+            topInputValue={newUserName}
+            topInputSetValue={setNewUserName}
+            topInputValidation={validateNewUser}
+            topInputValidationMessage={validateNewUserMessage}
 
-            bottomLabel = {'Välj lösenord'}
-            bottomInputValue = { newPassword }
-            bottomInputSetValue = { setNewPassword  }
-            bottomInputValidation = {validateNewPassword}
-            bottomInputValidationMessage  = { validateNewPasswordMessage }
-            typeOnBottomInputfield = {'text'}
+            bottomLabel={'Välj lösenord'}
+            bottomInputValue={newPassword}
+            bottomInputSetValue={setNewPassword}
+            bottomInputValidation={validateNewPassword}
+            bottomInputValidationMessage={validateNewPasswordMessage}
+            typeOnBottomInputfield={'text'}
 
-            topButtonText = {'Lägg till'}
-            bottomButtonText = {'Gå tillbaka'}
-            isLoading = { isAddingNewUser }
+            topButtonText={'Lägg till'}
+            bottomButtonText={'Gå tillbaka'}
+            isLoading={isAddingNewUser}
 
-            arrowIcon = { arrowBackwardIcon }
-            positionArrowIconOnRight= {true}
-            goToPage = {() => history.push('./')}
-            handleSubmit = { handleSubmit }
-            
-    />
+            arrowIcon={arrowBackwardIcon}
+            positionArrowIconOnRight={true}
+            goToPage={() => history.push('./')}
+            handleSubmit={handleSubmit}
+
+        />
     )
 
 }

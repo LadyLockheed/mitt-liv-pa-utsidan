@@ -10,6 +10,8 @@ const { getAllEquipment, getUser, addNewUser } = require('./database.js');
 
 const port = 1337; // Port number
 
+const bcrypt = require('bcryptjs');
+
 // middlewares
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -43,7 +45,7 @@ app.use((req, res, next) => {
     if (url.startsWith('/api') && !whitelist.includes(url)) {
         console.log('url:en var inte med på whitelist')
         if (!req.session.userId) {
-            console.log('man var inte inloggad')
+          
             res.status(401).end('Sorry, we cannot do that!')
             return
         }
@@ -57,9 +59,8 @@ app.post('/api/authenticateUser', async (req, res) => {
 
     const userName = req.body.userName;
     const password = req.body.password
-    const collection = 'users';
-    const userArray = await getUser(userName, collection)
-    console.log('i atuthenticateuser, response: ', userArray)
+    const userArray = await getUser(userName)
+   
     //om den inte hittar användaren skickas inget tillbaka och frontend renderar felmeddelanden
     if (userArray.length < 1) {
         console.log('i authenticateuser, hittar ej användaren ')
@@ -69,12 +70,14 @@ app.post('/api/authenticateUser', async (req, res) => {
         console.log('i authenticateuser, hittade användaren: ')
         //den hittade usern
         let user = userArray[0]
-        //TODO fixa hash för password
-        if (user.password === password) {
-            console.log('password stämmer')
+
+        const passwordIsCorrect = await bcrypt.compare(password, user.password)
+       
+        if (passwordIsCorrect) {
+           
             //sätter userID till sessionens userId
             req.session.userId = user._id
-            console.log('req.session: ', req.session)
+          
             const response = {
                 userName: user.userName,
                 id: user._id
@@ -101,13 +104,14 @@ app.post('/api/logOutSession', (req, res) => {
 
 app.post('/api/addNewUser', async (req, res) => {
 
-    console.log('i addnewuser, req.body: ', req.body)
     const newUserName = req.body.newUserName;
     const newPassword = req.body.newPassword
-    const collection = 'users';
+ 
+
+    const hashedPassword = await bcrypt.hash(newPassword, 8)
 
     //kollar om user redan finns
-    const userArray = await getUser(newUserName, collection)
+    const userArray = await getUser(newUserName)
     console.log('efter getUser, responsen: ', userArray)
     if (userArray.length > 0) {
         console.log('i ifsats, användaren finns redan')
@@ -118,7 +122,7 @@ app.post('/api/addNewUser', async (req, res) => {
     else {
 
         console.log('i else sats användaren finns inte, adda ny user ok')
-        const newUser = await addNewUser(newUserName, newPassword, collection)
+        const newUser = await addNewUser(newUserName, hashedPassword)
 
         res.send(newUser)
     }
@@ -128,18 +132,19 @@ app.post('/api/addNewUser', async (req, res) => {
 //TODO hämta bara de med rätt sessionId
 app.get('/api/allEquipment', async (req, res) => {
     console.log('server.js, getAllEquipment')
-    const collection = 'equipment'
+    
     // TODO const userId = req.session.userId
     // TODO skicka med userId som props, sök efter objekt med rätt UserId
-    const allEquipment = await getAllEquipment(collection)
+    const allEquipment = await getAllEquipment()
     console.log('server.js, getAllEquipment, response: ', allEquipment)
-        res.send(allEquipment); 
+    res.send(allEquipment);
 })
 
-//TODO 
+//TODO enligt Emil bör jag börja med denna.
+//TODO glöm ej att ta bort dataorerror!
 // add new equipment, lägger till session id
 // app.post('/api/newEquipment', (req, res)=>{
-//     const collection = 'equipment'
+//    
 //     const newEquipment = {...req.body.equipment, userId:req.session.userId}
 
 //     addNewEquipment( newEquipment, collection, dataOrError =>{
@@ -147,8 +152,6 @@ app.get('/api/allEquipment', async (req, res) => {
 //     })
 // })
 
-// app.post(createuser)
-// hacka password här
 
 app.listen(port, () => {
     console.log('Web server listening on port ' + port)
