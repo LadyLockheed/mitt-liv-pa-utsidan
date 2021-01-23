@@ -5,6 +5,7 @@ import FrostedBackground from '../Shared/FrostedBackground'
 import axios from 'axios';
 import styled from 'styled-components'
 import spinnerDayNight from '../../Assets/animatedDayNight.gif'
+import NoDataAddedYet from '../Shared/NoDataAddedYet'
 
 
 const Wrapper = styled.div`
@@ -79,6 +80,10 @@ const AllEquipment = () => {
             setFilteredEquipmentList(response.data)
             setIsLoading(false)
             console.log('equipmentlist: ', response.data)
+            if(response.data.length < 1){
+                console.log('ingen data')
+                setDisplayNoDataInfo(true)
+            }
         }
         catch (err) {
             console.log('Meddelande från frontend: nånting gick fel', err)
@@ -92,6 +97,7 @@ const AllEquipment = () => {
     const [isLoading, setIsLoading] = useState(false)
 
     const [displayErrorInfo, setDisplayErrorInfo] = useState(false)
+    const [displayNoDataInfo, setDisplayNoDataInfo] = useState(false)
 
     const [toggleMenu, setToggleMenu] = useState(false)
 
@@ -154,8 +160,11 @@ const AllEquipment = () => {
 
 
             {displayErrorInfo && <ErrorInfo>Nån gick vilse. Kolla kompassen och försök igen</ErrorInfo>}
+            {displayNoDataInfo && <NoDataAddedYet/>}
 
-            {isLoading ?
+            
+
+            {isLoading && !displayNoDataInfo ?
                 <LoadingWrapper>
                     <LoadingText>Hämtar all utrustning</LoadingText>
                     <IsLoadingSpinner src={spinnerDayNight} alt="loading..." />

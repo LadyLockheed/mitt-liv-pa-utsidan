@@ -1,8 +1,10 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import FrostedBackground from '../Shared/FrostedBackground';
 import styled from 'styled-components';
 import { Button, Label, InputField, SelectInput, ValidateMessage } from '../Shared/ButtonsAndSuch'
- 
+import axios from 'axios';
+import Spinner from '../Shared/Spinner'
+
 
 const Wrapper = styled.div`
    
@@ -22,7 +24,7 @@ const StyledSelectInput = styled(SelectInput)`
             color: ${props => props.theme.orange};
         }
         &:nth-child(odd){
-            background-color: ${ props => props.theme.grey};  
+            background-color: ${props => props.theme.grey};  
         }
     }
 
@@ -45,127 +47,153 @@ const SubmitButton = styled(Button)`
     
 `;
 
-const AddEquipment=()=>{
+const AddEquipment = () => {
 
     const [equipment, setEquipment] = useState('')
-	const [category, setCategory] = useState('')
-	const [weight, setWeight] = useState('')
+    const [category, setCategory] = useState('')
+    const [weight, setWeight] = useState('')
     const [info, setInfo] = useState('')
-    
+
     //variabler för att visa all validering (border och text)
     const [validateEquipment, setValidateEquipment] = useState(false)
     const [validateWeight, setValidateWeight] = useState(false)
     const [validateCategory, setValidateCategory] = useState(false)
 
-    const handleValidation = () => {
-        if (equipment.length < 1 || weight < 0.1 || category === 'category' || category === ''){
-            
+    const [isAddingEquipment, setIsAddingEquipment] = useState(false)
+
+
+    async function addNewEquipment() {
+
+        try {
+            const responseAddNewEquipment = await axios.post('/api/addNewEquipment', {
+                newEquipment: equipment, newCategory: category, newWeight: weight, newInfo: info
+            })
+
+            if(!responseAddNewEquipment){
+                console.log('nånting gick fel nånstans')
+                setIsAddingEquipment(false)
+            }
+            else{
+                console.log('success, ny equipmenttillagd: ', responseAddNewEquipment)
+                setIsAddingEquipment(false)
+                setEquipment('')
+                setCategory('')
+                setWeight('')
+                setInfo('')
+
+            }
+           
+        }
+        catch (err) {
+            console.log('Something went wrong ', err)
+        }
+    }
+
+
+
+    //validerar frontend
+    const handleAddNewEquipment = () => {
+
+        if (equipment.length < 1 || weight < 0.1 || category === 'category' || category === '') {
+
             if (equipment.length < 1) { setValidateEquipment(true); }
             if (weight.length < 1) { setValidateWeight(true); }
-            if (category === 'category' || category === '' ){ setValidateCategory(true); }
-            
-            return false
+            if (category === 'category' || category === '') { setValidateCategory(true); }
+            return 
         }
-        else { return true }
+        setIsAddingEquipment(true)
+        addNewEquipment()
 
     }
 
     const resetValidation = () => {
-       
-        setValidateEquipment(false); 
+
+        setValidateEquipment(false);
         setValidateWeight(false)
         setValidateCategory(false)
     }
 
     const handleSubmit = () => {
+
+        console.log('handlesubmit')
         //resetar så att validering kan börja om ifall man enbart fyllt i vissa fält rätt
         resetValidation();
 
-       let allIsValid =  handleValidation();
+        handleAddNewEquipment();
 
-        if (allIsValid){
-            //lägg till ny equipment till all equipment
-            //lägg till currentUser i det objektet!!!
-            console.log('posta equipment, lägg till spinner (då ser man inte heller ev validerade fält)')
-        }
-        else{
-            return
-        }
-        
-       
     }
-  
-    return(
-       
-        <FrostedBackground headline = {'Lägg till ny utrustning'}>
 
+    return (
+
+        <FrostedBackground headline={'Lägg till ny utrustning'}>
+                {isAddingEquipment ? <Spinner spinnerMessage={'slänger in grejer på hyllan...'}/> : 
             <Wrapper>
 
                 {/* Equipment */}
-                <Label htmlFor = 'equipment'>Utrustning</Label>
+                <Label htmlFor='equipment'>Utrustning</Label>
                 <InputField
-                type = 'text' 
-                id = 'equipment'
-                value = {equipment}
-                onChange = {event=>setEquipment(event.target.value)}
-                isValid = {validateEquipment}
+                    type='text'
+                    id='equipment'
+                    value={equipment}
+                    onChange={event => setEquipment(event.target.value)}
+                    isValid={validateEquipment}
                 />
-                <ValidateMessage displayMessage = {validateEquipment}>Vad är det för pryl?</ValidateMessage>
+                <ValidateMessage displayMessage={validateEquipment}>Vad är det för pryl?</ValidateMessage>
 
                 {/* Category */}
                 <Label>Kategori</Label>
 
-                <StyledSelectInput 
-                name = "category" 
-                id = "category"
-                type = 'text' 
-                value = {category}
-                isValid = {validateCategory}   
-                onChange = {event=>setCategory(event.target.value)}>
-                    <option value = 'category'>Välj kategori</option>
-                    <option value = "living">Boende</option>
-                    <option value = "storage">Bära/Förvaring</option>
-                    <option value = "sleeping">Sova</option>
-                    <option value = "clothes">Kläder</option>
-                    <option value = "electronics">Elektronik</option>
-                    <option value = "fun">Nöje</option>
-                    <option value = "cooking">Laga mat</option>
-                    <option value = "hygiene">Hygien</option>
-                    <option value = "other">Övrigt</option>
-                    
+                <StyledSelectInput
+                    name="category"
+                    id="category"
+                    type='text'
+                    value={category}
+                    isValid={validateCategory}
+                    onChange={event => setCategory(event.target.value)}>
+                    <option value='category'>Välj kategori</option>
+                    <option value="living">Boende</option>
+                    <option value="storage">Bära/Förvaring</option>
+                    <option value="sleeping">Sova</option>
+                    <option value="clothes">Kläder</option>
+                    <option value="electronics">Elektronik</option>
+                    <option value="fun">Nöje</option>
+                    <option value="cooking">Laga mat</option>
+                    <option value="hygiene">Hygien</option>
+                    <option value="other">Övrigt</option>
+
                 </StyledSelectInput>
 
-                <ValidateMessage displayMessage = {validateCategory}>What for stuff now?</ValidateMessage>
+                <ValidateMessage displayMessage={validateCategory}>What for stuff now?</ValidateMessage>
 
                 {/* Weight */}
-                <Label htmlFor = 'weight'>Vikt</Label>
+                <Label htmlFor='weight'>Vikt</Label>
                 <InputField
-                type = 'number' 
-                id = 'weight' 
-                step = "0.1" 
-                placeholder = '(g)'
-                value = {weight}
-                onChange = {event=>setWeight(event.target.value)}
-                isValid = {validateWeight}
+                    type='number'
+                    id='weight'
+                    step="0.1"
+                    placeholder='(g)'
+                    value={weight}
+                    onChange={event => setWeight(event.target.value)}
+                    isValid={validateWeight}
                 />
-                <ValidateMessage displayMessage = {validateWeight}>Vikten är viktig</ValidateMessage>
+                <ValidateMessage displayMessage={validateWeight}>Vikten är viktig</ValidateMessage>
 
                 {/* Info */}
-                <Label htmlFor = 'info'>Info</Label>
-                <TextArea 
-                id = 'info' 
-                rows = '4'
-                type = 'text' 
-                value = {info}  
-                onChange = {event=>setInfo(event.target.value)}></TextArea>
+                <Label htmlFor='info'>Info</Label>
+                <TextArea
+                    id='info'
+                    rows='4'
+                    type='text'
+                    value={info}
+                    onChange={event => setInfo(event.target.value)}></TextArea>
 
-                <SubmitButton onClick = {(event)=> handleSubmit(event)}>Lägg till</SubmitButton>
+                <SubmitButton onClick={(event) => handleSubmit(event)}>Lägg till</SubmitButton>
 
             </Wrapper>
-      
+        }
         </FrostedBackground>
-        
-        
+
+
     )
 }
 

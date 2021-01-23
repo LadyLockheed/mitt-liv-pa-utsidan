@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import arrowBackwardIcon from '../../Assets/backarrow.svg'
-import FrostedForm from './FrostedForm'
+import Form from './Form'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import { isAuthenticatedState, currentUserState } from '../Shared/GlobalStates';
 import { useSetRecoilState } from "recoil";
+import FrostedBackground from '../Shared/FrostedBackground'
 
 const AddNewUser = () => {
 
@@ -53,8 +54,6 @@ const AddNewUser = () => {
 
             }
 
-           
-
         }
         catch (err) {
             console.log('Something went wrong', err)
@@ -63,13 +62,15 @@ const AddNewUser = () => {
 
     }
 
+    
     const resetValidation = () => {
 
         setValidateNewUser(false);
         setValidateNewPassword(false)
     }
 
-    const handleAddNewuser = () => {
+    // validerar frontend
+    const handleAddNewUser = () => {
 
         if (newUserName.length < 1 || newPassword.length < 1) {
 
@@ -90,22 +91,21 @@ const AddNewUser = () => {
         setIsAddingNewUser(true)
         addNewUser();
 
-
     }
 
     const handleSubmit = () => {
+       
         //resetar så att validering kan börja om ifall man enbart fyllt i vissa fält rätt
-
         resetValidation();
 
-        handleAddNewuser();
+        handleAddNewUser();
 
     }
 
 
     return (
-
-        <FrostedForm
+        <FrostedBackground useInvisibleProblemFixer = {true}>
+        <Form
             headline={'Skapa ny användare'}
 
             topLabel={'Välj användarnamn'}
@@ -131,6 +131,7 @@ const AddNewUser = () => {
             handleSubmit={handleSubmit}
 
         />
+         </FrostedBackground>
     )
 
 }

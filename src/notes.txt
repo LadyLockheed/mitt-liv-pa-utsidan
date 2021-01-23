@@ -8,6 +8,8 @@ db.equipment.insertMany([{equipment:'Sovsäck Marmot Never Summer',category:'sle
 mongo "mongodb+srv://karinfrontend.foi9f.gcp.mongodb.net/MyLifeOnTheOutside" --username MyLifeOnTheOutside --password MyL1f3OnTh3Outs1d3
 
 
+
+//togglar, tex som i accordion, fast på ett annat sätt
 const Faq = () => {
   const [showHide, setShowHide] = useState([]);
   const toggleIsOpen = (index) =>{

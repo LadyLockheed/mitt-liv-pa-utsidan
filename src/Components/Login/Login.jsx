@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom'
 import { isAuthenticatedState, currentUserState } from '../Shared/GlobalStates';
 import { useSetRecoilState } from "recoil";
 import arrowForwardIcon from '../../Assets/arrowForward.svg'
-import FrostedForm from './FrostedForm'
-
+import Form from './Form'
 import axios from 'axios'
+import FrostedBackground from '../Shared/FrostedBackground'
 
 
 const Login = () => {
@@ -91,8 +91,8 @@ const Login = () => {
 
     return (
     
-
-        <FrostedForm
+        <FrostedBackground>
+        <Form
             headline={'Mitt liv på utsidan'}
 
             topLabel={'Login'}
@@ -118,6 +118,7 @@ const Login = () => {
             handleSubmit={handleSubmit}
             
         />
+        </FrostedBackground>
     
     )
 

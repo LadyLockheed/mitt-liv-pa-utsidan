@@ -40,7 +40,7 @@ async function get(filter, collection) {
 
 
 async function post(payload, collection) {
-  
+   
     let client;
     try {
         client = await MongoClient.connect(url, { useUnifiedTopology: true })
@@ -54,6 +54,7 @@ async function post(payload, collection) {
 
     try {
         const result = await theCollection.insertOne(payload);
+       
         return result.ops
 
     } catch (error) {
@@ -67,8 +68,8 @@ async function post(payload, collection) {
 }
 
 //TODO ska bara ta in filter (alltså vilken userId det är)
-function getAllEquipment(filterUserId) {
-    return get({}, 'equipment')
+function getAllEquipment(userId) {
+    return get({ userId:userId }, 'equipment')
 }
 
 
@@ -81,8 +82,16 @@ function addNewUser(newUserName, newPassword) {
     return post({ userName: newUserName, password: newPassword }, 'users')
 }
 
+function addNewEquipment(newEquipment, newCategory, newWeight, newInfo, userId) {
+  
+    return post({equipment: newEquipment, category: newCategory, weight: newWeight, info: newInfo, userId: userId}, 'equipment')
+   
+}
+
+
 module.exports = {
     getAllEquipment,
     getUser,
-    addNewUser
+    addNewUser,
+    addNewEquipment
 }

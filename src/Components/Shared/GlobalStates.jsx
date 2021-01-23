@@ -18,6 +18,11 @@ export const currentUserState = atom({
   default: {}
 })
 
+export const elementHeightState = atom({
+  key: 'elementHeightState',
+  default:''
+})
+
 
 
 export const Adventures = atom({

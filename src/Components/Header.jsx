@@ -14,7 +14,7 @@ const Navigation = styled.div`
     display:grid;
     grid-template-columns: repeat(5, 1fr);
     align-items:center;
-
+    margin-bottom: 2rem;
 `;
 const H1 = styled.h1`
     color: ${props => props.theme.white};

@@ -47,6 +47,9 @@ const MyApp = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    align-content:center;
 
 `;
 

@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const path = require('path')
 // const { cloudinary } = require('./cloudinary')
 const cors = require('cors');
-const { getAllEquipment, getUser, addNewUser } = require('./database.js');
+const { getAllEquipment, getUser, addNewUser, addNewEquipment } = require('./database.js');
 
 const port = 1337; // Port number
 
@@ -35,7 +35,6 @@ app.use((req, res, next) => {
 
     //current url
     const url = req.url
-    console.log('i server.js kollar vilken url: ', url)
 
     //släpper igenom whitelist anropet men inget annat anrop
 
@@ -43,9 +42,9 @@ app.use((req, res, next) => {
 
     //om urlen startar med api och den inte finns med i whitelist
     if (url.startsWith('/api') && !whitelist.includes(url)) {
-        console.log('url:en var inte med på whitelist')
+
         if (!req.session.userId) {
-          
+
             res.status(401).end('Sorry, we cannot do that!')
             return
         }
@@ -53,14 +52,13 @@ app.use((req, res, next) => {
     next()
 })
 
-
-
+//log in
 app.post('/api/authenticateUser', async (req, res) => {
 
     const userName = req.body.userName;
     const password = req.body.password
     const userArray = await getUser(userName)
-   
+
     //om den inte hittar användaren skickas inget tillbaka och frontend renderar felmeddelanden
     if (userArray.length < 1) {
         console.log('i authenticateuser, hittar ej användaren ')
@@ -72,12 +70,12 @@ app.post('/api/authenticateUser', async (req, res) => {
         let user = userArray[0]
 
         const passwordIsCorrect = await bcrypt.compare(password, user.password)
-       
+
         if (passwordIsCorrect) {
-           
+
             //sätter userID till sessionens userId
             req.session.userId = user._id
-          
+
             const response = {
                 userName: user.userName,
                 id: user._id
@@ -93,6 +91,7 @@ app.post('/api/authenticateUser', async (req, res) => {
 
 })
 
+// log out
 app.post('/api/logOutSession', (req, res) => {
 
     req.session.destroy(() => {
@@ -101,12 +100,12 @@ app.post('/api/logOutSession', (req, res) => {
 
 })
 
-
+//add a new user
 app.post('/api/addNewUser', async (req, res) => {
 
     const newUserName = req.body.newUserName;
     const newPassword = req.body.newPassword
- 
+
 
     const hashedPassword = await bcrypt.hash(newPassword, 8)
 
@@ -129,28 +128,30 @@ app.post('/api/addNewUser', async (req, res) => {
 
 })
 
-//TODO hämta bara de med rätt sessionId
 app.get('/api/allEquipment', async (req, res) => {
-    console.log('server.js, getAllEquipment')
-    
+
+    const userId = req.session.userId
     // TODO const userId = req.session.userId
     // TODO skicka med userId som props, sök efter objekt med rätt UserId
-    const allEquipment = await getAllEquipment()
+    const allEquipment = await getAllEquipment(userId)
     console.log('server.js, getAllEquipment, response: ', allEquipment)
     res.send(allEquipment);
 })
 
-//TODO enligt Emil bör jag börja med denna.
-//TODO glöm ej att ta bort dataorerror!
-// add new equipment, lägger till session id
-// app.post('/api/newEquipment', (req, res)=>{
-//    
-//     const newEquipment = {...req.body.equipment, userId:req.session.userId}
+// add equipment
+app.post('/api/addNewEquipment', async (req, res) => {
 
-//     addNewEquipment( newEquipment, collection, dataOrError =>{
-//         res.send(dataOrError)
-//     })
-// })
+    const newEquipment = req.body.newEquipment
+    const newCategory = req.body.newCategory
+    const newWeight = req.body.newWeight
+    const newInfo = req.body.newInfo
+    const userId = req.session.userId
+
+    const addedNewEquipment = await addNewEquipment(newEquipment, newCategory, newWeight, newInfo, userId)
+
+    res.send(addedNewEquipment)
+
+})
 
 
 app.listen(port, () => {

@@ -2,11 +2,23 @@ import styled from 'styled-components'
 import mainLogo from '../../Assets/mainLogo.svg'
 import { Button, InputField, SecondaryButton, ValidateMessage } from '../Shared/ButtonsAndSuch'
 import spinnerDayNight from '../../Assets/animatedDayNight.gif'
+import Spinner from '../Shared/Spinner'
 
 const Container = styled.div`
     
-    height: 80vh;
-    width: 80%;
+    display:grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    padding: 1rem;
+
+    @media screen and (min-width: 600px) {
+        ${'' /* width: 60%; */}
+        grid-template-columns: 1fr 1fr;
+        padding-left: 2rem;
+ 
+     
+    }
+    ${'' /* width: 80%;
     background: inherit;
     box-shadow:0 0 1rem 0 rgba(0,0,0, .2);
     position: relative;
@@ -21,7 +33,7 @@ const Container = styled.div`
     justify-content: center;
     background-color: rgba(233,235,218,0.8);
     border-radius: 3px;
-    
+   
     &:before{
         content: '';
         background: inherit; 
@@ -30,6 +42,8 @@ const Container = styled.div`
         right: 0;
         top: 0; 
         bottom: 0;
+
+        
         box-shadow: inset 0 0 0 2000px rgba(255,255,255,0.3);
         margin:-20px;
         filter: blur(15px);
@@ -38,22 +52,23 @@ const Container = styled.div`
     }
     @media screen and (min-width: 600px) {
         width: 60%;
-        height: 47vh;
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr 1fr 1fr;
         padding-left: 2rem;
-       
+ 
+     
     }
   
     @media screen and (min-width: 1024px) {
        width: 50%;
-       height: 50vh;
-       
+
     }
+    @media screen and (min-width: 1900px) {
+       width: 40%;
+
+    } */}
 
 `;
 const LoadingWrapper = styled.div`
-  
     display: grid;
     justify-content: center;
 
@@ -64,15 +79,6 @@ const LoadingWrapper = styled.div`
  
 `
 
-const IsLoadingSpinner = styled.img`
-    height:12rem;
-    width:auto;
-
-`;
-const LoadingText = styled.h3`
-    text-align:center;
-
-`
 const H1 = styled.h1` 
     color: ${props => props.theme.green};
     font-weight: 300;
@@ -95,10 +101,6 @@ const H1 = styled.h1`
 `;
 const InputSection = styled.section` 
 
-    @media screen and (min-width: 600px){
-        grid-row: 2/5;
-    }
-   
 `;
 const Label = styled.label` 
    display: block;
@@ -108,29 +110,26 @@ const Label = styled.label`
 
 `;
 
-const Input = styled(InputField)`
-
-    ${'' /* margin-bottom: 0.5rem; */}
-
-`;
-
 const ButtonsWrapper = styled.div`
     width: 60%;
     margin:auto;
     margin-top: 1rem;
+    margin-bottom: 2rem;
+    
 
     @media screen and (min-width: 600px) {
         width: 100%;
-        margin-top: 0.5rem;
-
+      
     }
     @media screen and (min-width: 700px) {
        width: 80%;
+       margin-top: 2rem;
        
     }
     @media screen and (min-width: 1024px) {
        width: 80%;
-       
+       margin-top: 3rem;
+     
     }
 
 `
@@ -172,43 +171,26 @@ const Logo = styled.img`
 
 `;
 
-//Den gär fixar problemet med att hela bakgrunden åker ner ju mer margin-top
-//jag har på den frostade rutan.
-const InvisibleProblemFixer = styled.div`
-    width:100%;
-    height:3rem;
-
-    @media screen and (min-width:600px){
-
-        height:10rem;
-    }
-
-`;
 
 const FrostedStartSquare = (props) => {
+
 
     const { headline, topLabel, bottomLabel, topInputValue, topInputSetValue, topInputValidation, bottomInputValidation, topInputValidationMessage, bottomInputValidationMessage, handleSubmit, topButtonText, bottomButtonText, arrowIcon, positionArrowIconOnRight, bottomInputValue, bottomInputSetValue, goToPage, typeOnBottomInputfield, isLoading } = props
 
 
     return (
         <>
-            <InvisibleProblemFixer></InvisibleProblemFixer>
+          
             <Container>
-                {isLoading ?
-                    <LoadingWrapper>
-                       
-                        <IsLoadingSpinner src={spinnerDayNight} alt="loading..." />
-                        <LoadingText>...jobbar och sliter</LoadingText>
-                    </LoadingWrapper>
-
+                {isLoading ? <LoadingWrapper><Spinner spinnerMessage={'...jobbar och sliter'} /></LoadingWrapper>
                     :
 
                     <>
                         <H1> {headline} </H1>
 
-                        <InputSection>
+                        <InputSection id='container'>
                             <Label htmlFor={topLabel}>{topLabel}</Label>
-                            <Input
+                            <InputField
                                 type='text'
                                 id={topLabel}
                                 value={topInputValue}
@@ -219,7 +201,7 @@ const FrostedStartSquare = (props) => {
                                 displayMessage={topInputValidation}> {topInputValidationMessage} </ValidateMessage>
 
                             <Label htmlFor={bottomLabel} > {bottomLabel} </Label>
-                            <Input
+                            <InputField
                                 type={typeOnBottomInputfield}
                                 id={bottomLabel}
                                 value={bottomInputValue}

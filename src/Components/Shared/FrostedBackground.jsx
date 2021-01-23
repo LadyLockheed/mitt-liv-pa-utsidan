@@ -1,23 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { useSetRecoilState } from 'recoil'
+import { elementHeightState } from './GlobalStates'
 
 const Container = styled.div`
     
     background: inherit;
-    width:50%;
-    min-height: 70vh;
+    width:95%;
     box-shadow:0 0 1rem 0 rgba(0,0,0, .2);
     position: relative;
     margin-left:auto;
     margin-right:auto;
-    margin-top:2rem;
+    ${'' /* margin-top:2rem; */}
     z-index:1;
     overflow:hidden;
     border-radius:3px;
+  
     
-
-    @media screen and (max-width: 750px) {
-        width:95%;
+    @media screen and (min-width: 600px) {
+        width:50%;
+        ${'' /* margin-top:4rem; */}
     }
   
 
@@ -35,9 +37,9 @@ const Container = styled.div`
         z-index:-1;
     }
 
-` 
-const Headline=styled.h1`
-    color:${props=>props.theme.black};
+`
+const Headline = styled.h1`
+    color:${props => props.theme.black};
     font-size: 1.2rem;
     font-weight:bold;
     text-align:center;
@@ -50,21 +52,52 @@ const Headline=styled.h1`
     }
     
 `
-const FrostedBackground=(props)=>{
 
-return(
+const InvisibleProblemFixer = styled.div`
+    width:100%;
+    height:3rem;
 
-    <Container>
-        <Headline>
-            {props.headline}
-        </Headline>
+    @media screen and (min-width:600px){
 
-       {props.children}
-       
-    </Container>
+        height:10rem;
+    }
 
-)
-  
+`;
+const FrostedBackground = (props) => {
+
+    useEffect(() => {
+        //get height from frostedBackground and use to set height on Spinner OuterWrapper
+        async function getHeightOfElement() {
+
+            const box = await document.getElementById('foo')
+            const height = box.offsetHeight
+            setElementHeight(height)
+
+        }
+        getHeightOfElement()
+
+    }, [])
+
+    const setElementHeight = useSetRecoilState(elementHeightState)
+
+    const { headline,  children, useInvisibleProblemFixer } = props
+
+
+    return (
+        <>
+         <InvisibleProblemFixer></InvisibleProblemFixer>
+            <Container id='foo'>
+                <Headline>
+                    {headline}
+                </Headline>
+
+                {children}
+
+            </Container>
+        </>
+
+    )
+
 
 
 }

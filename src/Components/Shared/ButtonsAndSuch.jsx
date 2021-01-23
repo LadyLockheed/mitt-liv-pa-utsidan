@@ -48,7 +48,7 @@ export const InputField = styled.input`
         outline: none;
     }
 
-`
+`;
 
 export const SelectInput = styled.select `
     border-radius: 3px;
@@ -72,14 +72,12 @@ export const SelectInput = styled.select `
 `;
 
 export const ValidateMessage = styled.span `
-    color:${props => props.theme.red};
+    color:${props => props.theme.orange};
     visibility: ${props => props.displayMessage ? 'visible' : 'hidden'};
     margin-left: 0.5rem;
+    font-weight: bold;
 `;
   
-
-
-
 export const theme = {
     black:'#303030',
     orange:'#D38324',
