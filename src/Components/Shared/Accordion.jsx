@@ -1,9 +1,10 @@
-import React, { useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import dropDownArrow from '../../Assets/dropdownarrow.svg'
 import editIcon from '../../Assets/editIcon.svg'
 import trashcanIcon from '../../Assets/trashcanIcon.svg'
 import AlertModal from './AlertModal'
+import axios from 'axios'
 
 
 const Wrapper = styled.div`
@@ -39,7 +40,7 @@ const TopRowWrapper = styled.div`
     align-items: center;
    
 `
-const CategoryDot=styled.div` 
+const CategoryDot = styled.div` 
     
     width: 0.7rem;
     height: 0.7rem;
@@ -47,22 +48,21 @@ const CategoryDot=styled.div`
     display: inline-block;
     grid-column: 1/2;
     margin-right:0.7rem;
-    background-color: ${(prop) => 
-        {
-            if(prop.categoryColor === 'living') return '#D38324';
-            if(prop.categoryColor === 'clothes') return '#67C070';
-            if(prop.categoryColor === 'sleeping') return '#678AC0';
-            if(prop.categoryColor === 'fun') return '#BF67C0'
-            if(prop.categoryColor === 'cooking') return '#6E67C0'
-            if(prop.categoryColor === 'electronics') return '#C0B267'
-            if(prop.categoryColor === 'hygiene') return '#67C0B0'
-            if(prop.categoryColor === 'storage') return '#D15933'
-            if(prop.categoryColor === 'other') return '#BABCAB'
-        }
+    background-color: ${(prop) => {
+        if (prop.categoryColor === 'living') return '#D38324';
+        if (prop.categoryColor === 'clothes') return '#67C070';
+        if (prop.categoryColor === 'sleeping') return '#678AC0';
+        if (prop.categoryColor === 'fun') return '#BF67C0'
+        if (prop.categoryColor === 'cooking') return '#6E67C0'
+        if (prop.categoryColor === 'electronics') return '#C0B267'
+        if (prop.categoryColor === 'hygiene') return '#67C0B0'
+        if (prop.categoryColor === 'storage') return '#D15933'
+        if (prop.categoryColor === 'other') return '#BABCAB'
+    }
     };
 `
 const Name = styled.p`
-    color: ${props=> props.theme.black};
+    color: ${props => props.theme.black};
     text-align: left;
     grid-column: 2/12;
     font-weight: bold;
@@ -72,9 +72,9 @@ const Name = styled.p`
         font-size:1rem;
     }
  
-`; 
+`;
 const Weight = styled.p` 
-    color: ${props=> props.theme.black};
+    color: ${props => props.theme.black};
     grid-column: 12/13;
     font-size:0.9rem;
     margin-left:0.2rem;
@@ -138,87 +138,101 @@ const TrachcanIcon = styled.img`
     
 `;
 
-const Accordion=({equipmentList})=>{
+const Accordion = ({ equipmentList }) => {
 
     const [expandedItems, setExpandedItems] = useState([]);
     const [displayModal, setDisplayModal] = useState(false)
- 
-    useEffect(()=>{
-        //skapar kopia av allEquipment så att ändringarna inte sker i originallistan
-        setExpandedItems(equipmentList.map(equipment =>{
 
-            return{...equipment, isExpanded:false}
+    useEffect(() => {
+        //skapar kopia av allEquipment så att ändringarna inte sker i originallistan
+        setExpandedItems(equipmentList.map(equipment => {
+
+            return { ...equipment, isExpanded: false }
         }))
 
-    },[])
-   
+    }, [])
+
     const toggleOpen = (item) => {
         setDisplayModal(false);
-        setExpandedItems(expandedItems.map((equipment)=>{
-            
-            if(equipment !== item ){
+        setExpandedItems(expandedItems.map((equipment) => {
+
+            if (equipment !== item) {
                 return equipment
             } else {
-                return {...equipment, isExpanded:!equipment.isExpanded}
+                return { ...equipment, isExpanded: !equipment.isExpanded }
             }
-                  
+
         }))
     }
 
-    const deleteEquipment = () =>{
-        // setDisplayModal(false)
-        console.log('Equipment deleted')
-    }
 
-    const editEquipment = (equipment) =>{
+
+
+   async function  deleteEquipment(id){
+        console.log(id)
+     
+        try {
+            const response = await axios.delete('/api/deleteEquipment', { data: { _id: id } })
+            console.log(response)
+
+        }
+        catch (err) {
+            console.log('Meddelande från frontend: nånting gick fel', err)
+
+        }
+
+    }
+    
+    const editEquipment = (equipment) => {
         console.log('equipment edited')
         console.log(equipment)
-        
+
     }
-    return(
-   
+    return (
+
         <Wrapper>
-        {expandedItems.map((item, index)=>{
-            return (
-                    <ItemWrapper key={item.equipment+index} >
-                        <TopRowWrapper onClick={()=>toggleOpen(item)}>
-                            <CategoryDot categoryColor={item.category}/>
+            {expandedItems.map((item, index) => {
+                return (
+                    <ItemWrapper key={item.equipment + index} >
+                        <TopRowWrapper onClick={() => toggleOpen(item)}>
+                            <CategoryDot categoryColor={item.category} />
                             <Name>{item.equipment}</Name>
                             <Weight>{item.weight}g</Weight>
-                            <DropDownArrow src={dropDownArrow}  isUpsideDown={item.isExpanded}></DropDownArrow>
+                            <DropDownArrow src={dropDownArrow} isUpsideDown={item.isExpanded}></DropDownArrow>
                         </TopRowWrapper>
                         {item.isExpanded &&
-                        
+
                             <BottomRowWrapper>
-                                <Info>{item.info}</Info>
+                                <Info>{item.category} <br />{item.info}</Info>
                                 <IconWrapper>
 
-                                    <EditIcon src={editIcon} onClick={() => editEquipment(item._id)}/>
-                                    
-                                    <TrachcanIcon src={trashcanIcon} onClick={()=> setDisplayModal(!displayModal)}></TrachcanIcon>
+                                    <EditIcon src={editIcon} onClick={() => editEquipment(item._id)} />
 
-                                    {displayModal && 
+                                    <TrachcanIcon src={trashcanIcon} onClick={() => deleteEquipment(item._id)}></TrachcanIcon>
+                                    {/* <TrachcanIcon src={trashcanIcon} onClick={()=> setDisplayModal(!displayModal)}></TrachcanIcon> */}
+
+                                    {/* {displayModal && 
                                     <AlertModal 
                                     setDisplayModal = {setDisplayModal} 
                                     displayModal = {displayModal}
                                     headline = {'Are u sure?'}
-                                    confirmFunction = {deleteEquipment}/>
-                                    }
-                                    
+                                    confirmFunction = { deleteEquipment }/>
+                                    } */}
+
                                 </IconWrapper>
-            
+
                             </BottomRowWrapper>
                         }
-            
-        
+
+
                     </ItemWrapper>
                 )
-        })}
+            })}
 
-       </Wrapper>
-       
-   
-      
+        </Wrapper>
+
+
+
     )
 }
 

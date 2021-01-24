@@ -15,8 +15,8 @@ const Container = styled.div`
     z-index:1;
     overflow:hidden;
     border-radius:3px;
-  
-    
+
+
     @media screen and (min-width: 600px) {
         width:50%;
         ${'' /* margin-top:4rem; */}
@@ -74,18 +74,19 @@ const FrostedBackground = (props) => {
             setElementHeight(height)
 
         }
+        
         getHeightOfElement()
 
     }, [])
 
     const setElementHeight = useSetRecoilState(elementHeightState)
 
-    const { headline,  children, useInvisibleProblemFixer } = props
+    const { headline,  children, useInvisibleProblemFixer=false } = props
 
 
     return (
         <>
-         <InvisibleProblemFixer></InvisibleProblemFixer>
+        {useInvisibleProblemFixer && <InvisibleProblemFixer></InvisibleProblemFixer> } 
             <Container id='foo'>
                 <Headline>
                     {headline}

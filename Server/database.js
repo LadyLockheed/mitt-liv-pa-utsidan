@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb')
+const { MongoClient, ObjectID } = require('mongodb')
 
 const dbName = 'MyLifeOnTheOutside';
 
@@ -24,7 +24,7 @@ async function get(filter, collection) {
     const theCollection = client.db(dbName).collection(collection);
 
     try {
-        const cursor = theCollection.find(filter);
+        const cursor = theCollection.find(filter).sort({_id:-1});
         const array = await cursor.toArray();
         return array
 
@@ -67,11 +67,38 @@ async function post(payload, collection) {
 
 }
 
-//TODO ska bara ta in filter (alltså vilken userId det är)
+async function deleteItem(payload, collection) {
+   
+    let client;
+    try {
+        client = await MongoClient.connect(url, { useUnifiedTopology: true })
+    }
+    catch {
+        console.log('Could not connect to mongodb ', error.message);
+        throw new Error('Could not connect to mongodb')
+    }
+
+    const theCollection = client.db(dbName).collection(collection);
+
+    try {
+        const result = await theCollection.deleteOne(payload);
+       
+        return result.ops
+
+    } catch (error) {
+        console.log('Fel query, error: ', error.message);
+        throw new Error('Fel query')
+
+    } finally {
+        client.close();
+    }
+
+}
+
+
 function getAllEquipment(userId) {
     return get({ userId:userId }, 'equipment')
 }
-
 
 function getUser( userName ) {
     return get({ userName: userName }, 'users')
@@ -88,10 +115,15 @@ function addNewEquipment(newEquipment, newCategory, newWeight, newInfo, userId) 
    
 }
 
+function deleteEquipment(id) {
+    return deleteItem( {_id: new ObjectID(id)}, 'equipment' )
+}
+
 
 module.exports = {
     getAllEquipment,
     getUser,
     addNewUser,
-    addNewEquipment
+    addNewEquipment,
+    deleteEquipment
 }

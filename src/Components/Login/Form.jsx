@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import mainLogo from '../../Assets/mainLogo.svg'
 import { Button, InputField, SecondaryButton, ValidateMessage } from '../Shared/ButtonsAndSuch'
-import spinnerDayNight from '../../Assets/animatedDayNight.gif'
 import Spinner from '../Shared/Spinner'
 
 const Container = styled.div`

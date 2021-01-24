@@ -1,16 +1,9 @@
 import { atom } from "recoil";
 
 
-
-
 export const isAuthenticatedState = atom({
   key:'isAuthenticatedState',
   default:false
-})
-
-export const allUsersState = atom({
-  key: 'allUsersState',
-  default: []
 })
 
 export const currentUserState = atom({
@@ -21,6 +14,12 @@ export const currentUserState = atom({
 export const elementHeightState = atom({
   key: 'elementHeightState',
   default:''
+})
+
+export const allEquipmentState = atom({
+  key:'allEquipmentState',
+  default:[]
+  
 })
 
 
@@ -144,54 +143,7 @@ export const Adventures = atom({
   ]
 })
 
-export const AllEquipment = atom({
-  key:'AllEquipment',
-  default:[
-    {equipment:'Sovsäck Marmot Never Summer',
-    category:'sleeping',
-    weight:1002,
-    info:'Väldigt fluffig. Orange färg. Billigare än sommarsäcken',
-    user: '60056c4141014b0bbf15be04'
-    },
-    {equipment:'Tält Unna',
-    category:'living',
-    weight:2400,
-    info:'Bästa tältet. 4 säsongers, går att vika undan golvet om man behöver plats för blöt utrustning. Sätt i tältbågen närmast öppningen först. Går bra att koppla loss ena hörnet  på innertältet för att laga mat i dåligt väder eller lägga blöta saker där. Torka av insidan av yttertält, plocka isär inner och ytter vid nedpackning.',
-    user: '60056c4141014b0bbf15be04'
- 
-    },
-    {equipment:'Optimus Crux Weekend kök',
-    category:'cooking',
-    weight:420,
-    info:'Packa allting i nätförvaringspåsen.',
-    user: '60056c4141014b0bbf15be04'
 
-    },
-    {equipment:'Turkos hoodie',
-    category:'clothes',
-    weight:520,
-    info:'Skön att ha vår, sommar, höst.',
-    user: '60056c4141014b0bbf15be04'
- 
-    },
-    {equipment:'Läsplatta',
-    category:'fun',
-    weight:230,
-    info:'Svinbra läsplatta i tältet. Får ej glömma denna',
-    user: '60056c4141014b0bbf15be04'
-   
-    },
-    {equipment:'Ryggsäck Osprey Aegis 65 liter',
-    category:'storage',
-    weight:2600,
-    info:'Smidigt att dra ut sovsäcken genom öppningen ner. Läcker in i sömmarna.',
-    user: '60056c4141014b0bbf15be04'
-
-    }
-
-  ]
-  
-})
 
 
 

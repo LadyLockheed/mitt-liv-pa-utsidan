@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { isAuthenticatedState, currentUserState } from '../Shared/GlobalStates';
+import { isAuthenticatedState, currentUserState} from '../Shared/GlobalStates';
 import { useSetRecoilState } from "recoil";
 import arrowForwardIcon from '../../Assets/arrowForward.svg'
 import Form from './Form'
@@ -25,6 +25,22 @@ const Login = () => {
     const [validateUserMessage, setValidateUserMessage] = useState('x')
     const [validatePasswordMessage, setValidatePassWordMessage] = useState('x')
 
+    // const [allEquipment, setAllEquipment] = useRecoilState(allEquipmentState)
+    // console.log(allEquipment)
+    // async function getAllEquipment() {
+   
+    //     try {
+    //         const response = await axios.get('/api/allEquipment')
+    //         setAllEquipment(response.data)
+    //         console.log('allequipment', response.data)
+
+    //     }
+    //     catch (err) {
+    //         console.log('Meddelande från frontend: nånting gick fel', err)
+         
+    //     }
+    // };
+
     async function authenticateUser() {
 
         try {
@@ -40,10 +56,10 @@ const Login = () => {
                 setIsLoggingIn(false)
             }
             else {
+                // getAllEquipment()
                 setCurrentUser(response.data)
                 setIsAuthenticatedState(true)
                 localStorage.setItem('userName',response.data.userName)
-            
                 history.push('/allequipment')
             }
 
@@ -91,7 +107,7 @@ const Login = () => {
 
     return (
     
-        <FrostedBackground>
+        <FrostedBackground useInvisibleProblemFixer={true}>
         <Form
             headline={'Mitt liv på utsidan'}
 

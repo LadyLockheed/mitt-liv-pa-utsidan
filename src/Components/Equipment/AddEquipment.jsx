@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import FrostedBackground from '../Shared/FrostedBackground';
 import styled from 'styled-components';
+import {useHistory} from 'react-router-dom'
 import { Button, Label, InputField, SelectInput, ValidateMessage } from '../Shared/ButtonsAndSuch'
 import axios from 'axios';
 import Spinner from '../Shared/Spinner'
@@ -61,6 +62,7 @@ const AddEquipment = () => {
 
     const [isAddingEquipment, setIsAddingEquipment] = useState(false)
 
+    const history = useHistory()
 
     async function addNewEquipment() {
 
@@ -74,13 +76,13 @@ const AddEquipment = () => {
                 setIsAddingEquipment(false)
             }
             else{
-                console.log('success, ny equipmenttillagd: ', responseAddNewEquipment)
-                setIsAddingEquipment(false)
-                setEquipment('')
-                setCategory('')
-                setWeight('')
-                setInfo('')
-
+                // console.log('success, ny equipmenttillagd: ', responseAddNewEquipment)
+                // setIsAddingEquipment(false)
+                // setEquipment('')
+                // setCategory('')
+                // setWeight('')
+                // setInfo('')
+                history.push('/allequipment')
             }
            
         }

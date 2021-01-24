@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const path = require('path')
 // const { cloudinary } = require('./cloudinary')
 const cors = require('cors');
-const { getAllEquipment, getUser, addNewUser, addNewEquipment } = require('./database.js');
+const { getAllEquipment, getUser, addNewUser, addNewEquipment, deleteEquipment } = require('./database.js');
 
 const port = 1337; // Port number
 
@@ -131,10 +131,8 @@ app.post('/api/addNewUser', async (req, res) => {
 app.get('/api/allEquipment', async (req, res) => {
 
     const userId = req.session.userId
-    // TODO const userId = req.session.userId
-    // TODO skicka med userId som props, sök efter objekt med rätt UserId
     const allEquipment = await getAllEquipment(userId)
-    console.log('server.js, getAllEquipment, response: ', allEquipment)
+   
     res.send(allEquipment);
 })
 
@@ -151,6 +149,14 @@ app.post('/api/addNewEquipment', async (req, res) => {
 
     res.send(addedNewEquipment)
 
+})
+
+app.delete('/api/deleteEquipment', async (req, res) =>{
+
+    console.log('equipment som ska tas bort: ',req.body._id)
+
+    const equipmentId = req.body._id
+    const deletedEquipment = await deleteEquipment(equipmentId)
 })
 
 

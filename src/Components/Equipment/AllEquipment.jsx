@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-// import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { allEquipmentState } from '../Shared/GlobalStates'
 import Accordion from '../Shared/Accordion'
 import FrostedBackground from '../Shared/FrostedBackground'
 import axios from 'axios';
@@ -9,7 +10,8 @@ import NoDataAddedYet from '../Shared/NoDataAddedYet'
 
 
 const Wrapper = styled.div`
-    position: relative;
+
+    
 `;
 const LoadingWrapper = styled.div`
     display:grid;
@@ -33,40 +35,46 @@ const ErrorInfo = styled.p`
     margin-bottom:0;
 `;
 
-const Button = styled.button`
+// const Button = styled.button`
+//     margin-left: 1rem;
+//     padding: 0.3rem;
+//     border: 2px solid orange;
+//     background: none;
+//     cursor: pointer;
+// `;
 
-`;
-
-const FilterWrapper = styled.div` 
-    background-color: ${props => props.theme.yellow};
-    border-radius: 3px;
-    height: auto;
-    width: 60%;
-    position: absolute;
-    top: 1rem;
-    left: 0;
-    transform: ${({ toggleMenu }) => toggleMenu ? 'translateX(0)' : 'translateX(-100%)'};
-    transition: transform 0.3s ease-in-out;
+// const FilterWrapper = styled.div` 
+//     background-color: ${props => props.theme.yellow};
+//     border-radius: 3px;
+//     height: auto;
+//     width: 60%;
+//     position: absolute;
+//     top: 1rem;
+//     left: 0;
+//     transform: ${({ toggleMenu }) => toggleMenu ? 'translateX(0)' : 'translateX(-100%)'};
+//     transition: transform 0.3s ease-in-out;
    
-`;
+// `;
 
-const FilterOption = styled.p`
-    ${'' /* visibility: ${props => props.toggleMenu ? 'visible' : 'hidden'}; */}
-    margin-top:none;
-    color: ${props => props.toggleMenu ? 'black' : 'pink'};
-    transition: color 2s ease;
-    cursor: pointer;
-    margin-left: 1rem;
-    border-radius: 3px;
-`;
+// const FilterOption = styled.p`
+
+//     margin-top:none;
+//     color: ${props => props.toggleMenu ? 'black' : 'pink'};
+//     transition: color 2s ease;
+//     cursor: pointer;
+//     margin-left: 1rem;
+//     border-radius: 3px;
+// `;
+
+
 
 const AllEquipment = () => {
-
-   
 
     useEffect(() => {
 
         getAllEquipment();
+       
+       
 
     }, [])
 
@@ -77,11 +85,10 @@ const AllEquipment = () => {
         try {
             const response = await axios.get('/api/allEquipment')
             setAllEquipment(response.data)
-            setFilteredEquipmentList(response.data)
             setIsLoading(false)
-            console.log('equipmentlist: ', response.data)
-            if(response.data.length < 1){
-                console.log('ingen data')
+
+            if (response.data.length < 1) {
+
                 setDisplayNoDataInfo(true)
             }
         }
@@ -91,9 +98,13 @@ const AllEquipment = () => {
             setIsLoading(false)
         }
     };
+    //lägger upp allEquipment i globalstate. 
+    //TODO Flytta denna så att allequipment hämtas vid login istället
+    // const allEquipment = useRecoilValue(allEquipmentState)
+    const [allEquipment, setAllEquipment] = useRecoilState(allEquipmentState)
 
-    const [allEquipment, setAllEquipment] = useState([])
-
+    // const [filteredEquipmentList, setFilteredEquipmentList] = useState([])
+ 
     const [isLoading, setIsLoading] = useState(false)
 
     const [displayErrorInfo, setDisplayErrorInfo] = useState(false)
@@ -101,7 +112,7 @@ const AllEquipment = () => {
 
     const [toggleMenu, setToggleMenu] = useState(false)
 
-    const [filteredEquipmentList, setFilteredEquipmentList] = useState([])
+
     const changeMenu = () => {
         setToggleMenu(!toggleMenu)
 
@@ -109,60 +120,22 @@ const AllEquipment = () => {
 
 
 
-    const filterFunc = (filter) => {
-        console.log('filter: ', filter)
+    // const filterFunc = (filter) => {
+    //    //TODO funkar ej pga att hela listan sätts om till endast det som passar filter (kategori) och sen går det inte att filtrer mer
+    //     setFilteredEquipmentList(filteredEquipmentList.filter( equipment => equipment.category === filter))
+    //             console.log('i filter functionen :',filteredEquipmentList)
 
-    }
-
-    const categories = [
-        {
-            categoryName: 'boende',
-            isActive: false
-        },
-        {
-            categoryName: 'kläder',
-            isActive: false
-        },
-        {
-            categoryName: 'sova',
-            isActive: false
-        },
-        {
-            categoryName: 'Nöje',
-            isActive: false
-        },
-        {
-            categoryName: 'Matlagning',
-            isActive: false
-        },
-        {
-            categoryName: 'Elektronik',
-            isActive: false
-        },
-        {
-            categoryName: 'Hygien',
-            isActive: false
-        },
-        {
-            categoryName: 'Bära/förvaring',
-            isActive: false
-        },
-        {
-            category: 'Övrigt',
-            isActive: false
-        },
-    ]
-
+    // }
 
     return (
 
-        <FrostedBackground headline={'All utrustning'}>
+        <FrostedBackground headline={'All utrustning'} use>
 
 
             {displayErrorInfo && <ErrorInfo>Nån gick vilse. Kolla kompassen och försök igen</ErrorInfo>}
-            {displayNoDataInfo && <NoDataAddedYet/>}
 
-            
+            {displayNoDataInfo && <NoDataAddedYet />}
+
 
             {isLoading && !displayNoDataInfo ?
                 <LoadingWrapper>
@@ -171,28 +144,23 @@ const AllEquipment = () => {
                 </LoadingWrapper> :
 
                 <Wrapper>
-                    <Button onClick={changeMenu}>Filter</Button>
+                    {/* <Button onClick={changeMenu}>Filter</Button>
+            
                     <FilterWrapper toggleMenu={toggleMenu}>
 
-                        {/* {categories.map((category, index)=>{
-                            <FilterOption 
-                                key = {category.categoryName + index} 
-                                toggleMenu = {toggleMenu} 
-                                onClick = {() => filterFunc({category})}>{category.categoryName}
-                            </FilterOption>    
-                        })} */}
+         
                         <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('boende')}>Boende</FilterOption>
-                        <FilterOption toggleMenu={toggleMenu}>Kläder</FilterOption>
-                        <FilterOption toggleMenu={toggleMenu}>Sova</FilterOption>
-                        <FilterOption toggleMenu={toggleMenu}>Nöje</FilterOption>
-                        <FilterOption toggleMenu={toggleMenu}>Matlagning</FilterOption>
-                        <FilterOption toggleMenu={toggleMenu}>Elektronik</FilterOption>
-                        <FilterOption toggleMenu={toggleMenu}>Hygien</FilterOption>
-                        <FilterOption toggleMenu={toggleMenu}>Bära/förvaring</FilterOption>
-                        <FilterOption toggleMenu={toggleMenu}>Övrigt</FilterOption>
+                        <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('clothes')}>Kläder</FilterOption>
+                        <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('sleeping')}>Sova</FilterOption>
+                        <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('fun')}>Nöje</FilterOption>
+                        <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('cooking')}>Matlagning</FilterOption>
+                        <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('electronics')}>Elektronik</FilterOption>
+                        <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('hyg')}>Hygien</FilterOption>
+                        <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('boende')}>Bära/förvaring</FilterOption>
+                        <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('boende')}>Övrigt</FilterOption>
 
-                    </FilterWrapper>
-                    <Accordion equipmentList={filteredEquipmentList} />
+                    </FilterWrapper> */}
+                    <Accordion equipmentList={allEquipment} />
                 </Wrapper>}
 
         </FrostedBackground>
