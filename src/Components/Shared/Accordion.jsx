@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import dropDownArrow from '../../Assets/dropdownarrow.svg'
 import editIcon from '../../Assets/editIcon.svg'
 import trashcanIcon from '../../Assets/trashcanIcon.svg'
+import { allEquipmentState } from './GlobalStates'
+import { useSetRecoilState } from 'recoil'
 import AlertModal from './AlertModal'
 import axios from 'axios'
 
@@ -143,7 +145,9 @@ const Accordion = ({ equipmentList }) => {
     const [expandedItems, setExpandedItems] = useState([]);
     const [displayModal, setDisplayModal] = useState(false)
 
-    console.log('accordion list: ',equipmentList)
+    const  setAllEquipment = useSetRecoilState(allEquipmentState)
+
+
 
     useEffect(() => {
         //skapar kopia av allEquipment så att ändringarna inte sker i originallistan
@@ -167,24 +171,39 @@ const Accordion = ({ equipmentList }) => {
         }))
     }
 
-   async function deleteEquipment(id){
-        console.log(id)
+    async function deleteEquipment(id) {
+     
         try {
             const response = await axios.delete('/api/deleteEquipment', { data: { _id: id } })
             console.log(response)
-
-            //kör gettAllEquipment
-            //uppdatera globalstates
+            getAllEquipment();
+       
         }
         catch (err) {
             console.log('Meddelande från frontend: nånting gick fel', err)
         }
     }
-    
+
+  
+    async function getAllEquipment() {
+        //TODO setIsLoading true
+        try {
+            const response = await axios.get('/api/allEquipment')
+            
+            setAllEquipment(response.data)
+
+        }
+        catch (err) {
+            console.log('Meddelande från frontend: nånting gick fel', err)
+
+        }
+    };
+
     const editEquipment = (equipment) => {
-        
+
 
     }
+
     return (
 
         <Wrapper>

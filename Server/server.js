@@ -157,6 +157,7 @@ app.delete('/api/deleteEquipment', async (req, res) =>{
 
     const equipmentId = req.body._id
     const deletedEquipment = await deleteEquipment(equipmentId)
+    res.send(deletedEquipment)
 })
 
 

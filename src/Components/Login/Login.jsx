@@ -25,22 +25,6 @@ const Login = () => {
     const [validateUserMessage, setValidateUserMessage] = useState('x')
     const [validatePasswordMessage, setValidatePassWordMessage] = useState('x')
 
-    // const [allEquipment, setAllEquipment] = useRecoilState(allEquipmentState)
-    // console.log('login, allEquipment: ',allEquipment)
-    // async function getAllEquipment() {
-   
-    //     try {
-    //         const response = await axios.get('/api/allEquipment')
-    //         setAllEquipment(response.data)
-    //         console.log('allequipment', response.data)
-
-    //     }
-    //     catch (err) {
-    //         console.log('Meddelande från frontend: nånting gick fel', err)
-         
-    //     }
-    // };
-
     async function authenticateUser() {
 
         try {

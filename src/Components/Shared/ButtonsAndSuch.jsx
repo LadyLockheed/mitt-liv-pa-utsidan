@@ -56,7 +56,7 @@ export const SelectInput = styled.select `
     font-family: 'Quicksand', sans-serif;
     font-size:1rem;
     padding: 0.3rem;
-    ${'' /* border: 1px solid rgba(197,197,197,0.30); */}
+
     background-color: ${props => props.theme.white};
     border:2px solid ${props => props.isValid ? `${props.theme.orange}` : `${props.theme.grey}`};
 

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { allEquipmentState, filteredAllEquipmentState, allEquipmentFilterState } from '../Shared/GlobalStates'
+import { useRecoilState } from 'recoil';
+import { allEquipmentState } from '../Shared/GlobalStates'
 import Accordion from '../Shared/Accordion'
 import FrostedBackground from '../Shared/FrostedBackground'
 import axios from 'axios';
 import styled from 'styled-components'
 import spinnerDayNight from '../../Assets/animatedDayNight.gif'
 import NoDataAddedYet from '../Shared/NoDataAddedYet'
-import { getAllEquipment } from '../Shared/Helpers'
+
 import {SelectInput} from '../Shared/ButtonsAndSuch'
 
 const Wrapper = styled.div`
@@ -69,7 +69,10 @@ const ErrorInfo = styled.p`
 
 
 const StyledSelectInput = styled(SelectInput)` 
-    margin-bottom: 1rem;
+    ${'' /* margin-bottom: 0.5rem; */}
+  
+    margin-left: 1rem;
+    width: 50%;
     option {
 
         &:first-child {
@@ -82,7 +85,7 @@ const StyledSelectInput = styled(SelectInput)`
     }
 
     @media screen and (min-width: 600px){
-        margin-bottom: 1rem;
+       
     }
 `;
 
@@ -93,8 +96,8 @@ const AllEquipment = () => {
     const [filter, setFilter] = useState('')
 
     let filteredEquipment = allEquipment;
- 
-    if(filter){
+    
+    if(filter) {
         filteredEquipment = allEquipment.filter((equipment)=> equipment.category === filter)
     }
 
@@ -110,10 +113,9 @@ const AllEquipment = () => {
         getAllEquipment();
    
     }, [])
-
     
     const updateFilter = ({target: {value}}) => {
-        console.log('filter körs')
+     
         setFilter(value);
       };
 
@@ -170,7 +172,7 @@ const AllEquipment = () => {
                     value={filter} 
                     onChange={updateFilter}
                   > 
-                    <option value='category'>Välj kategori</option>
+                    <option value=''>Välj kategori</option>
                     <option value=''>Allt</option>
                     <option value="living">Boende</option>
                     <option value="storage">Bära/Förvaring</option>
