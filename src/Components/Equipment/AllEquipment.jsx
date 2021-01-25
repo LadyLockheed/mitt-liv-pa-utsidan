@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { allEquipmentState } from '../Shared/GlobalStates'
+import { allEquipmentState, filteredAllEquipmentState, allEquipmentFilterState } from '../Shared/GlobalStates'
 import Accordion from '../Shared/Accordion'
 import FrostedBackground from '../Shared/FrostedBackground'
 import axios from 'axios';
 import styled from 'styled-components'
 import spinnerDayNight from '../../Assets/animatedDayNight.gif'
 import NoDataAddedYet from '../Shared/NoDataAddedYet'
-
+import { getAllEquipment } from '../Shared/Helpers'
+import {SelectInput} from '../Shared/ButtonsAndSuch'
 
 const Wrapper = styled.div`
 
@@ -53,7 +54,7 @@ const ErrorInfo = styled.p`
 //     left: 0;
 //     transform: ${({ toggleMenu }) => toggleMenu ? 'translateX(0)' : 'translateX(-100%)'};
 //     transition: transform 0.3s ease-in-out;
-   
+
 // `;
 
 // const FilterOption = styled.p`
@@ -67,16 +68,54 @@ const ErrorInfo = styled.p`
 // `;
 
 
+const StyledSelectInput = styled(SelectInput)` 
+    margin-bottom: 1rem;
+    option {
+
+        &:first-child {
+
+            color: ${props => props.theme.orange};
+        }
+        &:nth-child(odd){
+            background-color: ${props => props.theme.grey};  
+        }
+    }
+
+    @media screen and (min-width: 600px){
+        margin-bottom: 1rem;
+    }
+`;
 
 const AllEquipment = () => {
+
+    const [allEquipment, setAllEquipment] = useRecoilState(allEquipmentState)
+
+    const [filter, setFilter] = useState('')
+
+    let filteredEquipment = allEquipment;
+ 
+    if(filter){
+        filteredEquipment = allEquipment.filter((equipment)=> equipment.category === filter)
+    }
+
+    const [isLoading, setIsLoading] = useState(false)
+
+    const [displayErrorInfo, setDisplayErrorInfo] = useState(false)
+    const [displayNoDataInfo, setDisplayNoDataInfo] = useState(false)
+
+    const [toggleMenu, setToggleMenu] = useState(false)
 
     useEffect(() => {
 
         getAllEquipment();
-       
-       
-
+   
     }, [])
+
+    
+    const updateFilter = ({target: {value}}) => {
+        console.log('filter körs')
+        setFilter(value);
+      };
 
     async function getAllEquipment() {
         setIsLoading(true)
@@ -98,34 +137,13 @@ const AllEquipment = () => {
             setIsLoading(false)
         }
     };
-    //lägger upp allEquipment i globalstate. 
-    //TODO Flytta denna så att allequipment hämtas vid login istället
-    // const allEquipment = useRecoilValue(allEquipmentState)
-    const [allEquipment, setAllEquipment] = useRecoilState(allEquipmentState)
-
-    // const [filteredEquipmentList, setFilteredEquipmentList] = useState([])
- 
-    const [isLoading, setIsLoading] = useState(false)
-
-    const [displayErrorInfo, setDisplayErrorInfo] = useState(false)
-    const [displayNoDataInfo, setDisplayNoDataInfo] = useState(false)
-
-    const [toggleMenu, setToggleMenu] = useState(false)
 
 
-    const changeMenu = () => {
-        setToggleMenu(!toggleMenu)
-
-    }
-
-
-
-    // const filterFunc = (filter) => {
-    //    //TODO funkar ej pga att hela listan sätts om till endast det som passar filter (kategori) och sen går det inte att filtrer mer
-    //     setFilteredEquipmentList(filteredEquipmentList.filter( equipment => equipment.category === filter))
-    //             console.log('i filter functionen :',filteredEquipmentList)
+    // const changeMenu = () => {
+    //     setToggleMenu(!toggleMenu)
 
     // }
+
 
     return (
 
@@ -144,6 +162,27 @@ const AllEquipment = () => {
                 </LoadingWrapper> :
 
                 <Wrapper>
+
+                <StyledSelectInput
+                    name="category"
+                    id="category"
+                    type='text'
+                    value={filter} 
+                    onChange={updateFilter}
+                  > 
+                    <option value='category'>Välj kategori</option>
+                    <option value=''>Allt</option>
+                    <option value="living">Boende</option>
+                    <option value="storage">Bära/Förvaring</option>
+                    <option value="sleeping">Sova</option>
+                    <option value="clothes">Kläder</option>
+                    <option value="electronics">Elektronik</option>
+                    <option value="fun">Nöje</option>
+                    <option value="cooking">Laga mat</option>
+                    <option value="hygiene">Hygien</option>
+                    <option value="other">Övrigt</option>
+
+                </StyledSelectInput>
                     {/* <Button onClick={changeMenu}>Filter</Button>
             
                     <FilterWrapper toggleMenu={toggleMenu}>
@@ -160,7 +199,7 @@ const AllEquipment = () => {
                         <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('boende')}>Övrigt</FilterOption>
 
                     </FilterWrapper> */}
-                    <Accordion equipmentList={allEquipment} />
+                    <Accordion equipmentList={filteredEquipment} />
                 </Wrapper>}
 
         </FrostedBackground>

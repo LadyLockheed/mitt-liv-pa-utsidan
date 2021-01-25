@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { isAuthenticatedState, currentUserState} from '../Shared/GlobalStates';
-import { useSetRecoilState } from "recoil";
+import { isAuthenticatedState, currentUserState, allEquipmentState} from '../Shared/GlobalStates';
+import { useSetRecoilState, useRecoilState } from "recoil";
 import arrowForwardIcon from '../../Assets/arrowForward.svg'
 import Form from './Form'
 import axios from 'axios'
@@ -26,7 +26,7 @@ const Login = () => {
     const [validatePasswordMessage, setValidatePassWordMessage] = useState('x')
 
     // const [allEquipment, setAllEquipment] = useRecoilState(allEquipmentState)
-    // console.log(allEquipment)
+    // console.log('login, allEquipment: ',allEquipment)
     // async function getAllEquipment() {
    
     //     try {
@@ -59,6 +59,7 @@ const Login = () => {
                 // getAllEquipment()
                 setCurrentUser(response.data)
                 setIsAuthenticatedState(true)
+                // getAllEquipment()
                 localStorage.setItem('userName',response.data.userName)
                 history.push('/allequipment')
             }

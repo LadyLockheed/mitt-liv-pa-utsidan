@@ -99,7 +99,7 @@ const MenuFromSide = ({ isOpen, setIsOpen }) => {
 
         try {
             const response = await axios.post('/api/logOutSession')
-            console.log('log out response: ', response)
+           
         }
         catch (err) {
             console.log('Meddelande från frontend: nånting gick fel', err) 

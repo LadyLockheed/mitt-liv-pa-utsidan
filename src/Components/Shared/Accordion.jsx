@@ -143,6 +143,8 @@ const Accordion = ({ equipmentList }) => {
     const [expandedItems, setExpandedItems] = useState([]);
     const [displayModal, setDisplayModal] = useState(false)
 
+    console.log('accordion list: ',equipmentList)
+
     useEffect(() => {
         //skapar kopia av allEquipment så att ändringarna inte sker i originallistan
         setExpandedItems(equipmentList.map(equipment => {
@@ -150,7 +152,7 @@ const Accordion = ({ equipmentList }) => {
             return { ...equipment, isExpanded: false }
         }))
 
-    }, [])
+    }, [equipmentList])
 
     const toggleOpen = (item) => {
         setDisplayModal(false);
@@ -165,27 +167,22 @@ const Accordion = ({ equipmentList }) => {
         }))
     }
 
-
-
-
-   async function  deleteEquipment(id){
+   async function deleteEquipment(id){
         console.log(id)
-     
         try {
             const response = await axios.delete('/api/deleteEquipment', { data: { _id: id } })
             console.log(response)
 
+            //kör gettAllEquipment
+            //uppdatera globalstates
         }
         catch (err) {
             console.log('Meddelande från frontend: nånting gick fel', err)
-
         }
-
     }
     
     const editEquipment = (equipment) => {
-        console.log('equipment edited')
-        console.log(equipment)
+        
 
     }
     return (
