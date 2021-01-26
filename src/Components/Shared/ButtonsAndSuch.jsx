@@ -27,11 +27,16 @@ export const SecondaryButton = styled.button`
 
 export const Label = styled.label`
     font-weight: bold;
+    font-size: 0.8rem;
     display: block;
     text-align: left;
     margin-bottom: 0.3rem;
     margin-top: 0.5rem;
     text-transform: uppercase; 
+
+    @media screen and (min-width: 600px){
+        font-size: 1rem;
+    }
 
 `;
 
@@ -56,7 +61,6 @@ export const SelectInput = styled.select `
     font-family: 'Quicksand', sans-serif;
     font-size:1rem;
     padding: 0.3rem;
-
     background-color: ${props => props.theme.white};
     border:2px solid ${props => props.isValid ? `${props.theme.orange}` : `${props.theme.grey}`};
 
@@ -76,6 +80,14 @@ export const ValidateMessage = styled.span `
     visibility: ${props => props.displayMessage ? 'visible' : 'hidden'};
     margin-left: 0.5rem;
     font-weight: bold;
+    font-size: 0.8rem;
+    display:block;
+
+    @media screen and (min-width: 600px){
+        font-size: 1rem;
+    }
+
+
 `;
   
 export const theme = {

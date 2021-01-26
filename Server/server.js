@@ -6,11 +6,12 @@ const bodyParser = require('body-parser');
 const path = require('path')
 // const { cloudinary } = require('./cloudinary')
 const cors = require('cors');
-const { getAllEquipment, getUser, addNewUser, addNewEquipment, deleteEquipment } = require('./database.js');
+const { getAllEquipment, getUser, addNewUser, addNewEquipment, deleteEquipment, editEquipment } = require('./database.js');
 
 const port = 1337; // Port number
 
 const bcrypt = require('bcryptjs');
+// const { default: EditEquipment } = require('../src/Components/Equipment/EditEquipment.jsx');
 
 // middlewares
 app.use(cors());
@@ -132,7 +133,7 @@ app.get('/api/allEquipment', async (req, res) => {
 
     const userId = req.session.userId
     const allEquipment = await getAllEquipment(userId)
-   
+
     res.send(allEquipment);
 })
 
@@ -151,13 +152,26 @@ app.post('/api/addNewEquipment', async (req, res) => {
 
 })
 
-app.delete('/api/deleteEquipment', async (req, res) =>{
-
-    console.log('equipment som ska tas bort: ',req.body._id)
+app.delete('/api/deleteEquipment', async (req, res) => {
 
     const equipmentId = req.body._id
     const deletedEquipment = await deleteEquipment(equipmentId)
     res.send(deletedEquipment)
+})
+
+app.put('/api/editEquipment', async (req, res) => {
+
+    const updatedEquipment = {
+        equipment: req.body.updatedEquipment,
+        category: req.body.updatedCategory,
+        weight: req.body.updatedWeight,
+        info: req.body.updatedInfo,
+        userId: req.session.userId
+    }
+    const equipmentId = req.body.equipmentId
+
+    const editedEquipment = await editEquipment(updatedEquipment, equipmentId)
+    res.send(editedEquipment)
 })
 
 

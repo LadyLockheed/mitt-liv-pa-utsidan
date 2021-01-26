@@ -9,15 +9,23 @@ import Spinner from '../Shared/Spinner'
 
 const Wrapper = styled.div`
    
-    margin: 1rem 2rem 2rem 2rem;
+    ${'' /* margin: 1rem 2rem 2rem 2rem; */}
     background-color: ${props => props.theme.mintGreen};
     margin: 1rem;
     padding: 1rem;
     border-radius: 3px;
+
+    @media  screen and (min-width: 600px){
+
+        margin: 2rem 2rem 2rem 2rem;
+        
+
+    }
+
 `
 
 const StyledSelectInput = styled(SelectInput)` 
-    margin-bottom: 1rem;
+
     option {
 
         &:first-child {
@@ -29,9 +37,6 @@ const StyledSelectInput = styled(SelectInput)`
         }
     }
 
-    @media screen and (min-width: 600px){
-        margin-bottom: 1rem;
-    }
 `;
 
 const TextArea = styled.textarea`
@@ -76,12 +81,7 @@ const AddEquipment = () => {
                 setIsAddingEquipment(false)
             }
             else{
-                // console.log('success, ny equipmenttillagd: ', responseAddNewEquipment)
-                // setIsAddingEquipment(false)
-                // setEquipment('')
-                // setCategory('')
-                // setWeight('')
-                // setInfo('')
+         
                 history.push('/allequipment')
             }
            
@@ -117,10 +117,8 @@ const AddEquipment = () => {
 
     const handleSubmit = () => {
 
-        console.log('handlesubmit')
         //resetar så att validering kan börja om ifall man enbart fyllt i vissa fält rätt
         resetValidation();
-
         handleAddNewEquipment();
 
     }
@@ -189,12 +187,11 @@ const AddEquipment = () => {
                     value={info}
                     onChange={event => setInfo(event.target.value)}></TextArea>
 
-                <SubmitButton onClick={(event) => handleSubmit(event)}>Lägg till</SubmitButton>
+                <SubmitButton onClick={() => handleSubmit()}>Lägg till</SubmitButton>
 
             </Wrapper>
         }
         </FrostedBackground>
-
 
     )
 }

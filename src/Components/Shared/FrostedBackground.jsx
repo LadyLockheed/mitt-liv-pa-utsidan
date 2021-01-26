@@ -41,7 +41,7 @@ const Container = styled.div`
 `
 const Headline = styled.h1`
     color:${props => props.theme.black};
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight:bold;
     text-align:center;
     text-transform: uppercase;

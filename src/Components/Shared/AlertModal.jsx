@@ -4,7 +4,7 @@ import { Button, SecondaryButton } from './ButtonsAndSuch'
 
 
 const ModalWrapper = styled.div`
-
+    min-width: 15rem;
     background: ${props=> props.theme.white};
     color: ${props=> props.theme.white};
     text-align:center;
@@ -66,9 +66,7 @@ const AlertModal = (props) => {
 
 
     const {setDisplayModal, confirmFunction} = props
-    console.log('i alertmodal')
 
-    
     const handleConfirm = () => {
         setDisplayModal(false);
         confirmFunction()

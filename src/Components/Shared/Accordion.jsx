@@ -6,6 +6,7 @@ import trashcanIcon from '../../Assets/trashcanIcon.svg'
 import { allEquipmentState } from './GlobalStates'
 import { useSetRecoilState } from 'recoil'
 import AlertModal from './AlertModal'
+import EditEquipment from '../Equipment/EditEquipment'
 import axios from 'axios'
 import SpinnerFireLog from './SpinnerFireLog'
 
@@ -22,6 +23,7 @@ const ItemWrapper = styled.div`
     grid-template-columns: 1fr 1fr;
     padding:0rem 1rem 0rem 1rem;
     cursor:pointer;
+    position: relative;
 
     &:nth-child(odd) {
         background-color:#D4DBD4;
@@ -161,7 +163,7 @@ const Accordion = ({ equipmentList }) => {
     const [isDeleting, setIsDeleting] = useState(false)
 
     const [displayModal, setDisplayModal] = useState(false)
-    console.log(displayModal)
+    const [displayEditEquipment, setDisplayEditEquipment] = useState(false)
 
     const setAllEquipment = useSetRecoilState(allEquipmentState)
 
@@ -186,6 +188,13 @@ const Accordion = ({ equipmentList }) => {
             }
 
         }))
+    }
+
+
+    const handleDelete = (id)=>{
+      
+        setDisplayModal(true)
+        setDeleteItemId(id)
     }
 
     async function deleteEquipment(id) {
@@ -215,66 +224,77 @@ const Accordion = ({ equipmentList }) => {
         }
     };
 
-    const editEquipment = (equipment) => {
-
+    
+    const handleEdit = (id) =>{
+        console.log('id: ', id)
+        setDisplayEditEquipment(true)
+        setEditItemId(id)
 
     }
+  
 
+    const [deleteItemId, setDeleteItemId] = useState('')
+    const [editItemId, setEditItemId] = useState('')
+   
     return (
 
         <Wrapper>
 
-            {isDeleting ? <SpinnerFireLog text={'bränner upp skiten'} /> :
-                <>
-                    {expandedItems.map((item, index) => {
-                        return (
+            {isDeleting && <SpinnerFireLog text={'bränner upp skiten'} />}
+
+           
 
 
-                            <ItemWrapper key={item.equipment + index} >
-                                <TopRowWrapper >
-                                    <CategoryDot categoryColor={item.category} />
+            {!isDeleting &&  <>
+                {expandedItems.map((item, index) => {
+                    return (
 
-                                    <Name>{item.equipment}</Name>
-                                    <Weight>{item.weight}g</Weight>
-                                    <DropDownArrow src={dropDownArrow} isUpsideDown={item.isExpanded} onClick={() => toggleOpen(item)}></DropDownArrow>
-                                </TopRowWrapper>
-                                {item.isExpanded &&
+                        <ItemWrapper key={item.equipment + index} >
+                            <TopRowWrapper >
+                                <CategoryDot categoryColor={item.category} />
 
-                                    <Collapse>
-                                        <Info>{item.category} <br />{item.info}</Info>
-                                        <IconWrapper>
+                                <Name>{item.equipment}</Name>
+                                <Weight>{item.weight}g</Weight>
+                                <DropDownArrow src={dropDownArrow} isUpsideDown={item.isExpanded} onClick={() => toggleOpen(item)}></DropDownArrow>
+                            </TopRowWrapper>
+                            {item.isExpanded &&
 
-                                            <EditIcon src={editIcon} onClick={() => editEquipment(item._id)} />
+                                <Collapse>
 
-                                            {/* <TrachcanIcon src={trashcanIcon} onClick={() => deleteEquipment(item._id)}></TrachcanIcon> */}
+                                    <Info>{item.category} <br />{item.info}</Info>
+                                    <IconWrapper>
 
-                                            <TrachcanIcon src={trashcanIcon} onClick={() => setDisplayModal(true)}></TrachcanIcon>
-                                            {displayModal &&
-                                                <AlertModal
+                                        <EditIcon src={editIcon} onClick={() => handleEdit(item._id)} />
 
-                                                    setDisplayModal={setDisplayModal}
+                                        {displayEditEquipment && (editItemId === item._id) && <EditEquipment setDisplayEditEquipment={setDisplayEditEquipment} equipmentToEdit={item}/>}
 
-                                                    confirmFunction={() => deleteEquipment(item._id)} />
-                                            }
+                                        <TrachcanIcon src={trashcanIcon} onClick={()=> handleDelete(item._id)}></TrachcanIcon>
+
+                                        {displayModal && (deleteItemId === item._id) && <AlertModal
+                                            setDisplayModal={setDisplayModal}
+                                            confirmFunction={() => deleteEquipment(item._id)} />}
+
+                                       
+
+                                    </IconWrapper>
+
+                                </Collapse>
+                            }
+
+                        </ItemWrapper>
+
+                    )
+                })}
+            </>}
 
 
-                                        </IconWrapper>
 
-                                    </Collapse>
-                                }
 
-                            </ItemWrapper>
-
-                        )
-                    })} </>
-            }
 
 
 
 
         </Wrapper>
-
-
 
     )
 }
