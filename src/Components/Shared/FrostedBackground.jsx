@@ -7,6 +7,7 @@ const Container = styled.div`
     
     background: inherit;
     width:95%;
+    min-height: 28rem;
     box-shadow:0 0 1rem 0 rgba(0,0,0, .2);
     position: relative;
     margin-left:auto;

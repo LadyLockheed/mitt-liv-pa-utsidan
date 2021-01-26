@@ -4,12 +4,10 @@ import { Button, SecondaryButton } from './ButtonsAndSuch'
 
 
 const ModalWrapper = styled.div`
-    background: ${props=> props.theme.black};
+
+    background: ${props=> props.theme.white};
     color: ${props=> props.theme.white};
-    display: ${props => props.displayModal ? 'block' : 'none'};
     text-align:center;
-    width:90%;
-    height:40vh;
     position:absolute;
     top: 50%;
     left: 50%;
@@ -17,56 +15,58 @@ const ModalWrapper = styled.div`
     z-index: 4;
     padding:0.5rem;
     border-radius:3px;
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
 
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     @media screen and (min-width: 600px){
 
         width: 50%;
     }
+
+   
 `; 
-const InnerWrapper = styled.div `
-    display:grid;
-    grid-template-columns:repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    ${'' /* width:90%; */}
-    height:40vh;
-`;
+
 
 const Headline = styled.h1 `
     text-align:center;
     grid-column:2/5;
     font-size: 1rem;
+    color:black;
 `;
 const CloseButton = styled.button `
-    height: 1.5rem;
+    height: 1.4rem;
     width: 1.5rem;
     border-radius: 3px;
+    border: 1px solid ${props=> props.theme.darkgrey};
+    color: ${props => props.theme.black};
     grid-column: 5/6;
     justify-self: end;
-    border: none;
-    cursor: pointer;
- 
 
-`
+    cursor: pointer;
+    padding-bottom:3px;
+ 
+`;
 const ConfirmButton = styled(Button) `
     grid-column: 2/5;
-    grid-row:3/4;
-    height:3rem;
-    align-self:end;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
     
 `;
 
 const RegretButton = styled(SecondaryButton)`
     grid-column: 2/5;
-    grid-row:4/5;
-    height:3rem;
-    align-self:end;
+    margin-bottom: 1rem;
+    color: ${props => props.theme.black};
+    background-color: ${props => props.theme.white};
 `;
 
 //den här ska ta props för headline, vad som ska stå på knappen och en funktion för vad som ska göra om man klickar på confirm
 const AlertModal = (props) => {
 
 
-    const {displayModal, setDisplayModal, headline, confirmFunction} = props
+    const {setDisplayModal, confirmFunction} = props
+    console.log('i alertmodal')
 
     
     const handleConfirm = () => {
@@ -77,14 +77,14 @@ const AlertModal = (props) => {
 
     return (
 
-        <ModalWrapper displayModal={displayModal}>
+        <ModalWrapper>
 
-            <InnerWrapper>
-                <Headline>{headline}</Headline>
+           
+                <Headline>Är du riktigt riktigt riktigt säker?</Headline>
                 <CloseButton onClick={()=> setDisplayModal(false)}>x</CloseButton>
                 <ConfirmButton onClick={ handleConfirm }>Hell yeah</ConfirmButton>
                 <RegretButton onClick={()=> setDisplayModal(false)}>Mjaeh</RegretButton>
-            </InnerWrapper>
+          
             
         </ModalWrapper>
 

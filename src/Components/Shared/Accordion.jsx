@@ -7,10 +7,12 @@ import { allEquipmentState } from './GlobalStates'
 import { useSetRecoilState } from 'recoil'
 import AlertModal from './AlertModal'
 import axios from 'axios'
+import SpinnerFireLog from './SpinnerFireLog'
 
 
 const Wrapper = styled.div`
     margin: 1rem 1rem 2rem 1rem;
+  
     @media screen and (min-width:600px;){
         margin: 1rem 2rem 2rem 2rem;
     }
@@ -47,6 +49,7 @@ const CategoryDot = styled.div`
     width: 0.7rem;
     height: 0.7rem;
     border-radius: 6px;
+
     display: inline-block;
     grid-column: 1/2;
     margin-right:0.7rem;
@@ -80,6 +83,7 @@ const Weight = styled.p`
     grid-column: 12/13;
     font-size:0.9rem;
     margin-left:0.2rem;
+    justify-self: end;
    
     @media screen and (min-width:350px){
         font-weight:1rem;
@@ -99,7 +103,7 @@ const DropDownArrow = styled.img`
     }
  
 `;
-const BottomRowWrapper = styled.div` 
+const Collapse = styled.div` 
     grid-column: 1/3;
     display: grid;
     grid-template-columns: 6fr 1fr;
@@ -130,23 +134,36 @@ const EditIcon = styled.img`
     height: 1.2rem;
     width: auto;
     margin-bottom: 1rem;
-   
+    transition: all .2s ease-in-out;
+  
+  &:hover {
+    transform: scale(1.4);
+  }
     
 `;
 const TrachcanIcon = styled.img`
     height: 1.5rem;
     width: auto;
     align-self:end;
+    transition: all .2s ease-in-out;
+  
+  &:hover {
+    transform: scale(1.4);
+  }
     
 `;
+
 
 const Accordion = ({ equipmentList }) => {
 
     const [expandedItems, setExpandedItems] = useState([]);
+
+    const [isDeleting, setIsDeleting] = useState(false)
+
     const [displayModal, setDisplayModal] = useState(false)
+    console.log(displayModal)
 
-    const  setAllEquipment = useSetRecoilState(allEquipmentState)
-
+    const setAllEquipment = useSetRecoilState(allEquipmentState)
 
 
     useEffect(() => {
@@ -172,30 +189,29 @@ const Accordion = ({ equipmentList }) => {
     }
 
     async function deleteEquipment(id) {
-     
+
+        setIsDeleting(true)
         try {
             const response = await axios.delete('/api/deleteEquipment', { data: { _id: id } })
             console.log(response)
             getAllEquipment();
-       
+            setIsDeleting(false)
+
         }
         catch (err) {
             console.log('Meddelande från frontend: nånting gick fel', err)
         }
     }
 
-  
+
     async function getAllEquipment() {
-        //TODO setIsLoading true
+
         try {
             const response = await axios.get('/api/allEquipment')
-            
             setAllEquipment(response.data)
-
         }
         catch (err) {
             console.log('Meddelande från frontend: nånting gick fel', err)
-
         }
     };
 
@@ -207,43 +223,54 @@ const Accordion = ({ equipmentList }) => {
     return (
 
         <Wrapper>
-            {expandedItems.map((item, index) => {
-                return (
-                    <ItemWrapper key={item.equipment + index} >
-                        <TopRowWrapper onClick={() => toggleOpen(item)}>
-                            <CategoryDot categoryColor={item.category} />
-                            <Name>{item.equipment}</Name>
-                            <Weight>{item.weight}g</Weight>
-                            <DropDownArrow src={dropDownArrow} isUpsideDown={item.isExpanded}></DropDownArrow>
-                        </TopRowWrapper>
-                        {item.isExpanded &&
 
-                            <BottomRowWrapper>
-                                <Info>{item.category} <br />{item.info}</Info>
-                                <IconWrapper>
-
-                                    <EditIcon src={editIcon} onClick={() => editEquipment(item._id)} />
-
-                                    <TrachcanIcon src={trashcanIcon} onClick={() => deleteEquipment(item._id)}></TrachcanIcon>
-                                    {/* <TrachcanIcon src={trashcanIcon} onClick={()=> setDisplayModal(!displayModal)}></TrachcanIcon> */}
-
-                                    {/* {displayModal && 
-                                    <AlertModal 
-                                    setDisplayModal = {setDisplayModal} 
-                                    displayModal = {displayModal}
-                                    headline = {'Are u sure?'}
-                                    confirmFunction = { deleteEquipment }/>
-                                    } */}
-
-                                </IconWrapper>
-
-                            </BottomRowWrapper>
-                        }
+            {isDeleting ? <SpinnerFireLog text={'bränner upp skiten'} /> :
+                <>
+                    {expandedItems.map((item, index) => {
+                        return (
 
 
-                    </ItemWrapper>
-                )
-            })}
+                            <ItemWrapper key={item.equipment + index} >
+                                <TopRowWrapper >
+                                    <CategoryDot categoryColor={item.category} />
+
+                                    <Name>{item.equipment}</Name>
+                                    <Weight>{item.weight}g</Weight>
+                                    <DropDownArrow src={dropDownArrow} isUpsideDown={item.isExpanded} onClick={() => toggleOpen(item)}></DropDownArrow>
+                                </TopRowWrapper>
+                                {item.isExpanded &&
+
+                                    <Collapse>
+                                        <Info>{item.category} <br />{item.info}</Info>
+                                        <IconWrapper>
+
+                                            <EditIcon src={editIcon} onClick={() => editEquipment(item._id)} />
+
+                                            {/* <TrachcanIcon src={trashcanIcon} onClick={() => deleteEquipment(item._id)}></TrachcanIcon> */}
+
+                                            <TrachcanIcon src={trashcanIcon} onClick={() => setDisplayModal(true)}></TrachcanIcon>
+                                            {displayModal &&
+                                                <AlertModal
+
+                                                    setDisplayModal={setDisplayModal}
+
+                                                    confirmFunction={() => deleteEquipment(item._id)} />
+                                            }
+
+
+                                        </IconWrapper>
+
+                                    </Collapse>
+                                }
+
+                            </ItemWrapper>
+
+                        )
+                    })} </>
+            }
+
+
+
 
         </Wrapper>
 

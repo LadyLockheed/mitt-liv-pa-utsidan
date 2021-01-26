@@ -22,14 +22,14 @@ const NoDataText = styled.h3`
 `;
 
 
-const NoDataAddedYet = ()=> {
+const SpinnerFireLog = ({text})=> {
 
     return (
   
 
             <InnerWrapper>
                 <AnimatedCampfireGif src ={animatedCampfire}/>
-                <NoDataText>Ingen utrustning tillagd än</NoDataText>
+                <NoDataText>{text}</NoDataText>
             </InnerWrapper>
           
       
@@ -37,4 +37,4 @@ const NoDataAddedYet = ()=> {
 
 }
 
-export default NoDataAddedYet
+export default SpinnerFireLog

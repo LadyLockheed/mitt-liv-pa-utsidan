@@ -6,7 +6,7 @@ import FrostedBackground from '../Shared/FrostedBackground'
 import axios from 'axios';
 import styled from 'styled-components'
 import spinnerDayNight from '../../Assets/animatedDayNight.gif'
-import NoDataAddedYet from '../Shared/NoDataAddedYet'
+import SpinnerFireLog from '../Shared/SpinnerFireLog'
 
 import {SelectInput} from '../Shared/ButtonsAndSuch'
 
@@ -36,41 +36,9 @@ const ErrorInfo = styled.p`
     margin-bottom:0;
 `;
 
-// const Button = styled.button`
-//     margin-left: 1rem;
-//     padding: 0.3rem;
-//     border: 2px solid orange;
-//     background: none;
-//     cursor: pointer;
-// `;
-
-// const FilterWrapper = styled.div` 
-//     background-color: ${props => props.theme.yellow};
-//     border-radius: 3px;
-//     height: auto;
-//     width: 60%;
-//     position: absolute;
-//     top: 1rem;
-//     left: 0;
-//     transform: ${({ toggleMenu }) => toggleMenu ? 'translateX(0)' : 'translateX(-100%)'};
-//     transition: transform 0.3s ease-in-out;
-
-// `;
-
-// const FilterOption = styled.p`
-
-//     margin-top:none;
-//     color: ${props => props.toggleMenu ? 'black' : 'pink'};
-//     transition: color 2s ease;
-//     cursor: pointer;
-//     margin-left: 1rem;
-//     border-radius: 3px;
-// `;
-
 
 const StyledSelectInput = styled(SelectInput)` 
-    ${'' /* margin-bottom: 0.5rem; */}
-  
+
     margin-left: 1rem;
     width: 50%;
     option {
@@ -106,8 +74,6 @@ const AllEquipment = () => {
     const [displayErrorInfo, setDisplayErrorInfo] = useState(false)
     const [displayNoDataInfo, setDisplayNoDataInfo] = useState(false)
 
-    const [toggleMenu, setToggleMenu] = useState(false)
-
     useEffect(() => {
 
         getAllEquipment();
@@ -140,13 +106,6 @@ const AllEquipment = () => {
         }
     };
 
-
-    // const changeMenu = () => {
-    //     setToggleMenu(!toggleMenu)
-
-    // }
-
-
     return (
 
         <FrostedBackground headline={'All utrustning'} use>
@@ -154,7 +113,7 @@ const AllEquipment = () => {
 
             {displayErrorInfo && <ErrorInfo>Nån gick vilse. Kolla kompassen och försök igen</ErrorInfo>}
 
-            {displayNoDataInfo && <NoDataAddedYet />}
+            {displayNoDataInfo && <SpinnerFireLog text = {'Inget tillagt än'} />}
 
 
             {isLoading && !displayNoDataInfo ?
@@ -185,22 +144,7 @@ const AllEquipment = () => {
                     <option value="other">Övrigt</option>
 
                 </StyledSelectInput>
-                    {/* <Button onClick={changeMenu}>Filter</Button>
-            
-                    <FilterWrapper toggleMenu={toggleMenu}>
-
-         
-                        <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('boende')}>Boende</FilterOption>
-                        <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('clothes')}>Kläder</FilterOption>
-                        <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('sleeping')}>Sova</FilterOption>
-                        <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('fun')}>Nöje</FilterOption>
-                        <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('cooking')}>Matlagning</FilterOption>
-                        <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('electronics')}>Elektronik</FilterOption>
-                        <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('hyg')}>Hygien</FilterOption>
-                        <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('boende')}>Bära/förvaring</FilterOption>
-                        <FilterOption toggleMenu={toggleMenu} onClick={() => filterFunc('boende')}>Övrigt</FilterOption>
-
-                    </FilterWrapper> */}
+               
                     <Accordion equipmentList={filteredEquipment} />
                 </Wrapper>}
 
