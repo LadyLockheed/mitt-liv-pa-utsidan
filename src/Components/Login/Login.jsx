@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { isAuthenticatedState, currentUserState, allEquipmentState} from '../Shared/GlobalStates';
-import { useSetRecoilState, useRecoilState } from "recoil";
+import { isAuthenticatedState, currentUserState } from '../Shared/GlobalStates';
+import { useSetRecoilState } from "recoil";
 import arrowForwardIcon from '../../Assets/arrowForward.svg'
 import Form from './Form'
 import axios from 'axios'

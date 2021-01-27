@@ -98,7 +98,7 @@ const MenuFromSide = ({ isOpen, setIsOpen }) => {
     async function logOutSession() {
 
         try {
-            const response = await axios.post('/api/logOutSession')
+            await axios.post('/api/logOutSession')
            
         }
         catch (err) {

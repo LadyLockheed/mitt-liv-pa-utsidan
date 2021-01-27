@@ -1,10 +1,13 @@
 import axios from 'axios'
 
-export const  getAllEquipment = async () => {
-
+export const getAllEquipment = async (g) => {
+    
+  
     try {
 
         const response = await axios.get('/api/allEquipment')
+    
+
         return response.data
 
     }

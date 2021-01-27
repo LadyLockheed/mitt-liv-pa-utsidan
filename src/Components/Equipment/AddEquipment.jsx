@@ -9,7 +9,7 @@ import Spinner from '../Shared/Spinner'
 
 const Wrapper = styled.div`
    
-    ${'' /* margin: 1rem 2rem 2rem 2rem; */}
+   
     background-color: ${props => props.theme.mintGreen};
     margin: 1rem;
     padding: 1rem;
@@ -19,7 +19,6 @@ const Wrapper = styled.div`
 
         margin: 2rem 2rem 2rem 2rem;
         
-
     }
 
 `

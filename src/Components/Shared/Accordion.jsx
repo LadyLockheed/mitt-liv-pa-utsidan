@@ -159,14 +159,12 @@ const TrachcanIcon = styled.img`
 const Accordion = ({ equipmentList }) => {
 
     const [expandedItems, setExpandedItems] = useState([]);
-
     const [isDeleting, setIsDeleting] = useState(false)
-
     const [displayModal, setDisplayModal] = useState(false)
     const [displayEditEquipment, setDisplayEditEquipment] = useState(false)
-
     const setAllEquipment = useSetRecoilState(allEquipmentState)
-
+    const [deleteItemId, setDeleteItemId] = useState('')
+    const [editItemId, setEditItemId] = useState('')
 
     useEffect(() => {
         //skapar kopia av allEquipment så att ändringarna inte sker i originallistan
@@ -190,9 +188,8 @@ const Accordion = ({ equipmentList }) => {
         }))
     }
 
+    const handleDelete = (id) => {
 
-    const handleDelete = (id)=>{
-      
         setDisplayModal(true)
         setDeleteItemId(id)
     }
@@ -201,51 +198,43 @@ const Accordion = ({ equipmentList }) => {
 
         setIsDeleting(true)
         try {
-            const response = await axios.delete('/api/deleteEquipment', { data: { _id: id } })
+         const response = await axios.delete('/api/deleteEquipment', { data: { _id: id } })
             console.log(response)
             getAllEquipment();
-            setIsDeleting(false)
+            
 
         }
         catch (err) {
             console.log('Meddelande från frontend: nånting gick fel', err)
         }
     }
-
 
     async function getAllEquipment() {
 
         try {
             const response = await axios.get('/api/allEquipment')
             setAllEquipment(response.data)
+            setIsDeleting(false)
         }
         catch (err) {
             console.log('Meddelande från frontend: nånting gick fel', err)
         }
     };
 
-    
-    const handleEdit = (id) =>{
-        console.log('id: ', id)
+    const handleEdit = (id) => {
         setDisplayEditEquipment(true)
         setEditItemId(id)
-
     }
-  
 
-    const [deleteItemId, setDeleteItemId] = useState('')
-    const [editItemId, setEditItemId] = useState('')
-   
+
     return (
 
         <Wrapper>
 
             {isDeleting && <SpinnerFireLog text={'bränner upp skiten'} />}
 
-           
 
-
-            {!isDeleting &&  <>
+            {!isDeleting && <>
                 {expandedItems.map((item, index) => {
                     return (
 
@@ -266,15 +255,15 @@ const Accordion = ({ equipmentList }) => {
 
                                         <EditIcon src={editIcon} onClick={() => handleEdit(item._id)} />
 
-                                        {displayEditEquipment && (editItemId === item._id) && <EditEquipment setDisplayEditEquipment={setDisplayEditEquipment} equipmentToEdit={item}/>}
+                                        {displayEditEquipment && (editItemId === item._id) && <EditEquipment setDisplayEditEquipment={setDisplayEditEquipment} equipmentToEdit={item} />}
 
-                                        <TrachcanIcon src={trashcanIcon} onClick={()=> handleDelete(item._id)}></TrachcanIcon>
+                                        <TrachcanIcon src={trashcanIcon} onClick={() => handleDelete(item._id)}></TrachcanIcon>
 
                                         {displayModal && (deleteItemId === item._id) && <AlertModal
                                             setDisplayModal={setDisplayModal}
                                             confirmFunction={() => deleteEquipment(item._id)} />}
 
-                                       
+
 
                                     </IconWrapper>
 

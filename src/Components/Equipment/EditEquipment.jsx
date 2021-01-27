@@ -1,10 +1,15 @@
 import React, { useState } from 'react'
+import Spinner from '../Shared/Spinner'
 
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom'
+
 import { Button, Label, InputField, SelectInput, ValidateMessage } from '../Shared/ButtonsAndSuch'
 import axios from 'axios';
-import Spinner from '../Shared/Spinner'
+
+import { allEquipmentState } from '../Shared/GlobalStates'
+import { useSetRecoilState } from 'recoil'
+
+// import { elementHeightState } from '../Shared/GlobalStates'
 
 
 const Wrapper = styled.div`
@@ -16,7 +21,6 @@ const Wrapper = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
     z-index: 4;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
@@ -38,18 +42,17 @@ const CloseButton = styled.button`
     border: 1px solid ${props => props.theme.darkgrey};
     color: ${props => props.theme.black};
     cursor: pointer;
-    padding-bottom:3px;
+    margin-bottom: 0.3rem;
+ 
 `;
 
 const StyledSelectInput = styled(SelectInput)` 
-    ${'' /* margin-bottom: 1rem; */}
     padding:0.1rem;
     font-size: 0.8rem;
 
     option {
 
         &:first-child {
-
             color: ${props => props.theme.orange};
         }
         &:nth-child(odd){
@@ -63,21 +66,21 @@ const StyledLabel = styled(Label)`
     font-size:0.8rem;
     margin-top: 0.3rem;
     margin-bottom: 0.1rem;
-    
 
 `;
 const StyledInputField = styled(InputField)`
    padding: 0.1rem;
  
 `;
-
+const StyledValidateMessage = styled(ValidateMessage)`
+    font-size: 0.8rem;
+`
 const TextArea = styled.textarea`
     width: 100%;
     border-radius: 3px;
     border: none;
     resize: none;
 `;
-
 const SubmitButton = styled(Button)`
     display: block;
     margin: auto;
@@ -88,39 +91,45 @@ const SubmitButton = styled(Button)`
 `;
 
 const EditEquipment = (props) => {
+    // useEffect(() => {
+    //     //get height from wrapper and use to set height on Spinner OuterWrapper
+    //     async function getHeightOfElement() {
 
+    //         const box = await document.getElementById('foo')
+    //         const height = box.offsetHeight
+    //         setElementHeight(height)
+
+    //     }
+        
+    //     getHeightOfElement()
+
+    // }, [])
+    // const setElementHeight = useSetRecoilState(elementHeightState)
     const { setDisplayEditEquipment, equipmentToEdit } = props;
-   
+  
+    const setAllEquipment = useSetRecoilState(allEquipmentState)
+
     const [equipment, setEquipment] = useState(equipmentToEdit.equipment)
     const [category, setCategory] = useState(equipmentToEdit.category)
     const [weight, setWeight] = useState(equipmentToEdit.weight)
     const [info, setInfo] = useState(equipmentToEdit.info)
 
-    //variabler för att visa all validering (border och text)
     const [validateEquipment, setValidateEquipment] = useState(false)
     const [validateWeight, setValidateWeight] = useState(false)
     const [validateCategory, setValidateCategory] = useState(false)
 
-    const [isUpdatingEquipment, setIsUpdatingEquipment] = useState(false)
+    const [isEditing, setIsEditing]= useState(false)
 
-    const history = useHistory()
 
     async function editEquipment() {
 
         try {
-            const responseUpdatedEquipment = await axios.put('/api/editEquipment', {
-                updatedEquipment: equipment, updatedCategory: category, updatedWeight: weight, updatedInfo: info, equipmentId:equipmentToEdit._id
+            await axios.put('/api/editEquipment', {
+                updatedEquipment: equipment, updatedCategory: category, updatedWeight: weight, updatedInfo: info, equipmentId: equipmentToEdit._id
             })
-            console.log('frontend response: ',responseUpdatedEquipment)
 
-            // if(!responseAddNewEquipment){
-            //     console.log('nånting gick fel nånstans')
-            //     setIsAddingEquipment(false)
-            // }
-            // else{
-
-            //     history.push('/allequipment')
-            // }
+            getAllEquipment()
+            setDisplayEditEquipment(false)
 
         }
         catch (err) {
@@ -128,9 +137,24 @@ const EditEquipment = (props) => {
         }
     }
 
+    async function getAllEquipment() {
 
+        try {
+            const response = await axios.get('/api/allEquipment')
+            setAllEquipment(response.data)
+        }
+        catch (err) {
+            console.log('Meddelande från frontend: nånting gick fel', err)
+        }
+    };
 
-    //validerar frontend
+    const resetValidation = () => {
+
+        setValidateEquipment(false);
+        setValidateWeight(false)
+        setValidateCategory(false)
+    }
+
     const handleEditEquipment = () => {
 
         resetValidation();
@@ -142,106 +166,86 @@ const EditEquipment = (props) => {
             if (category === 'category' || category === '') { setValidateCategory(true); }
             return
         }
-        // setIsUpdatingEquipment(true)
+        setIsEditing(true)
         editEquipment()
 
     }
 
-    const resetValidation = () => {
-
-        setValidateEquipment(false);
-        setValidateWeight(false)
-        setValidateCategory(false)
-    }
-
-    // const handleSubmit = () => {
-
-    //     //resetar så att validering kan börja om ifall man enbart fyllt i vissa fält rätt
-
-    //     handleUpdateEquipment();
-
-    // }
-
-
     return (
+  
+        <Wrapper id='foo'>
+        {isEditing ? <Spinner spinnerMessage={'uppdaterar...'}/> :
         <>
+            <TopWrapper>
+                <StyledLabel htmlFor='equipment'>Ändra utrustning</StyledLabel>
+                <CloseButton onClick={() => setDisplayEditEquipment(false)}>x</CloseButton>
+                {/* Equipment */}
 
-            {isUpdatingEquipment ? <Spinner spinnerMessage={'utför ändring...'} /> :
-                <Wrapper>
-                    <TopWrapper>
-                        <StyledLabel htmlFor='equipment'>Utrustning</StyledLabel>
-                        <CloseButton onClick={() => setDisplayEditEquipment(false)}>x</CloseButton>
-                        {/* Equipment */}
+            </TopWrapper>
+            <StyledInputField
+                type='text'
+                id='equipment'
+                value={equipment}
+                onChange={event => setEquipment(event.target.value)}
+                isValid={validateEquipment}
+            />
+            <StyledValidateMessage displayMessage={validateEquipment}>Vad är det för pryl?</StyledValidateMessage>
 
-                    </TopWrapper>
-                    <StyledInputField
-                        type='text'
-                        id='equipment'
-                        value={equipment}
-                        onChange={event => setEquipment(event.target.value)}
-                        isValid={validateEquipment}
-                    />
-                    <ValidateMessage displayMessage={validateEquipment}>Vad är det för pryl?</ValidateMessage>
+            {/* Category */}
 
-                    {/* Category */}
+            <StyledLabel>Ändra kategori</StyledLabel>
 
-                    <StyledLabel>Kategori</StyledLabel>
+            <StyledSelectInput
+                name="category"
+                id="category"
+                type='text'
+                value={category}
+                isValid={validateCategory}
+                onChange={event => setCategory(event.target.value)}>
+                <option value='category'>Välj kategori</option>
+                <option value="living">Boende</option>
+                <option value="storage">Bära/Förvaring</option>
+                <option value="sleeping">Sova</option>
+                <option value="clothes">Kläder</option>
+                <option value="electronics">Elektronik</option>
+                <option value="fun">Nöje</option>
+                <option value="cooking">Laga mat</option>
+                <option value="hygiene">Hygien</option>
+                <option value="other">Övrigt</option>
 
-                    <StyledSelectInput
-                        name="category"
-                        id="category"
-                        type='text'
-                        value={category}
-                        isValid={validateCategory}
-                        onChange={event => setCategory(event.target.value)}>
-                        <option value='category'>Välj kategori</option>
-                        <option value="living">Boende</option>
-                        <option value="storage">Bära/Förvaring</option>
-                        <option value="sleeping">Sova</option>
-                        <option value="clothes">Kläder</option>
-                        <option value="electronics">Elektronik</option>
-                        <option value="fun">Nöje</option>
-                        <option value="cooking">Laga mat</option>
-                        <option value="hygiene">Hygien</option>
-                        <option value="other">Övrigt</option>
+            </StyledSelectInput>
 
-                    </StyledSelectInput>
+            <StyledValidateMessage displayMessage={validateCategory}>What for stuff now?</StyledValidateMessage>
 
-                    <ValidateMessage displayMessage={validateCategory}>What for stuff now?</ValidateMessage>
+            {/* Weight */}
+            <StyledLabel htmlFor='weight'>Ändra vikt</StyledLabel>
+            <StyledInputField
+                type='number'
+                id='weight'
+                step="0.1"
+                placeholder='(g)'
+                value={weight}
+                onChange={event => setWeight(event.target.value)}
+                isValid={validateWeight}
+            />
+            <StyledValidateMessage displayMessage={validateWeight}>Vikten är viktig</StyledValidateMessage>
 
+            {/* Info */}
+            <StyledLabel htmlFor='info'>Ändra info</StyledLabel>
+            <TextArea
+                id='info'
+                rows='2'
+                type='text'
+                value={info}
+                onChange={event => setInfo(event.target.value)}></TextArea>
 
+            <SubmitButton onClick={() => handleEditEquipment()}>Uppdatera</SubmitButton>
+            </>
+        }
+        </Wrapper>
 
-                    {/* Weight */}
-                    <StyledLabel htmlFor='weight'>Vikt</StyledLabel>
-                    <StyledInputField
-                        type='number'
-                        id='weight'
-                        step="0.1"
-                        placeholder='(g)'
-                        value={weight}
-                        onChange={event => setWeight(event.target.value)}
-                        isValid={validateWeight}
-                    />
-                    <ValidateMessage displayMessage={validateWeight}>Vikten är viktig</ValidateMessage>
-
-
-
-                    {/* Info */}
-                    <StyledLabel htmlFor='info'>Info</StyledLabel>
-                    <TextArea
-                        id='info'
-                        rows='2'
-                        type='text'
-                        value={info}
-                        onChange={event => setInfo(event.target.value)}></TextArea>
-
-                    <SubmitButton onClick={() => handleEditEquipment()}>Uppdatera</SubmitButton>
-
-                </Wrapper>
-            }
-
-        </>
     )
+
 }
 
 export default EditEquipment

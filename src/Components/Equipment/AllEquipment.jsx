@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import spinnerDayNight from '../../Assets/animatedDayNight.gif'
 import SpinnerFireLog from '../Shared/SpinnerFireLog'
 
-import {SelectInput} from '../Shared/ButtonsAndSuch'
+import { SelectInput } from '../Shared/ButtonsAndSuch'
 
 const Wrapper = styled.div`
 
@@ -60,30 +60,73 @@ const StyledSelectInput = styled(SelectInput)`
 const AllEquipment = () => {
 
     const [allEquipment, setAllEquipment] = useRecoilState(allEquipmentState)
-
     const [filter, setFilter] = useState('')
+    const [sorting, setSorting] = useState('')
 
+console.log('filter: ', filter, '   sorting: ', sorting)
     let filteredEquipment = allEquipment;
+    const updateFilter = ({ target: { value } }) => {
     
-    if(filter) {
-        filteredEquipment = allEquipment.filter((equipment)=> equipment.category === filter)
+        setFilter(value);
+    };
+    
+    const updateSorting = ({ target: { value } }) => {
+
+        setSorting(value);
+    };
+    console.log(filteredEquipment)
+    if (filter || sorting) {
+      
+        if(filter){
+         
+            filteredEquipment = filteredEquipment.filter((equipment) => equipment.category === filter)
+        }
+        if(sorting){
+
+         
+            // console.log(filteredEquipment)
+            if (sorting === 'highest'){
+                filteredEquipment = [...filteredEquipment].sort((a,b)=>{
+                    return b.weight-a.weight })
+            }
+            if (sorting === 'lowest'){
+                filteredEquipment = [...filteredEquipment].sort((a,b)=>{
+                    return a.weight-b.weight })
+            }
+                
+            
+        }
+     
+        
     }
+
+    // if (sorting){
+
+    //     if(sorting === 'highest'){
+    //         filteredEquipment = [...filteredEquipment].sort((a,b)=>{
+    //             console.log('a: ', a, 'b: ', b)
+    //             return b.weight-a.weight })
+    //     }
+    //     if(sorting === 'lowest'){
+    //         filteredEquipment = [...filteredEquipment].sort((a,b)=>{
+    //             console.log('a: ', a, 'b: ', b)
+    //             return a.weight-b.weight })
+    //     }
+    
+    // }
 
     const [isLoading, setIsLoading] = useState(false)
 
     const [displayErrorInfo, setDisplayErrorInfo] = useState(false)
     const [displayNoDataInfo, setDisplayNoDataInfo] = useState(false)
+    
+      
 
     useEffect(() => {
 
         getAllEquipment();
-   
+
     }, [])
-    
-    const updateFilter = ({target: {value}}) => {
-     
-        setFilter(value);
-      };
 
     async function getAllEquipment() {
         setIsLoading(true)
@@ -113,24 +156,23 @@ const AllEquipment = () => {
 
             {displayErrorInfo && <ErrorInfo>Nån gick vilse. Kolla kompassen och försök igen</ErrorInfo>}
 
-            {displayNoDataInfo && <SpinnerFireLog text = {'Inget tillagt än'} />}
+            {displayNoDataInfo && <SpinnerFireLog text={'Inget tillagt än'} />}
 
 
-            {isLoading && !displayNoDataInfo ?
+            {isLoading && !displayNoDataInfo && !displayErrorInfo &&
                 <LoadingWrapper>
                     <LoadingText>Hämtar all utrustning</LoadingText>
                     <IsLoadingSpinner src={spinnerDayNight} alt="loading..." />
-                </LoadingWrapper> :
-
-                <Wrapper>
+                </LoadingWrapper> }
+                {!isLoading && !displayNoDataInfo && <Wrapper>
 
                 <StyledSelectInput
                     name="category"
                     id="category"
                     type='text'
-                    value={filter} 
-                    onChange={updateFilter}
-                  > 
+                    value={filter}
+                    onChange={updateFilter}>
+
                     <option value=''>Välj kategori</option>
                     <option value=''>Allt</option>
                     <option value="living">Boende</option>
@@ -144,9 +186,24 @@ const AllEquipment = () => {
                     <option value="other">Övrigt</option>
 
                 </StyledSelectInput>
-               
-                    <Accordion equipmentList={filteredEquipment} />
-                </Wrapper>}
+
+                <StyledSelectInput
+                    name="category"
+                    id="category"
+                    type='text'
+                    value={sorting}
+                    onChange={updateSorting}>
+
+                    <option value=''>Sortera</option>
+                    <option value=''>Allt</option>
+                    <option value="highest">Högsta vikt</option>
+                    <option value="lowest">Lägsta vikt</option>
+                
+                </StyledSelectInput>
+
+                <Accordion equipmentList={filteredEquipment} />
+            </Wrapper>}
+
 
         </FrostedBackground>
 

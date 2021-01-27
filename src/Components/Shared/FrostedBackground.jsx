@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { useSetRecoilState } from 'recoil'
-import { elementHeightState } from './GlobalStates'
+// import { useSetRecoilState } from 'recoil'
+// import { elementHeightState } from './GlobalStates'
 
 const Container = styled.div`
     
@@ -66,21 +66,21 @@ const InvisibleProblemFixer = styled.div`
 `;
 const FrostedBackground = (props) => {
 
-    useEffect(() => {
-        //get height from frostedBackground and use to set height on Spinner OuterWrapper
-        async function getHeightOfElement() {
+    // useEffect(() => {
+    //     //get height from frostedBackground and use to set height on Spinner OuterWrapper
+    //     async function getHeightOfElement() {
 
-            const box = await document.getElementById('foo')
-            const height = box.offsetHeight
-            setElementHeight(height)
+    //         const box = await document.getElementById('foo')
+    //         const height = box.offsetHeight
+    //         setElementHeight(height)
 
-        }
+    //     }
         
-        getHeightOfElement()
+    //     getHeightOfElement()
 
-    }, [])
+    // }, [])
 
-    const setElementHeight = useSetRecoilState(elementHeightState)
+    // const setElementHeight = useSetRecoilState(elementHeightState)
 
     const { headline,  children, useInvisibleProblemFixer=false } = props
 

@@ -77,7 +77,7 @@ async function deleteItem(payload, collection) {
     try {
         const result = await theCollection.deleteOne(payload);
        
-        return result.ops
+        return result
 
     } catch (error) {
         console.log('Fel query, error: ', error.message);
@@ -107,6 +107,7 @@ async function put(payload, collection, id) {
 
     try {
         const result = await theCollection.updateOne(id, {$set: payload});
+        
         return result.ops
 
     } catch (error) {
