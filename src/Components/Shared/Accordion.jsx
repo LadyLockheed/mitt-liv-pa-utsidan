@@ -67,7 +67,32 @@ const CategoryDot = styled.div`
         if (prop.categoryColor === 'other') return '#BABCAB'
     }
     };
-`
+`;
+
+const CheckBox = styled.div`
+
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 2px;
+
+    display: inline-block;
+    grid-column: 1/2;
+    margin-right:0.7rem;
+    border: 2px solid ${(prop) => {
+        if (prop.categoryColor === 'living') return '#D38324';
+        if (prop.categoryColor === 'clothes') return '#67C070';
+        if (prop.categoryColor === 'sleeping') return '#678AC0';
+        if (prop.categoryColor === 'fun') return '#BF67C0'
+        if (prop.categoryColor === 'cooking') return '#6E67C0'
+        if (prop.categoryColor === 'electronics') return '#C0B267'
+        if (prop.categoryColor === 'hygiene') return '#67C0B0'
+        if (prop.categoryColor === 'storage') return '#D15933'
+        if (prop.categoryColor === 'other') return '#BABCAB'
+    }};
+
+    
+
+`;
 const Name = styled.p`
     color: ${props => props.theme.black};
     text-align: left;
@@ -156,7 +181,12 @@ const TrachcanIcon = styled.img`
 `;
 
 
-const Accordion = ({ equipmentList }) => {
+const Accordion = (props) => {
+
+    const { equipmentList, displayDotOrBox } = props;
+
+    console.log('accordion: ', displayDotOrBox)
+
 
     const [expandedItems, setExpandedItems] = useState([]);
     const [isDeleting, setIsDeleting] = useState(false)
@@ -198,10 +228,10 @@ const Accordion = ({ equipmentList }) => {
 
         setIsDeleting(true)
         try {
-         const response = await axios.delete('/api/deleteEquipment', { data: { _id: id } })
+            const response = await axios.delete('/api/deleteEquipment', { data: { _id: id } })
             console.log(response)
             getAllEquipment();
-            
+
 
         }
         catch (err) {
@@ -240,7 +270,10 @@ const Accordion = ({ equipmentList }) => {
 
                         <ItemWrapper key={item.equipment + index} >
                             <TopRowWrapper >
-                                <CategoryDot categoryColor={item.category} />
+
+                                {displayDotOrBox === 'dot' && <CategoryDot categoryColor={item.category} />}
+                                {displayDotOrBox === 'box' && <CheckBox categoryColor={item.category} />}
+
 
                                 <Name>{item.equipment}</Name>
                                 <Weight>{item.weight}g</Weight>

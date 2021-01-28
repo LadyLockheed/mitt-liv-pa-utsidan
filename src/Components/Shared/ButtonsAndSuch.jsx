@@ -55,7 +55,7 @@ export const InputField = styled.input`
 
 `;
 
-export const SelectInput = styled.select `
+export const SelectInput = styled.select`
     border-radius: 3px;
     border: none;
     font-family: 'Quicksand', sans-serif;
@@ -70,12 +70,21 @@ export const SelectInput = styled.select `
 
     option{
         padding:0.3rem;
+
+        &:first-child {
+
+            color: ${props => props.theme.orange};
+        }
+        &:nth-child(odd){
+            background-color: ${props => props.theme.grey};  
+        }
+        
         
     }
    
 `;
 
-export const ValidateMessage = styled.span `
+export const ValidateMessage = styled.span`
     color:${props => props.theme.orange};
     visibility: ${props => props.displayMessage ? 'visible' : 'hidden'};
     margin-left: 0.5rem;
@@ -89,17 +98,17 @@ export const ValidateMessage = styled.span `
 
 
 `;
-  
+
 export const theme = {
-    black:'#303030',
-    orange:'#D38324',
-    green:'#606338',
-    beige:'#E9EBDA',
-    white:'#F9F9F9',
-    grey:'#EFEFEF',
-    darkgrey:'#BABCAB',
+    black: '#303030',
+    orange: '#D38324',
+    green: '#606338',
+    beige: '#E9EBDA',
+    white: '#F9F9F9',
+    grey: '#EFEFEF',
+    darkgrey: '#BABCAB',
     mediumbeige: '#DBDDCD',
-    red:'#D15933',
+    red: '#D15933',
     yellow: '#D3AC24',
     mintGreen: '#D4DBD4'
 }
