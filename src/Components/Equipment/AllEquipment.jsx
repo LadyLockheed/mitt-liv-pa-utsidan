@@ -90,7 +90,7 @@ const AllEquipment = () => {
 
             {!isLoading && !displayNoDataInfo && <Wrapper>
 
-                <AccordionSortedFiltered equipmentList={allEquipment} displayDotOrBox={'box'} />
+                <AccordionSortedFiltered equipmentList={allEquipment} displayDotOrBox={'dot'} />
 
             </Wrapper>}
 

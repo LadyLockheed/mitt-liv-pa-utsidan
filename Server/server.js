@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const path = require('path')
 // const { cloudinary } = require('./cloudinary')
 const cors = require('cors');
-const { getAllEquipment, getUser, addNewUser, addNewEquipment, deleteEquipment, editEquipment } = require('./database.js');
+const { getAllEquipment, getUser, addNewUser, addNewEquipment, deleteEquipment, editEquipment, addNewAdventure } = require('./database.js');
 
 const port = 1337; // Port number
 
@@ -173,6 +173,20 @@ app.put('/api/editEquipment', async (req, res) => {
 
     const editedEquipment = await editEquipment(updatedEquipment, equipmentId)
     res.send(editedEquipment)
+})
+
+app.post('/api/addNewAdventure', async (req, res) => {
+
+    const userId= req.session.userId
+    const adventure = {...req.body, userId}
+
+    console.log(1, adventure)
+
+    const addedNewAdventure = await addNewAdventure(adventure)
+    console.log(3, addedNewAdventure)
+
+    res.send(addedNewAdventure)
+
 })
 
 

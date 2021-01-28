@@ -211,7 +211,8 @@ const TrachcanIcon = styled.img`
 
 const Accordion = (props) => {
 
-    const { equipmentList, displayDotOrBox } = props;
+    const { equipmentList, displayDotOrBox, packingList, setPackingList } = props;
+    // const { equipmentList, displayDotOrBox, packingList, setPackingList, itemWeightList, setItemWeightList } = props;
 
     const [expandedItems, setExpandedItems] = useState([]);
     const [isDeleting, setIsDeleting] = useState(false)
@@ -220,7 +221,7 @@ const Accordion = (props) => {
     const setAllEquipment = useSetRecoilState(allEquipmentState)
     const [deleteItemId, setDeleteItemId] = useState('')
     const [editItemId, setEditItemId] = useState('')
-    const [packingList, setPackinglist] = useState([])
+ 
 
    
     useEffect(() => {
@@ -286,23 +287,45 @@ const Accordion = (props) => {
         setEditItemId(id)
     }
 
-   //add or remove item-id in packinglist
     const handleChecked = (event) => {
-        
         const newId = event.target.value
+     
         const isIdAlreadyChecked = packingList.find((id) => id === newId)
 
         if (isIdAlreadyChecked) {
-           setPackinglist(packingList.filter((id) => id != newId))
-          
+            setPackingList(packingList.filter((id) => id !== newId))
+           
         }
         else {
-            setPackinglist([...packingList, newId])
+
+            setPackingList([...packingList, newId])
           
         }
         
-
     }
+
+  
+
+    // let itemWeight;
+
+    // const handleChecked = (event) => {
+    //     const newId = event.target.value
+     
+    //     const isIdAlreadyChecked = packingList.find((id) => id === newId)
+
+    //     if (isIdAlreadyChecked) {
+    //         setPackingList(packingList.filter((id) => id !== newId))
+    //         setItemWeightList(itemWeightList.filter((weight)=> weight !== itemWeight))
+    //     }
+    //     else {
+
+    //         setPackingList([...packingList, newId])
+    //         setItemWeightList([...itemWeightList, itemWeight])
+    //     }
+        
+    // }
+
+
 
 
     return (
@@ -321,6 +344,11 @@ const Accordion = (props) => {
                                 {displayDotOrBox === 'dot' && <CategoryDot categoryColor={item.category} />}
 
                                 {displayDotOrBox === 'box' && <CheckBox categoryColor={item.category} type='checkbox' value={item._id} onChange={(event) => handleChecked(event)} checked={packingList.includes(item._id)}/>}
+
+                                
+                                {/* {displayDotOrBox === 'box' && <CheckBox categoryColor={item.category} type='checkbox' value={item._id} onChange={() => handleChecked({itemId: item._id, itemWeight: item.weight})} checked={packingList.includes(item._id)}/>} */}
+
+                                {/* {displayDotOrBox === 'box' && <CheckBox categoryColor={item.category} type='checkbox' value={item._id} onChange={(event) => handleChecked(event)} checked={packingList.includes(item._id)} onClick={()=> itemWeight = item.weight}/>} */}
 
 
                                 <Name>{item.equipment}</Name>

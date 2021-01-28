@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Accordion from './Accordion'
 import { SelectInput } from './ButtonsAndSuch'
 
+
 const WrapperSelectInput = styled.div`
 
     display:grid;
@@ -23,7 +24,8 @@ const StyledSelectInput = styled(SelectInput)`
 
 const AccordionSortedFiltered = (props) => {
 
-    const { equipmentList, displayDotOrBox } = props;
+    const { equipmentList, displayDotOrBox, packingList, setPackingList } = props;
+    // const { equipmentList, displayDotOrBox, packingList, setPackingList, itemWeightList, setItemWeightList } = props;
 
     const [filter, setFilter] = useState('')
     const [sorting, setSorting] = useState('')
@@ -46,7 +48,6 @@ const AccordionSortedFiltered = (props) => {
             filteredEquipment = filteredEquipment.filter((equipment) => equipment.category === filter)
         }
         if (sorting) {
-
 
             if (sorting === 'highest') {
                 filteredEquipment = [...filteredEquipment].sort((a, b) => {
@@ -102,7 +103,8 @@ const AccordionSortedFiltered = (props) => {
                 </StyledSelectInput>
 
             </WrapperSelectInput>
-            <Accordion equipmentList={filteredEquipment} displayDotOrBox={displayDotOrBox} />
+            <Accordion equipmentList={filteredEquipment} displayDotOrBox={displayDotOrBox} packingList={packingList} setPackingList={setPackingList}/>
+            {/* <Accordion equipmentList={filteredEquipment} displayDotOrBox={displayDotOrBox} packingList={packingList} setPackingList={setPackingList} itemWeightList={itemWeightList} setItemWeightList={setItemWeightList}/> */}
         </>
     )
 

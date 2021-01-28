@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import FrostedBackground from '../../Shared/FrostedBackground'
 import { Button, Label, InputField, SelectInput, ValidateMessage } from '../../Shared/ButtonsAndSuch';
@@ -47,8 +47,24 @@ const ArrowForwardIcon = styled.img`
 `;
 
 
-const AddNewAdventure = ({ setNewAdventure }) => {
+const AddNewAdventure = (props) => {
 
+    const { setDisplayForm, setNewAdventureInfo, newAdventureInfo } = props
+
+    //TODO Datestarting och days syns ej om man backar tillbaka from packlistan. Funkar ju i editEquipment, varför inte här?
+    //kollar om man redan har skrivit något i formuläret om man backar tillbaka från skapa packlista, så att allt man skrev fortfarande är ifyllt
+    useEffect(()=>{
+        if(newAdventureInfo && newAdventureInfo.adventure){
+           
+            console.log(newAdventureInfo)
+            setAdventure(newAdventureInfo.adventure)
+            setSeason(newAdventureInfo.season)
+            setDateStarting(newAdventureInfo.dateStarting)
+            setDays(parseInt(newAdventureInfo.days))
+        }
+
+    },[])
+    
     const [adventure, setAdventure] = useState('')
     const [season, setSeason] = useState('')
     const [dateStarting, setDateStarting] = useState('')
@@ -59,25 +75,30 @@ const AddNewAdventure = ({ setNewAdventure }) => {
     const [validateDateStarting, setValidateDateStarting] = useState(false)
     const [validateDays, setValidateDays] = useState(false)
 
-    let newAdventure = {
+
+    let adventureInfo = {
         adventure: adventure,
         season: season,
         dateStarting: dateStarting,
         days: days
     }
 
-    const handleValidation = () => {
+    const handleAddNewAdventure = () => {
+        
+        resetValidation();
 
-        if (adventure.length < 1 || season === 'season' || season === '' || days < 1 || dateStarting.length < 1) {
-
+        if (adventure.length < 1 || season === 'season' || season === '' || days < 0.5 || dateStarting.length < 1) {
+        
             if (adventure.length < 1) { setValidateAdventure(true); }
             if (season === 'season' || season === '') { setValidateSeason(true); }
             if (days < 0.5) { setValidateDays(true); }
             if (dateStarting.length < 1) { setValidateDateStarting(true); }
 
-            return false
+            return
         }
-        else { return true }
+  
+        setDisplayForm(false)
+        setNewAdventureInfo({...adventureInfo, dateEnding:calculateEndDate(adventureInfo)})
     }
 
     const resetValidation = () => {
@@ -86,24 +107,6 @@ const AddNewAdventure = ({ setNewAdventure }) => {
         setValidateSeason(false)
         setValidateDateStarting(false)
         setValidateDays(false)
-    }
-
-    const handleSubmit = () => {
-
-        resetValidation();
-
-        let allIsValid = handleValidation();
-
-        if (allIsValid) {
-
-            return setNewAdventure({ ...newAdventure, dateEnding: calculateEndDate(newAdventure) })
-        }
-
-        else {
-            console.log('inte godkänt enligt handlesubmit')
-            return
-        }
-
     }
 
     return (
@@ -149,12 +152,12 @@ const AddNewAdventure = ({ setNewAdventure }) => {
                 <ValidateMessage displayMessage={validateDateStarting}> När ska du ut? </ValidateMessage>
 
                 {/* Hur många dygn */}
-                <Label htmlFor="days"> Hur länge </Label>
+                <Label htmlFor="days"> Hur många dygn</Label>
                 <InputField
                     type='number'
                     id='days'
                     step="0.5"
-                    placeholder='Dygn'
+                    // placeholder='Dygn'
                     onChange={event => setDays(event.target.value)}
                     isValid={validateDays}
                 />
@@ -163,7 +166,7 @@ const AddNewAdventure = ({ setNewAdventure }) => {
                 {/* <LabelStyled htmlFor="days">Hur långt</LabelStyled>
                 <InputFieldStyled type='number' id='days' step="0.5"/> */}
 
-                <SubmitButton onClick={handleSubmit}>Packa ryggsäcken <ArrowForwardIcon src={arrowForwardICon} /> </SubmitButton>
+                <SubmitButton onClick={handleAddNewAdventure}>Packa ryggsäcken <ArrowForwardIcon src={arrowForwardICon} /> </SubmitButton>
 
 
 

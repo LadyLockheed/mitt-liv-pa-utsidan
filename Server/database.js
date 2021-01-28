@@ -145,6 +145,11 @@ function editEquipment(updatedEquipment, equipmentId){
     return put(updatedEquipment,'equipment', {_id: new ObjectID(equipmentId)})
 }
 
+function addNewAdventure(adventure){
+    console.log(2, adventure)
+    return post(adventure, 'adventure')
+}
+
 
 
 
@@ -155,5 +160,6 @@ module.exports = {
     addNewUser,
     addNewEquipment,
     deleteEquipment,
-    editEquipment
+    editEquipment,
+    addNewAdventure
 }

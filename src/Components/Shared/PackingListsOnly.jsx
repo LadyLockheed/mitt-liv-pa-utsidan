@@ -1,14 +1,12 @@
 import React from 'react'
-import { Adventures } from '../Shared/GlobalStates';
-import { useRecoilValue } from 'recoil';
+// import { Adventures } from '../Shared/GlobalStates';
+// import { useRecoilValue } from 'recoil';
 import styled from 'styled-components'
-import FrostedBackground from '../Shared/FrostedBackground'
 import autumnIcon from '../../Assets/autumnLeafIcon.svg'
 import summerIcon from '../../Assets/summerSunIcon.svg'
 import winterIcon from '../../Assets/winterSnowFlaceIcon.svg'
 import springIcon from '../../Assets/springBranchIcon.svg'
 import {SelectInput} from '../Shared/ButtonsAndSuch'
-
 
 const Wrapper = styled.div`
     margin: 1rem 1rem 2rem 1rem;
@@ -68,9 +66,9 @@ const WeightText = styled.p`
 `;
 
 
-const PackingLists=()=>{
+const PackingLists=({packingList})=>{
   
-    const packingLists = useRecoilValue(Adventures)
+    // const packingLists = useRecoilValue(Adventures)
 
     const calculatedIcon = (season) => {
 
@@ -82,12 +80,12 @@ const PackingLists=()=>{
     }
     
     return(
-        <FrostedBackground headline={'Packlistor'}>
+      
             <Wrapper>
         <SelectInput>
             <option>Glöm ej lägga in filtrering och sortering</option>
         </SelectInput>
-            {packingLists.map((item, index) =>{
+            {packingList.map((item, index) =>{
                 return(
                 <ItemWrapper key={item.adventureName + index}>
                   
@@ -103,7 +101,7 @@ const PackingLists=()=>{
 
         </Wrapper>
 
-        </FrostedBackground>
+  
      
     )
 }
