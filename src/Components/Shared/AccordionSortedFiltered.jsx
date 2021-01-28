@@ -5,21 +5,19 @@ import { SelectInput } from './ButtonsAndSuch'
 
 const WrapperSelectInput = styled.div`
 
- 
     display:grid;
     grid-template-columns: 1fr;
-    padding-left: 1rem;
-    padding-right: 1rem;
     
-
     @media screen and (min-width: 600px){
         grid-template-columns: 1fr 1fr;
+
     }
 `;
 const StyledSelectInput = styled(SelectInput)` 
+    margin-left:1rem;
+    margin-right: 1rem;
 
 
-    ${'' /* margin: 1rem; */}
 `;
 
 

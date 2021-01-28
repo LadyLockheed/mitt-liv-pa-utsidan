@@ -7,7 +7,7 @@ import autumnIcon from '../../Assets/autumnLeafIcon.svg'
 import summerIcon from '../../Assets/summerSunIcon.svg'
 import winterIcon from '../../Assets/winterSnowFlaceIcon.svg'
 import springIcon from '../../Assets/springBranchIcon.svg'
-
+import {SelectInput} from '../Shared/ButtonsAndSuch'
 
 const Wrapper = styled.div`
     margin: 1rem 1rem 2rem 1rem;
@@ -104,7 +104,9 @@ const PackingLists=()=>{
     return(
         <FrostedBackground headline={'Packlistor'}>
             <Wrapper>
-       
+        <SelectInput>
+            <option>Glöm ej lägga in filtrering och sortering</option>
+        </SelectInput>
             {packingLists.map((item, index) =>{
                 return(
                 <ItemWrapper key={item.adventureName + index}>

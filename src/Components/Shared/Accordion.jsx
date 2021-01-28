@@ -69,16 +69,21 @@ const CategoryDot = styled.div`
     };
 `;
 
-const CheckBox = styled.div`
+const CheckBox = styled.input`
 
-    width: 0.7rem;
-    height: 0.7rem;
-    border-radius: 2px;
-
+    height: 20px;
+    width: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
     display: inline-block;
     grid-column: 1/2;
     margin-right:0.7rem;
-    border: 2px solid ${(prop) => {
+    border:3px solid ${(prop) => {
         if (prop.categoryColor === 'living') return '#D38324';
         if (prop.categoryColor === 'clothes') return '#67C070';
         if (prop.categoryColor === 'sleeping') return '#678AC0';
@@ -90,7 +95,30 @@ const CheckBox = styled.div`
         if (prop.categoryColor === 'other') return '#BABCAB'
     }};
 
-    
+    &:checked{
+
+        &:before{
+            content:'X';
+            font-weight: bold;
+            margin-left: 2px;
+            margin-bottom:2px;
+            color: ${(prop) => {
+                if (prop.categoryColor === 'living') return '#D38324';
+                if (prop.categoryColor === 'clothes') return '#67C070';
+                if (prop.categoryColor === 'sleeping') return '#678AC0';
+                if (prop.categoryColor === 'fun') return '#BF67C0'
+                if (prop.categoryColor === 'cooking') return '#6E67C0'
+                if (prop.categoryColor === 'electronics') return '#C0B267'
+                if (prop.categoryColor === 'hygiene') return '#67C0B0'
+                if (prop.categoryColor === 'storage') return '#D15933'
+                if (prop.categoryColor === 'other') return '#BABCAB'
+                }
+                
+            };
+
+        }
+
+    }  
 
 `;
 const Name = styled.p`
@@ -185,9 +213,6 @@ const Accordion = (props) => {
 
     const { equipmentList, displayDotOrBox } = props;
 
-    console.log('accordion: ', displayDotOrBox)
-
-
     const [expandedItems, setExpandedItems] = useState([]);
     const [isDeleting, setIsDeleting] = useState(false)
     const [displayModal, setDisplayModal] = useState(false)
@@ -195,7 +220,9 @@ const Accordion = (props) => {
     const setAllEquipment = useSetRecoilState(allEquipmentState)
     const [deleteItemId, setDeleteItemId] = useState('')
     const [editItemId, setEditItemId] = useState('')
+    const [packingList, setPackinglist] = useState([])
 
+   
     useEffect(() => {
         //skapar kopia av allEquipment så att ändringarna inte sker i originallistan
         setExpandedItems(equipmentList.map(equipment => {
@@ -205,6 +232,7 @@ const Accordion = (props) => {
 
     }, [equipmentList])
 
+    //hanterar open/close av element i accordion
     const toggleOpen = (item) => {
         setDisplayModal(false);
         setExpandedItems(expandedItems.map((equipment) => {
@@ -218,6 +246,7 @@ const Accordion = (props) => {
         }))
     }
 
+    //delete equipment
     const handleDelete = (id) => {
 
         setDisplayModal(true)
@@ -232,13 +261,13 @@ const Accordion = (props) => {
             console.log(response)
             getAllEquipment();
 
-
         }
         catch (err) {
             console.log('Meddelande från frontend: nånting gick fel', err)
         }
     }
 
+    //get all equipment
     async function getAllEquipment() {
 
         try {
@@ -251,9 +280,28 @@ const Accordion = (props) => {
         }
     };
 
+    //edit equipment
     const handleEdit = (id) => {
         setDisplayEditEquipment(true)
         setEditItemId(id)
+    }
+
+   //add or remove item-id in packinglist
+    const handleChecked = (event) => {
+        
+        const newId = event.target.value
+        const isIdAlreadyChecked = packingList.find((id) => id === newId)
+
+        if (isIdAlreadyChecked) {
+           setPackinglist(packingList.filter((id) => id != newId))
+          
+        }
+        else {
+            setPackinglist([...packingList, newId])
+          
+        }
+        
+
     }
 
 
@@ -263,7 +311,6 @@ const Accordion = (props) => {
 
             {isDeleting && <SpinnerFireLog text={'bränner upp skiten'} />}
 
-
             {!isDeleting && <>
                 {expandedItems.map((item, index) => {
                     return (
@@ -272,7 +319,8 @@ const Accordion = (props) => {
                             <TopRowWrapper >
 
                                 {displayDotOrBox === 'dot' && <CategoryDot categoryColor={item.category} />}
-                                {displayDotOrBox === 'box' && <CheckBox categoryColor={item.category} />}
+
+                                {displayDotOrBox === 'box' && <CheckBox categoryColor={item.category} type='checkbox' value={item._id} onChange={(event) => handleChecked(event)} checked={packingList.includes(item._id)}/>}
 
 
                                 <Name>{item.equipment}</Name>
@@ -308,13 +356,6 @@ const Accordion = (props) => {
                     )
                 })}
             </>}
-
-
-
-
-
-
-
 
         </Wrapper>
 
