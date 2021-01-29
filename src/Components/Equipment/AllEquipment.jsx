@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useRecoilState } from 'recoil';
-import { allEquipmentState } from '../Shared/GlobalStates'
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { allEquipmentState, allAdventuresState } from '../Shared/GlobalStates'
 
 import AccordionSortedFiltered from '../Shared/AccordionSortedFiltered'
 import FrostedBackground from '../Shared/FrostedBackground'
@@ -40,6 +40,7 @@ const ErrorInfo = styled.p`
 const AllEquipment = () => {
 
     const [allEquipment, setAllEquipment] = useRecoilState(allEquipmentState)
+    const setAllAdventures = useSetRecoilState(allAdventuresState)
 
     const [isLoading, setIsLoading] = useState(false)
 
@@ -49,6 +50,7 @@ const AllEquipment = () => {
     useEffect(() => {
 
         getAllEquipment();
+        getAllAdventures();
 
     }, [])
 
@@ -59,12 +61,35 @@ const AllEquipment = () => {
         try {
             const response = await axios.get('/api/allEquipment')
             setAllEquipment(response.data)
+            console.log('response equipment: ', response.data)
             setIsLoading(false)
 
             if (response.data.length < 1) {
 
                 setDisplayNoDataInfo(true)
             }
+        }
+        catch (err) {
+            console.log('Meddelande från frontend: nånting gick fel', err)
+            setDisplayErrorInfo(true)
+            setIsLoading(false)
+        }
+    };
+
+    async function getAllAdventures() {
+        // setIsLoading(true)
+        // setDisplayErrorInfo(false)
+
+        try {
+            const response = await axios.get('/api/allAdventures')
+            setAllAdventures(response.data)
+            console.log('response adventure: ', response.data)
+            // setIsLoading(false)
+
+            // if (response.data.length < 1) {
+
+            //     setDisplayNoDataInfo(true)
+            // }
         }
         catch (err) {
             console.log('Meddelande från frontend: nånting gick fel', err)

@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const path = require('path')
 // const { cloudinary } = require('./cloudinary')
 const cors = require('cors');
-const { getAllEquipment, getUser, addNewUser, addNewEquipment, deleteEquipment, editEquipment, addNewAdventure } = require('./database.js');
+const { getAllEquipment, getUser, addNewUser, addNewEquipment, deleteEquipment, editEquipment, addNewAdventure, getAllAdventures } = require('./database.js');
 
 const port = 1337; // Port number
 
@@ -137,6 +137,26 @@ app.get('/api/allEquipment', async (req, res) => {
     res.send(allEquipment);
 })
 
+app.get('/api/allAdventures', async (req, res) => {
+
+    const userId = req.session.userId
+
+    const allAdventures = await getAllAdventures(userId)
+
+    res.send(allAdventures);
+})
+
+app.post('/api/addNewAdventure', async (req, res) => {
+
+    const userId = req.session.userId
+    const newAdventure ={...req.body.newAdventure, userId}
+    
+    const addedNewAdventure = await addNewAdventure(newAdventure)
+
+    res.send(addedNewAdventure)
+
+})
+
 // add equipment
 app.post('/api/addNewEquipment', async (req, res) => {
 
@@ -145,7 +165,7 @@ app.post('/api/addNewEquipment', async (req, res) => {
     const newWeight = req.body.newWeight
     const newInfo = req.body.newInfo
     const userId = req.session.userId
-
+ 
     const addedNewEquipment = await addNewEquipment(newEquipment, newCategory, newWeight, newInfo, userId)
 
     res.send(addedNewEquipment)
@@ -173,20 +193,6 @@ app.put('/api/editEquipment', async (req, res) => {
 
     const editedEquipment = await editEquipment(updatedEquipment, equipmentId)
     res.send(editedEquipment)
-})
-
-app.post('/api/addNewAdventure', async (req, res) => {
-
-    const userId= req.session.userId
-    const adventure = {...req.body, userId}
-
-    console.log(1, adventure)
-
-    const addedNewAdventure = await addNewAdventure(adventure)
-    console.log(3, addedNewAdventure)
-
-    res.send(addedNewAdventure)
-
 })
 
 

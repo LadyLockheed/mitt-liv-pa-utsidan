@@ -22,6 +22,13 @@ export const allEquipmentState = atom({
 
 })
 
+export const allAdventuresState = atom({
+  key: 'allAdventuresState',
+  default: [
+    
+  ]
+})
+
 
 export const Adventures = atom({
   key: 'Adventures',

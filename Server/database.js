@@ -34,7 +34,7 @@ async function get(filter, collection) {
 
 
 async function post(payload, collection) {
-   
+ 
     let client;
     try {
         client = await MongoClient.connect(url, { useUnifiedTopology: true })
@@ -125,6 +125,11 @@ function getAllEquipment(userId) {
     return get({ userId:userId }, 'equipment')
 }
 
+function getAllAdventures(userId) {
+ 
+    return get({ userId:userId }, 'adventure')
+}
+
 function getUser( userName ) {
     return get({ userName: userName }, 'users')
 }
@@ -137,6 +142,11 @@ function addNewEquipment(newEquipment, newCategory, newWeight, newInfo, userId) 
     return post({equipment: newEquipment, category: newCategory, weight: newWeight, info: newInfo, userId: userId}, 'equipment')
 }
 
+function addNewAdventure(newAdventure){
+    
+    return post(newAdventure, 'adventure')
+}
+
 function deleteEquipment(id) {
     return deleteItem( {_id: new ObjectID(id)}, 'equipment' )
 }
@@ -145,10 +155,12 @@ function editEquipment(updatedEquipment, equipmentId){
     return put(updatedEquipment,'equipment', {_id: new ObjectID(equipmentId)})
 }
 
-function addNewAdventure(adventure){
-    console.log(2, adventure)
-    return post(adventure, 'adventure')
-}
+
+
+
+
+
+
 
 
 
@@ -161,5 +173,6 @@ module.exports = {
     addNewEquipment,
     deleteEquipment,
     editEquipment,
-    addNewAdventure
+    addNewAdventure,
+    getAllAdventures
 }

@@ -3,9 +3,10 @@ import React from 'react'
 // import AnimatedCampfireSmaller from '../../Assets/animatedCampfireSmaller.gif'
 import styled from 'styled-components'
 import FrostedBackground from '../Shared/FrostedBackground'
-import { Adventures } from '../Shared/GlobalStates';
+import { allAdventuresState } from '../Shared/GlobalStates';
 import { useRecoilValue } from 'recoil';
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+
 
 // const Campfire = styled.img`
 //     height:7rem;
@@ -56,42 +57,47 @@ const InfoText = styled.p`
  
 `;
 
-const AllAdventure=()=>{
+const AllAdventure = () => {
 
-    const adventures = useRecoilValue(Adventures)
+    const allAdventures = useRecoilValue(allAdventuresState)
+
+    console.log('äventyr: ', allAdventures)
     const history = useHistory()
     const goToSpecificAdventure = () => {
 
-        history.push('/specificadventure')
+        // history.push('/specificadventure')
+        console.log('går till specifikt äventyr')
     }
 
-    return(
-  
-        
+    return (
+
+
 
         <FrostedBackground headline={'Alla äventyr'}>
 
-        <Wrapper>
+            <Wrapper>
 
 
+                {allAdventures.map((adventure, index) => {
 
-            {adventures.map((adventure, index)=> {
-                  
-              return ( <AdventureWrapper key = {adventure.adventureName + index} onClick= {goToSpecificAdventure}>
-                    <InfoText> { adventure.adventureName } </InfoText>
-              
+                    return (
+                        <AdventureWrapper key={adventure._id} onClick={goToSpecificAdventure}>
 
-                </AdventureWrapper> )
-            })}
+                            <InfoText> {adventure.adventure} </InfoText>
+                            <InfoText> {adventure.days} </InfoText>
+                            <InfoText> {adventure.season} </InfoText>
 
-        </Wrapper>
+                        </AdventureWrapper>)
+                })}
+
+            </Wrapper>
 
             {/* <Campfire src={AnimatedCampfire} alt="loading..." />
             <Campfire src={AnimatedCampfireSmaller} alt="loading..." /> */}
 
         </FrostedBackground>
-      
-      
+
+
     )
 }
 

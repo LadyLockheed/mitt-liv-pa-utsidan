@@ -4,11 +4,12 @@ import AddAdventureForm from './AddAdventureForm'
 import styled from 'styled-components'
 import FrostedBackground from '../../Shared/FrostedBackground'
 import AccordionSortedFiltered from '../../Shared/AccordionSortedFiltered'
-import { useRecoilValue } from 'recoil'
-import { allEquipmentState } from '../../Shared/GlobalStates'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { allEquipmentState, allAdventuresState } from '../../Shared/GlobalStates'
 import { Button, SecondaryButton } from '../../Shared/ButtonsAndSuch'
 import axios from 'axios'
 import Spinner from '../../Shared/Spinner'
+import { useHistory } from 'react-router-dom'
 
 
 const SubmitButton = styled(Button)`
@@ -30,8 +31,11 @@ const AddAdventure = () => {
     const [displayPackingLists, setDisplayPackingLists] = useState(false)
     const [newAdventureInfo, setNewAdventureInfo] = useState({})
     const allEquipment = useRecoilValue(allEquipmentState)
+    const  setAllAdventures = useSetRecoilState(allAdventuresState)
+
     const [packingList, setPackingList] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const history = useHistory()
 
     // const [itemWeightList, setItemWeightList]=useState([])
 
@@ -58,15 +62,17 @@ const AddAdventure = () => {
     let newAdventure = newAdventureInfo
     const handleCreateNewAdventure = () => {
 
-        if (packingList.length > 0) {
-            setIsLoading(true)
-            newAdventure = { ...newAdventureInfo, packingList: packingList }
-            console.log(newAdventure)
-            addNewAdventure()
-        }
-        else {
+        if (packingList.length < 0) {
             console.log('Validering som säger att den inte innehåller nåt. ')
             return
+        }
+        else {
+
+            setIsLoading(true)
+            newAdventure = { ...newAdventureInfo, packingList: packingList }
+            console.log('Från frontend skickas detta till backend: ', newAdventure)
+            addNewAdventure()
+
         }
 
     }
@@ -75,11 +81,10 @@ const AddAdventure = () => {
 
         try {
             const responseAddNewAdventure = await axios.post('/api/addNewAdventure', { newAdventure })
-            console.log('resonse frontend: ', responseAddNewAdventure)
+            console.log('resonse frontend efter att ha addat: ', responseAddNewAdventure)
             if (responseAddNewAdventure) {
-                setIsLoading(false)
 
-                //TODO använd history och skicka vidare till specifikt äventyr
+                getAllAdventures()
 
             }
             else {
@@ -92,7 +97,24 @@ const AddAdventure = () => {
             console.log('Something went wrong ', err)
         }
     }
-    // console.log('newAdventure: ', newAdventure)
+
+    async function getAllAdventures() {
+
+        try {
+            const response = await axios.get('/api/allAdventures')
+            setAllAdventures(response.data)
+            setIsLoading(false)
+            //TODO använd history och skicka vidare till specifikt äventyr, nu skickar den till alla äventyr
+
+            history.push("/alladventures")
+
+        }
+        catch (err) {
+            console.log('Meddelande från frontend: nånting gick fel', err)
+
+        }
+    };
+
 
     return (
         <>
@@ -102,7 +124,7 @@ const AddAdventure = () => {
                 <AddAdventureForm setDisplayForm={setDisplayForm} setNewAdventureInfo={setNewAdventureInfo} newAdventureInfo={newAdventureInfo} />}
 
             {!displayForm && !isLoading && <FrostedBackground headline={'Dags att packa'}>
-                {/* <ChooseDoneListButton onClick= {setDisplayPackingLists(true)}>Välj en färdig lista</ChooseDoneListButton> */}
+
                 <SecondaryOptionButton onClick={() => setDisplayPackingLists(true)}>Välj en färdig lista</SecondaryOptionButton>
                 <AccordionSortedFiltered equipmentList={allEquipment} displayDotOrBox={'box'} packingList={packingList} setPackingList={setPackingList} />
 
