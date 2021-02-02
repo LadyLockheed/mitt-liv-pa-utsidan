@@ -72,7 +72,7 @@ const AddEquipment = () => {
 
         try {
             const responseAddNewEquipment = await axios.post('/api/addNewEquipment', {
-                newEquipment: equipment, newCategory: category, newWeight: weight, newInfo: info
+                newEquipment: equipment, newCategory: category, newWeight: parseFloat(weight), newInfo: info
             })
 
             if(!responseAddNewEquipment){
@@ -169,7 +169,6 @@ const AddEquipment = () => {
                 <InputField
                     type='number'
                     id='weight'
-                    step="0.1"
                     placeholder='(g)'
                     value={weight}
                     onChange={event => setWeight(event.target.value)}

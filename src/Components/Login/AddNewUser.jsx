@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import arrowBackwardIcon from '../../Assets/backarrow.svg'
+import arrowBackwardIcon from '../../Assets/backArrowWhite.svg'
 import Form from './Form'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'

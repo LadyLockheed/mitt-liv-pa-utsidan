@@ -11,54 +11,70 @@ import axios from 'axios'
 import Spinner from '../../Shared/Spinner'
 import { useHistory } from 'react-router-dom'
 
+import arrowBackwardIcon from '../../../Assets/backArrowBlack.svg'
+
 
 const SubmitButton = styled(Button)`
     display:block;
     margin:auto;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 `;
 
 const SecondaryOptionButton = styled(SecondaryButton)`
     color: ${props => props.theme.black};
+    font-weight: bold;
     display:block;
     margin:auto;
     margin-bottom: 2rem;
 `
 
+const ArrowIcon = styled.img`
+    height: 0.5rem;
+    width: auto;
+    margin-bottom:0.1rem;
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
+
+`;
+
+const WeightWrapper = styled.div`
+
+    ${'' /* width: 7rem; */}
+    ${'' /* border-radius: 50px; */}
+    ${'' /* background-color: ${props => props.theme.black}; */}
+    display:grid;
+    justify-content: end;
+`;
+const Weight = styled.p`
+    color: ${props => props.theme.white};
+    display:inline-block;
+    margin: 1rem;
+    margin-right: 1.5rem;
+    margin-top: 0;
+   text-align: right;
+
+ 
+   
+`;
+
 const AddAdventure = () => {
 
     const [displayForm, setDisplayForm] = useState(true)
-    const [displayPackingLists, setDisplayPackingLists] = useState(false)
+    // const [displayPackingLists, setDisplayPackingLists] = useState(false)
     const [newAdventureInfo, setNewAdventureInfo] = useState({})
     const allEquipment = useRecoilValue(allEquipmentState)
-    const  setAllAdventures = useSetRecoilState(allAdventuresState)
+    const setAllAdventures = useSetRecoilState(allAdventuresState)
 
     const [packingList, setPackingList] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const history = useHistory()
 
-    // const [itemWeightList, setItemWeightList]=useState([])
 
-    // const [totalWeight, setTotalWeight]=useState('')
+    const [totalWeight, setTotalWeight] = useState(0)
+    // console.log('addadventure, totalweight: ', totalWeight)
+    // console.log('avrundad totalweight i gram: ', totalWeight.toFixed(2))
+    // console.log('till kilo totalweight: ', totalWeight/1000+'kg')
 
-    // console.log(packingList)
-
-
-    // if(packingList.length > 0){
-    //     allEquipment.map((equipment)=>{
-
-    //         let weight = packingList.find((id)=> id === equipment._id)
-
-    //     })
-    // }
-
-    // const handleAddNewAdventure = () =>{
-
-
-    //     setNewAdventure({...newAdventure, packingList: packingList})
-    //     addNewAdventure()
-
-    // }
     let newAdventure = newAdventureInfo
     const handleCreateNewAdventure = () => {
 
@@ -119,22 +135,39 @@ const AddAdventure = () => {
     return (
         <>
 
-
             {displayForm && !isLoading &&
                 <AddAdventureForm setDisplayForm={setDisplayForm} setNewAdventureInfo={setNewAdventureInfo} newAdventureInfo={newAdventureInfo} />}
 
-            {!displayForm && !isLoading && <FrostedBackground headline={'Dags att packa'}>
+            {!displayForm && !isLoading &&
+                <FrostedBackground headline={'Dags att packa'}>
+{/* 
+                    <SecondaryOptionButton onClick={() => setDisplayPackingLists(true)}>Välj en färdig lista</SecondaryOptionButton> */}
+                    
+                    <SecondaryOptionButton>Välj en färdig lista</SecondaryOptionButton>
 
-                <SecondaryOptionButton onClick={() => setDisplayPackingLists(true)}>Välj en färdig lista</SecondaryOptionButton>
-                <AccordionSortedFiltered equipmentList={allEquipment} displayDotOrBox={'box'} packingList={packingList} setPackingList={setPackingList} />
+                    <AccordionSortedFiltered
+                        equipmentList={allEquipment}
+                        displayDotOrBox={'box'}
+                        packingList={packingList}
+                        setPackingList={setPackingList}
+                        totalWeight={totalWeight}
+                        setTotalWeight={setTotalWeight}
 
-                <SubmitButton onClick={handleCreateNewAdventure}>Skapa äventyr</SubmitButton>
-                <SecondaryOptionButton onClick={() => setDisplayForm(true)}>Tillbaka</SecondaryOptionButton>
+                    />
+                    <WeightWrapper>
+                        <Weight> Total vikt <br/> {totalWeight/1000} kg</Weight>
 
-                {/* <p>Vikt</p> */}
-            </FrostedBackground>}
+                    </WeightWrapper>
 
-            {isLoading && <FrostedBackground><Spinner spinnerMessage={'sparar äventyret...'} /></FrostedBackground>}
+                    <SubmitButton onClick={handleCreateNewAdventure}>Skapa äventyr</SubmitButton>
+
+                    <SecondaryOptionButton onClick={() => setDisplayForm(true)}><ArrowIcon src={arrowBackwardIcon} />Tillbaka</SecondaryOptionButton>
+
+                    {/* <p>Vikt</p> */}
+                </FrostedBackground>}
+
+            {isLoading &&
+                <FrostedBackground><Spinner spinnerMessage={'sparar äventyret...'} /></FrostedBackground>}
 
 
 

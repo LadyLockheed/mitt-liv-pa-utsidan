@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-// import { useSetRecoilState } from 'recoil'
-// import { elementHeightState } from './GlobalStates'
+
 
 const Container = styled.div`
     
@@ -18,7 +17,7 @@ const Container = styled.div`
     border-radius:3px;
 
 
-    @media screen and (min-width: 600px) {
+    @media screen and (min-width: 700px) {
         width:50%;
         ${'' /* margin-top:4rem; */}
     }
@@ -66,21 +65,6 @@ const InvisibleProblemFixer = styled.div`
 `;
 const FrostedBackground = (props) => {
 
-    // useEffect(() => {
-    //     //get height from frostedBackground and use to set height on Spinner OuterWrapper
-    //     async function getHeightOfElement() {
-
-    //         const box = await document.getElementById('foo')
-    //         const height = box.offsetHeight
-    //         setElementHeight(height)
-
-    //     }
-        
-    //     getHeightOfElement()
-
-    // }, [])
-
-    // const setElementHeight = useSetRecoilState(elementHeightState)
 
     const { headline,  children, useInvisibleProblemFixer=false } = props
 

@@ -174,7 +174,7 @@ const Logo = styled.img`
 const FrostedStartSquare = (props) => {
 
 
-    const { headline, topLabel, bottomLabel, topInputValue, topInputSetValue, topInputValidation, bottomInputValidation, topInputValidationMessage, bottomInputValidationMessage, handleSubmit, topButtonText, bottomButtonText, arrowIcon, positionArrowIconOnRight, bottomInputValue, bottomInputSetValue, goToPage, typeOnBottomInputfield, isLoading } = props
+    const { headline, topLabel, bottomLabel, topInputValue, topInputSetValue, topInputValidation, bottomInputValidation, topInputValidationMessage, bottomInputValidationMessage, handleSubmit, topButtonText, bottomButtonText, arrowIcon, positionArrowIconOnRight, bottomInputValue, bottomInputSetValue, goToPage, typeOnBottomInputfield, isLoading} = props
 
 
     return (
@@ -228,8 +228,8 @@ const FrostedStartSquare = (props) => {
                                         {bottomButtonText}
                                         <ArrowIcon src={arrowIcon} />
                                     </BottomButton>
+                                   
                                 }
-
                             </ButtonsWrapper>
                         </InputSection>
                         <Logo src={mainLogo}></Logo>

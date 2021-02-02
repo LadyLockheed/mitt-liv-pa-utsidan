@@ -43,7 +43,6 @@ const AllEquipment = () => {
     const setAllAdventures = useSetRecoilState(allAdventuresState)
 
     const [isLoading, setIsLoading] = useState(false)
-
     const [displayErrorInfo, setDisplayErrorInfo] = useState(false)
     const [displayNoDataInfo, setDisplayNoDataInfo] = useState(false)
 

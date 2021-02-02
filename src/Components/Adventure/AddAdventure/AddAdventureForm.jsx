@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import FrostedBackground from '../../Shared/FrostedBackground'
 import { Button, Label, InputField, SelectInput, ValidateMessage } from '../../Shared/ButtonsAndSuch';
-import arrowForwardICon from '../../../Assets/arrowForward.svg'
+import arrowForwardICon from '../../../Assets/forwardArrowWhite.svg'
 
 const Wrapper = styled.div`
  
@@ -56,14 +56,14 @@ const AddNewAdventure = (props) => {
     useEffect(()=>{
         if(newAdventureInfo && newAdventureInfo.adventure){
            
-            console.log(newAdventureInfo)
             setAdventure(newAdventureInfo.adventure)
             setSeason(newAdventureInfo.season)
             setDateStarting(newAdventureInfo.dateStarting)
-            setDays(parseInt(newAdventureInfo.days))
+            setDays(newAdventureInfo.days)
         }
 
     },[])
+
     
     const [adventure, setAdventure] = useState('')
     const [season, setSeason] = useState('')
@@ -80,7 +80,7 @@ const AddNewAdventure = (props) => {
         adventure: adventure,
         season: season,
         dateStarting: dateStarting,
-        days: days
+        days: parseFloat(days)
     }
 
     const handleAddNewAdventure = () => {

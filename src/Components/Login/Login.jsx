@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { isAuthenticatedState, currentUserState } from '../Shared/GlobalStates';
 import { useSetRecoilState } from "recoil";
-import arrowForwardIcon from '../../Assets/arrowForward.svg'
+import arrowForwardIcon from '../../Assets/forwardArrowWhite.svg'
 import Form from './Form'
 import axios from 'axios'
 import FrostedBackground from '../Shared/FrostedBackground'
@@ -107,7 +107,7 @@ const Login = () => {
             bottomInputSetValue={setPassword}
             bottomInputValidation={validatePassword}
             bottomInputValidationMessage={validatePasswordMessage}
-            typeOnBottomInputfield={'text'}
+            typeOnBottomInputfield={'password'}
 
             topButtonText={'Logga in'}
             bottomButtonText={'Jag är ny'}
@@ -117,6 +117,7 @@ const Login = () => {
             positionArrowIconOnRight={false}
             goToPage={() => history.push('/addnewuser')}
             handleSubmit={handleSubmit}
+    
             
         />
         </FrostedBackground>

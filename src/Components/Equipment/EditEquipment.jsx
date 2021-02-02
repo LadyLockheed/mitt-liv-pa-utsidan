@@ -9,8 +9,6 @@ import axios from 'axios';
 import { allEquipmentState } from '../Shared/GlobalStates'
 import { useSetRecoilState } from 'recoil'
 
-// import { elementHeightState } from '../Shared/GlobalStates'
-
 
 const Wrapper = styled.div`
     background-color: ${props => props.theme.mediumbeige};
@@ -91,20 +89,7 @@ const SubmitButton = styled(Button)`
 `;
 
 const EditEquipment = (props) => {
-    // useEffect(() => {
-    //     //get height from wrapper and use to set height on Spinner OuterWrapper
-    //     async function getHeightOfElement() {
 
-    //         const box = await document.getElementById('foo')
-    //         const height = box.offsetHeight
-    //         setElementHeight(height)
-
-    //     }
-        
-    //     getHeightOfElement()
-
-    // }, [])
-    // const setElementHeight = useSetRecoilState(elementHeightState)
     const { setDisplayEditEquipment, equipmentToEdit } = props;
   
     const setAllEquipment = useSetRecoilState(allEquipmentState)
@@ -125,7 +110,7 @@ const EditEquipment = (props) => {
 
         try {
             await axios.put('/api/editEquipment', {
-                updatedEquipment: equipment, updatedCategory: category, updatedWeight: weight, updatedInfo: info, equipmentId: equipmentToEdit._id
+                updatedEquipment: equipment, updatedCategory: category, updatedWeight: parseFloat(weight), updatedInfo: info, equipmentId: equipmentToEdit._id
             })
 
             getAllEquipment()

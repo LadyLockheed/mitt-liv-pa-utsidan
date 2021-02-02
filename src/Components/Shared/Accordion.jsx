@@ -100,21 +100,19 @@ const CheckBox = styled.input`
         &:before{
             content:'X';
             font-weight: bold;
-            margin-left: 2px;
+            margin-left: 3px;
             margin-bottom:2px;
             color: ${(prop) => {
-                if (prop.categoryColor === 'living') return '#D38324';
-                if (prop.categoryColor === 'clothes') return '#67C070';
-                if (prop.categoryColor === 'sleeping') return '#678AC0';
-                if (prop.categoryColor === 'fun') return '#BF67C0'
-                if (prop.categoryColor === 'cooking') return '#6E67C0'
-                if (prop.categoryColor === 'electronics') return '#C0B267'
-                if (prop.categoryColor === 'hygiene') return '#67C0B0'
-                if (prop.categoryColor === 'storage') return '#D15933'
-                if (prop.categoryColor === 'other') return '#BABCAB'
-                }
-                
-            };
+            if (prop.categoryColor === 'living') return '#D38324';
+            if (prop.categoryColor === 'clothes') return '#67C070';
+            if (prop.categoryColor === 'sleeping') return '#678AC0';
+            if (prop.categoryColor === 'fun') return '#BF67C0'
+            if (prop.categoryColor === 'cooking') return '#6E67C0'
+            if (prop.categoryColor === 'electronics') return '#C0B267'
+            if (prop.categoryColor === 'hygiene') return '#67C0B0'
+            if (prop.categoryColor === 'storage') return '#D15933'
+            if (prop.categoryColor === 'other') return '#BABCAB'
+            }};
 
         }
 
@@ -160,11 +158,15 @@ const DropDownArrow = styled.img`
 `;
 const Collapse = styled.div` 
     grid-column: 1/3;
+    
     display: grid;
     grid-template-columns: 6fr 1fr;
     margin-bottom: 1rem;
     
 `;
+// const CategoryText = styled.p `
+
+// `;
 const Info = styled.div`
     border: 1px solid #E2E2E2;
     border-radius: 3px;
@@ -211,8 +213,8 @@ const TrachcanIcon = styled.img`
 
 const Accordion = (props) => {
 
-    const { equipmentList, displayDotOrBox, packingList, setPackingList } = props;
-    // const { equipmentList, displayDotOrBox, packingList, setPackingList, itemWeightList, setItemWeightList } = props;
+    // const { equipmentList, displayDotOrBox, packingList, setPackingList } = props;
+    const { equipmentList, displayDotOrBox, packingList=[], setPackingList, totalWeight, setTotalWeight } = props;
 
     const [expandedItems, setExpandedItems] = useState([]);
     const [isDeleting, setIsDeleting] = useState(false)
@@ -221,9 +223,9 @@ const Accordion = (props) => {
     const setAllEquipment = useSetRecoilState(allEquipmentState)
     const [deleteItemId, setDeleteItemId] = useState('')
     const [editItemId, setEditItemId] = useState('')
- 
 
-   
+
+
     useEffect(() => {
         //skapar kopia av allEquipment så att ändringarna inte sker i originallistan
         setExpandedItems(equipmentList.map(equipment => {
@@ -287,46 +289,45 @@ const Accordion = (props) => {
         setEditItemId(id)
     }
 
+
+    // editing packinglists
     const handleChecked = (event) => {
         const newId = event.target.value
-     
+
         const isIdAlreadyChecked = packingList.find((id) => id === newId)
 
         if (isIdAlreadyChecked) {
             setPackingList(packingList.filter((id) => id !== newId))
-           
+
         }
         else {
 
             setPackingList([...packingList, newId])
-          
+
         }
-        
+
     }
 
-  
-
-    // let itemWeight;
-
-    // const handleChecked = (event) => {
-    //     const newId = event.target.value
-     
-    //     const isIdAlreadyChecked = packingList.find((id) => id === newId)
-
-    //     if (isIdAlreadyChecked) {
-    //         setPackingList(packingList.filter((id) => id !== newId))
-    //         setItemWeightList(itemWeightList.filter((weight)=> weight !== itemWeight))
-    //     }
-    //     else {
-
-    //         setPackingList([...packingList, newId])
-    //         setItemWeightList([...itemWeightList, itemWeight])
-    //     }
+    const countTotalWeight = (weight, itemId) => {
         
-    // }
+        const isAlreadyCounted = packingList.find((id) => id === itemId)
+
+        if (isAlreadyCounted) {
+
+           
+            setTotalWeight(totalWeight - weight)
 
 
+        }
+        else {
 
+          
+            setTotalWeight(totalWeight + weight)
+
+        }
+
+
+    }
 
     return (
 
@@ -343,12 +344,7 @@ const Accordion = (props) => {
 
                                 {displayDotOrBox === 'dot' && <CategoryDot categoryColor={item.category} />}
 
-                                {displayDotOrBox === 'box' && <CheckBox categoryColor={item.category} type='checkbox' value={item._id} onChange={(event) => handleChecked(event)} checked={packingList.includes(item._id)}/>}
-
-                                
-                                {/* {displayDotOrBox === 'box' && <CheckBox categoryColor={item.category} type='checkbox' value={item._id} onChange={() => handleChecked({itemId: item._id, itemWeight: item.weight})} checked={packingList.includes(item._id)}/>} */}
-
-                                {/* {displayDotOrBox === 'box' && <CheckBox categoryColor={item.category} type='checkbox' value={item._id} onChange={(event) => handleChecked(event)} checked={packingList.includes(item._id)} onClick={()=> itemWeight = item.weight}/>} */}
+                                {displayDotOrBox === 'box' && <CheckBox categoryColor={item.category} type='checkbox' value={item._id} onChange={(event) => { handleChecked(event); countTotalWeight(item.weight, item._id) }} checked={packingList.includes(item._id)} />}
 
 
                                 <Name>{item.equipment}</Name>
@@ -358,8 +354,8 @@ const Accordion = (props) => {
                             {item.isExpanded &&
 
                                 <Collapse>
-
-                                    <Info>{item.category} <br />{item.info}</Info>
+                                    {/* <CategoryText>Kategori: {item.category}</CategoryText> */}
+                                    <Info>Kategori: {item.category} <br />{item.info}</Info>
                                     <IconWrapper>
 
                                         <EditIcon src={editIcon} onClick={() => handleEdit(item._id)} />

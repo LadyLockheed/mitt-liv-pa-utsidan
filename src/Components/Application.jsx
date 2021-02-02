@@ -28,9 +28,9 @@ import AllEquipment from './Equipment/AllEquipment'
 import PackingLists from './Equipment/PackingLists'
 import AddEquipment from './Equipment/AddEquipment'
 //Adventure components
-import AllAdventures from './Adventure/AllAdventures'
+import Adventures from './Adventure/Adventures/index'
 import AddAdventure from './Adventure/AddAdventure/AddAdventure'
-import SpecificAdventure from './Adventure/SpecificAdventure'
+
 
 //gör så att alla request kommer skicka med kakor
 //kakorna behövs för sessions
@@ -93,9 +93,9 @@ const Application=()=>{
                 <ProtectedRoute path="/allequipment" component={AllEquipment}/>
                 <ProtectedRoute path="/packinglists" component={PackingLists}/>
                 <ProtectedRoute path="/addequipment" component={AddEquipment}/>
-                <ProtectedRoute path="/alladventures" component={AllAdventures}/>
+                <ProtectedRoute path="/alladventures" component={Adventures}/>
                 <ProtectedRoute path="/addadventure" component={AddAdventure}/>
-                <ProtectedRoute path="/specificadventure" component={SpecificAdventure}/>
+               
                
             </Switch>
         </MyApp>

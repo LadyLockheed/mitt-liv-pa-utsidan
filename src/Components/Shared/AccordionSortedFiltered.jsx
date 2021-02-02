@@ -24,8 +24,8 @@ const StyledSelectInput = styled(SelectInput)`
 
 const AccordionSortedFiltered = (props) => {
 
-    const { equipmentList, displayDotOrBox, packingList, setPackingList } = props;
-    // const { equipmentList, displayDotOrBox, packingList, setPackingList, itemWeightList, setItemWeightList } = props;
+    // const { equipmentList, displayDotOrBox, packingList, setPackingList } = props;
+    const { equipmentList, displayDotOrBox, packingList, setPackingList, totalWeight, setTotalWeight } = props;
 
     const [filter, setFilter] = useState('')
     const [sorting, setSorting] = useState('')
@@ -103,8 +103,16 @@ const AccordionSortedFiltered = (props) => {
                 </StyledSelectInput>
 
             </WrapperSelectInput>
-            <Accordion equipmentList={filteredEquipment} displayDotOrBox={displayDotOrBox} packingList={packingList} setPackingList={setPackingList}/>
-            {/* <Accordion equipmentList={filteredEquipment} displayDotOrBox={displayDotOrBox} packingList={packingList} setPackingList={setPackingList} itemWeightList={itemWeightList} setItemWeightList={setItemWeightList}/> */}
+            <Accordion
+                equipmentList={filteredEquipment}
+                displayDotOrBox={displayDotOrBox}
+                packingList={packingList}
+                setPackingList={setPackingList}
+                totalWeight={totalWeight}
+                setTotalWeight={setTotalWeight}
+            />
+
+
         </>
     )
 

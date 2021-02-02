@@ -5,6 +5,7 @@ import styled from 'styled-components'
 export const Button = styled.button` 
     background-color: ${props => props.theme.orange};
     color: ${props => props.theme.white};
+    font-family: 'Quicksand', sans-serif;
     border-radius: 3px;
     border: none;
     cursor: pointer;
@@ -15,7 +16,8 @@ export const Button = styled.button`
 `;
 
 export const SecondaryButton = styled.button` 
-    background-color: rgba(0,0,0,0.1);
+    background-color: rgba(255,255,255,0.1);
+    font-family: 'Quicksand', sans-serif;
     color: ${props => props.theme.white};
     border-radius: 3px;
     border: 3px solid ${props => props.theme.orange};
