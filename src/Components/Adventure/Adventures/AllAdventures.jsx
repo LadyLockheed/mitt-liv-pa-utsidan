@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import FrostedBackground from '../../Shared/FrostedBackground'
 import { allAdventuresState } from '../../Shared/GlobalStates';
@@ -13,10 +13,19 @@ import { SelectInput } from '../../Shared/ButtonsAndSuch'
 
 
 const Wrapper = styled.div`
-    margin: 1rem 1rem 2rem 1rem;
+    ${'' /* margin: 1rem 1rem 2rem 1rem; */}
+    margin: 1rem;
+
+    
+    max-height: 61vh;
+    overflow:scroll;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+        display: none;
+    }
 
     @media screen and (min-width:600px;){
-        margin: 1rem 2rem 2rem 2rem;
+        ${'' /* margin: 1rem 2rem 2rem 2rem; */}
     }
 
 `;
@@ -150,8 +159,6 @@ const AllAdventure = (props) => {
 
     const { setDisplayAllAdventures, setSpecificAdventure } = props
     const allAdventures = useRecoilValue(allAdventuresState)
-
-   
 
     const calculatedIcon = (season) => {
 

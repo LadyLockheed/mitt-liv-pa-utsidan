@@ -11,15 +11,13 @@ const Container = styled.div`
     position: relative;
     margin-left:auto;
     margin-right:auto;
-    ${'' /* margin-top:2rem; */}
     z-index:1;
     overflow:hidden;
     border-radius:3px;
 
-
     @media screen and (min-width: 700px) {
-        width:50%;
-        ${'' /* margin-top:4rem; */}
+        width:60%;
+      
     }
   
 

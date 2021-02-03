@@ -15,10 +15,11 @@ const Navigation = styled.div`
     grid-template-columns: repeat(5, 1fr);
     align-items:center;
     margin-bottom: 0.5rem;
+    
 
     @media screen and (min-width: 600px){
 
-        margin-bottom: 2rem;
+        margin-bottom: 5rem;
     }
 `;
 const H1 = styled.h1`

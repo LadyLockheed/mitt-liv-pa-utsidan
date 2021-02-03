@@ -12,10 +12,17 @@ import SpinnerFireLog from './SpinnerFireLog'
 
 
 const Wrapper = styled.div`
-    margin: 1rem 1rem 2rem 1rem;
+   
+    max-height: 61vh;
+    overflow:scroll;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+        display: none;
+    }
   
     @media screen and (min-width:600px;){
-        margin: 1rem 2rem 2rem 2rem;
+        ${'' /* margin: 1rem 2rem 2rem 2rem; */}
+        
     }
 `;
 const ItemWrapper = styled.div`
@@ -158,15 +165,12 @@ const DropDownArrow = styled.img`
 `;
 const Collapse = styled.div` 
     grid-column: 1/3;
-    
     display: grid;
     grid-template-columns: 6fr 1fr;
     margin-bottom: 1rem;
-    
+   
 `;
-// const CategoryText = styled.p `
 
-// `;
 const Info = styled.div`
     border: 1px solid #E2E2E2;
     border-radius: 3px;
@@ -174,9 +178,13 @@ const Info = styled.div`
     text-align: left;
     padding: 0.5rem;
     background-color: #F5F8F4;
+    font-size: 0.8rem;
+
    
-    @media screen and (min-width: 600px;){
+    @media screen and (min-width: 600px){
         margin-left: 1.5rem;
+        font-size: 1rem;
+      
     }
     
 `;

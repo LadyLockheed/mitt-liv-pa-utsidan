@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 
     @media  screen and (min-width: 600px){
 
-        margin: 2rem 2rem 2rem 2rem;
+        ${'' /* margin: 2rem 2rem 2rem 2rem; */}
 
     }   
 `;

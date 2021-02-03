@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
+
 import AllAdventures from './AllAdventures'
 import SpecificAdventure from './SpecificAdventure'
 // import { allAdventuresState } from '../../Shared/GlobalStates'

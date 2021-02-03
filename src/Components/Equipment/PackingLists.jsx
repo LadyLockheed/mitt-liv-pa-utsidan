@@ -1,5 +1,5 @@
 import React from 'react'
-import { Adventures } from '../Shared/GlobalStates';
+import { allAdventuresState, allEquipmentState } from '../Shared/GlobalStates';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components'
 import FrostedBackground from '../Shared/FrostedBackground'
@@ -11,13 +11,15 @@ import { SelectInput } from '../Shared/ButtonsAndSuch'
 
 
 const Wrapper = styled.div`
-    margin: 1rem 1rem 2rem 1rem;
-
-    @media screen and (min-width:600px;){
-        margin: 1rem 2rem 2rem 2rem;
-    }
+   
+    margin: 1rem;
 
 `;
+
+const StyledSelectInput = styled(SelectInput)`
+    margin-bottom: 8px;
+
+`
 const ItemWrapper = styled.div`
     display:grid;
     align-items: center;
@@ -49,20 +51,41 @@ const SeasonIcon = styled.img`
     height:1.5rem;
     width: auto;
     grid-column: 1/2;
+    margin-right: 1rem;
     
 `;
-const InfoText = styled.p`
-    font-weight:bold;
-    ${'' /* text-transform: uppercase; */}
+const InfoText = styled.div`
     text-align: left;
-    grid-column: 3/12;
+    grid-column: 2/12;
+    font-size: 0.8rem;
+    align-self:bottom;
+
+    .days{
+        font-weight:bold;
+        margin: 0;
+    }
+
+    .adventureName{
+        font-weight: normal;
+        font-size: 0.8rem;
+        margin: 0;
+    }
+  
+
+    @media screen and (min-width: 600px){
+        font-size: 1rem;
+  
+    }
  
 `;
 const WeightText = styled.p`
     grid-column: 12/15;
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: bold;
 
     @media screen and (min-width: 600px){
-
+        font-size: 1rem;
         grid-column: 13/15;
     }
 `;
@@ -70,8 +93,29 @@ const WeightText = styled.p`
 
 const PackingLists = () => {
 
-    const packingLists = useRecoilValue(Adventures)
+    const allAdventures = useRecoilValue(allAdventuresState)
+    const allEquipment = useRecoilValue(allEquipmentState)
 
+    const calculatedTotalWeight = (packingList) => {
+        let totalWeight = 0;
+       
+        packingList.forEach((listId) => {
+          
+            allEquipment.find((equipment) => {
+               
+                if (equipment._id === listId) {
+                 
+                    totalWeight = totalWeight+equipment.weight
+                    
+                }
+                
+            })
+        })
+
+        return totalWeight/1000
+    }
+
+ 
     const calculatedIcon = (season) => {
 
         if (season === 'autumn') return autumnIcon;
@@ -81,21 +125,25 @@ const PackingLists = () => {
 
     }
 
+ 
     return (
         <FrostedBackground headline={'Packlistor'}>
             <Wrapper>
-                <SelectInput>
+                <StyledSelectInput>
                     <option>Glöm ej lägga in filtrering och sortering</option>
-                </SelectInput>
-                {packingLists.map((item, index) => {
+                </StyledSelectInput>
+                {allAdventures.map((item) => {
                     return (
-                        <ItemWrapper key={item.adventureName + index}>
+                        <ItemWrapper key={item._id}>
 
                             <SeasonIcon src={calculatedIcon(item.season)} />
                             <InfoText>
-                                {item.adventureName}, {item.days}<span> dygn</span>
+                               
+                                <p className='days'>{item.days}<span> dygn</span></p>
+                                <p className='adventureName'>{item.adventure}</p>
                             </InfoText>
-                            <WeightText>{item.weight} <span> kg</span></WeightText>
+
+                            <WeightText>{calculatedTotalWeight(item.packingList)}<span> kg</span></WeightText>
 
 
                         </ItemWrapper>)

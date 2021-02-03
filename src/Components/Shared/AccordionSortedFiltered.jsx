@@ -4,23 +4,39 @@ import Accordion from './Accordion'
 import { SelectInput } from './ButtonsAndSuch'
 
 
+const StyledWrapper = styled.div `
+
+    padding: 0 1rem 1rem 1rem;
+
+    @media screen and (min-width: 600px){
+
+    }
+
+`
 const WrapperSelectInput = styled.div`
 
     display:grid;
     grid-template-columns: 1fr;
+
+    .categorySelect{
+       margin-top:0;
+    }
+    .sortingSelect{
+        margin-bottom: 8px;
+    }
     
     @media screen and (min-width: 600px){
         grid-template-columns: 1fr 1fr;
 
+        .categorySelect{
+            margin-bottom: 8px;
+        }
+        .sortingSelect{
+            margin-bottom: 8px;
+        }
+
     }
 `;
-const StyledSelectInput = styled(SelectInput)` 
-    margin-left:1rem;
-    margin-right: 1rem;
-
-
-`;
-
 
 const AccordionSortedFiltered = (props) => {
 
@@ -65,9 +81,10 @@ const AccordionSortedFiltered = (props) => {
     }
 
     return (
-        <>
+        <StyledWrapper>
             <WrapperSelectInput>
-                <StyledSelectInput
+                <SelectInput
+                className='categorySelect'
                     name="category"
                     id="category"
                     type='text'
@@ -86,9 +103,10 @@ const AccordionSortedFiltered = (props) => {
                     <option value="hygiene">Hygien</option>
                     <option value="other">Övrigt</option>
 
-                </StyledSelectInput>
+                </SelectInput>
 
-                <StyledSelectInput
+                <SelectInput
+                className='sortingSelect'
                     name="category"
                     id="category"
                     type='text'
@@ -100,7 +118,7 @@ const AccordionSortedFiltered = (props) => {
                     <option value="highest">Högsta vikt</option>
                     <option value="lowest">Lägsta vikt</option>
 
-                </StyledSelectInput>
+                </SelectInput>
 
             </WrapperSelectInput>
             <Accordion
@@ -113,7 +131,7 @@ const AccordionSortedFiltered = (props) => {
             />
 
 
-        </>
+        </StyledWrapper>
     )
 
 }

@@ -65,6 +65,7 @@ export const SelectInput = styled.select`
     padding: 0.3rem;
     background-color: ${props => props.theme.white};
     border:2px solid ${props => props.isValid ? `${props.theme.orange}` : `${props.theme.grey}`};
+    cursor: pointer;
 
     &:focus {
         outline: none;

@@ -9,15 +9,14 @@ import Spinner from '../Shared/Spinner'
 
 const Wrapper = styled.div`
    
-   
     background-color: ${props => props.theme.mintGreen};
     margin: 1rem;
     padding: 1rem;
     border-radius: 3px;
-
+    
     @media  screen and (min-width: 600px){
 
-        margin: 2rem 2rem 2rem 2rem;
+        ${'' /* margin: 2rem 2rem 2rem 2rem; */}
         
     }
 
@@ -39,10 +38,13 @@ const StyledSelectInput = styled(SelectInput)`
 `;
 
 const TextArea = styled.textarea`
-    width: 100%;
+    width: 96%;
     border-radius: 3px;
     border: none;
     resize: none;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    padding: 8px;
 `;
 
 const SubmitButton = styled(Button)`
