@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { allAdventuresState, allEquipmentState } from '../../Shared/GlobalStates';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components'
@@ -18,14 +18,46 @@ const Wrapper = styled.div`
     max-height: 60vh;
     overflow:scroll;
     overflow-x: hidden;
+
     &::-webkit-scrollbar {
         display: none;
     }
 
 `;
 
+const WrapperSelectInput = styled.div`
+
+    display:grid;
+    grid-template-columns: 1fr;
+
+    .seasonSelect{
+       margin-top:0;
+      
+    }
+    .daysSelect{
+        margin-bottom: 8px;
+        
+    }
+    
+    @media screen and (min-width: 600px){
+        grid-template-columns: 1fr 1fr;
+
+        .seasonSelect{
+            margin-bottom: 8px;
+            margin-right: 1rem;
+        }
+        .daysSelect{
+            margin-bottom: 8px;
+            margin-left: 1rem;
+        }
+
+    }
+`;
+
 const StyledSelectInput = styled(SelectInput)`
-    margin-bottom: 8px;
+
+    margin-left:1rem;
+    margin-right: 1rem;
 
 `
 const ItemWrapper = styled.div`
@@ -104,27 +136,66 @@ const AllPackingLists = (props) => {
 
     const allAdventures = useRecoilValue(allAdventuresState)
     const allEquipment = useRecoilValue(allEquipmentState)
+    const [filter, setFilter] = useState('')
+    const [sorting, setSorting] = useState('')
+    let filteredAdventures = allAdventures;
+
+    useEffect(()=>{
+        console.log('useEffect')
+    },[filter, sorting])
+
+    const updateFilter = ({ target: { value } }) => {
+
+        setFilter(value);
+    };
+
+    const updateSorting = ({ target: { value } }) => {
+
+        setSorting(value);
+    };
+
+    if (filter || sorting) {
+
+        if (filter) {
+
+            filteredAdventures = filteredAdventures.filter((adventure) => adventure.season === filter)
+        }
+        if (sorting) {
+            console.log('i if-sats för sorting')
+            if (sorting === 'longest') {
+                filteredAdventures = [...filteredAdventures].sort((a, b) => {
+                    return b.days - a.days
+                })
+            }
+            if (sorting === 'shortest') {
+                filteredAdventures = [...filteredAdventures].sort((a, b) => {
+                    return a.days - b.days
+                })
+            }
+
+        }
+
+    }
 
     const calculatedTotalWeight = (packingList) => {
         let totalWeight = 0;
-       
+
         packingList.forEach((listId) => {
-          
+
             allEquipment.find((equipment) => {
-               
+
                 if (equipment._id === listId) {
-                 
-                    totalWeight = totalWeight+equipment.weight
-                    
+
+                    totalWeight = totalWeight + equipment.weight
+
                 }
-                
+
             })
         })
 
-        return totalWeight/1000
+        return totalWeight / 1000
     }
 
- 
     const calculatedIcon = (season) => {
 
         if (season === 'autumn') return autumnIcon;
@@ -133,18 +204,53 @@ const AllPackingLists = (props) => {
         if (season === 'spring') return springIcon
 
     }
-  
- 
+
+   
+
+
     return (
         <FrostedBackground headline={'Packlistor'}>
-         <StyledSelectInput>
-                    <option>Glöm ej lägga in filtrering och sortering</option>
-                </StyledSelectInput>
+    <WrapperSelectInput>
+            <StyledSelectInput
+                className='seasonSelect'
+                name="season"
+                id="season"
+                type='text'
+                value={filter}
+                onChange={updateFilter}
+            >
+                <option value=''>Årstid</option>
+                <option value=''>Alla</option>
+                <option value='summer'>Sommar</option>
+                <option value='autumn'>Höst</option>
+                <option value='winter'>Vinter</option>
+                <option value='spring'>Vår</option>
+            </StyledSelectInput>
+
+            <StyledSelectInput
+                className='daysSelect'
+                name="days"
+                id="days"
+                type='text'
+                value={sorting}
+                onChange={updateSorting}
+            >
+                <option value=''>Antal dygn</option>
+                <option value=''>Senast tillagd</option>
+                <option value="longest">Längst tid</option>
+                <option value="shortest">Kortast tid</option>
+            </StyledSelectInput>
+
+            </WrapperSelectInput>
+
+            {/* <StyledSelectInput>
+                <option>Vikt</option>
+            </StyledSelectInput> */}
             <Wrapper>
-               
-                {allAdventures.map((item) => {
+
+                {filteredAdventures.map((item) => {
                     return (
-                        <ItemWrapper key={item._id} onClick = {()=>{ setDisplayAllPackingLists(false); setSpecificPackingList({item:item, totalWeight:calculatedTotalWeight(item.packingList)})}}>
+                        <ItemWrapper key={item._id} onClick={() => { setDisplayAllPackingLists(false); setSpecificPackingList({ item: item, totalWeight: calculatedTotalWeight(item.packingList) }) }}>
 
                             <SeasonIcon src={calculatedIcon(item.season)} />
                             <InfoText>
@@ -160,7 +266,7 @@ const AllPackingLists = (props) => {
 
             </Wrapper>
 
-        </FrostedBackground>
+        </FrostedBackground >
 
     )
 }

@@ -13,19 +13,14 @@ import { SelectInput } from '../../Shared/ButtonsAndSuch'
 
 
 const Wrapper = styled.div`
-    ${'' /* margin: 1rem 1rem 2rem 1rem; */}
+   
     margin: 1rem;
-
-    
     max-height: 61vh;
     overflow:scroll;
     overflow-x: hidden;
+
     &::-webkit-scrollbar {
         display: none;
-    }
-
-    @media screen and (min-width:600px;){
-        ${'' /* margin: 1rem 2rem 2rem 2rem; */}
     }
 
 `;
@@ -57,11 +52,7 @@ const AdventureWrapper = styled.div`
     display:grid;
     align-items: center;
     padding: 1rem;
-  
-   
- 
     background-color:rgba(233,235,218,0.8);
-
 
     &:nth-child(odd) {
         background-color:rgb(219,221,205);
@@ -80,7 +71,6 @@ const AdventureWrapper = styled.div`
         cursor:pointer;
     }
 
-
 `;
 
 const StyledDateWrapper = styled.div`
@@ -88,7 +78,6 @@ const StyledDateWrapper = styled.div`
     font-size: 0.8rem;
     margin:0;
    
-
     span{
       
         display:block;
@@ -96,7 +85,6 @@ const StyledDateWrapper = styled.div`
     
     .streck{
        font-weight: bold;
-      
     }
 
     @media screen and (min-width: 600px){
@@ -112,13 +100,12 @@ const StyledDateWrapper = styled.div`
 const NameAndDateWrapper = styled.div`
     grid-column: 2/11;
   
-
     @media screen and (min-width: 600px){
         grid-column: 2/11;
     }
 `;
 const SeasonIcon = styled.img`
-    height:1.5rem;
+    height: 1.5rem;
     width: auto;
     margin-right: 1rem;
     align-self: center;
@@ -131,7 +118,14 @@ const SeasonIcon = styled.img`
 const AdventureName = styled.p`
     font-weight:bold;
     text-align: left;
+    font-size: 0.8rem;
     margin:0;
+
+    
+    @media screen and (min-width: 600px){
+        font-size: 1rem;
+  
+    }
 
 `;
 
@@ -140,6 +134,8 @@ const StyledDays = styled.p`
     grid-column: 11/15;
     text-align: center;
     justify-self: end;
+    font-size: 0.8rem;
+    align-self: center;
 
     span{
         font-weight: bold;
@@ -148,6 +144,8 @@ const StyledDays = styled.p`
 
     @media screen and (min-width: 600px){
         grid-column: 12/15;
+        font-size: 1rem;
+       
        
     }
  
