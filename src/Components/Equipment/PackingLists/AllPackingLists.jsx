@@ -1,18 +1,26 @@
 import React from 'react'
-import { allAdventuresState, allEquipmentState } from '../Shared/GlobalStates';
+import { allAdventuresState, allEquipmentState } from '../../Shared/GlobalStates';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components'
-import FrostedBackground from '../Shared/FrostedBackground'
-import autumnIcon from '../../Assets/autumnLeafIcon.svg'
-import summerIcon from '../../Assets/summerSunIcon.svg'
-import winterIcon from '../../Assets/winterSnowFlaceIcon.svg'
-import springIcon from '../../Assets/springBranchIcon.svg'
-import { SelectInput } from '../Shared/ButtonsAndSuch'
+import FrostedBackground from '../../Shared/FrostedBackground'
+import autumnIcon from '../../../Assets/autumnLeafIcon.svg'
+import summerIcon from '../../../Assets/summerSunIcon.svg'
+import winterIcon from '../../../Assets/winterSnowFlaceIcon.svg'
+import springIcon from '../../../Assets/springBranchIcon.svg'
+import { SelectInput } from '../../Shared/ButtonsAndSuch'
+
 
 
 const Wrapper = styled.div`
    
     margin: 1rem;
+    border-radius: 3px;
+    max-height: 60vh;
+    overflow:scroll;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+        display: none;
+    }
 
 `;
 
@@ -43,7 +51,6 @@ const ItemWrapper = styled.div`
     &:hover {
         cursor:pointer;
     }
-
 
 `;
 
@@ -91,7 +98,9 @@ const WeightText = styled.p`
 `;
 
 
-const PackingLists = () => {
+const AllPackingLists = (props) => {
+
+    const { setDisplayAllPackingLists, setSpecificPackingList } = props;
 
     const allAdventures = useRecoilValue(allAdventuresState)
     const allEquipment = useRecoilValue(allEquipmentState)
@@ -124,21 +133,21 @@ const PackingLists = () => {
         if (season === 'spring') return springIcon
 
     }
-
+  
  
     return (
         <FrostedBackground headline={'Packlistor'}>
-            <Wrapper>
-                <StyledSelectInput>
+         <StyledSelectInput>
                     <option>Glöm ej lägga in filtrering och sortering</option>
                 </StyledSelectInput>
+            <Wrapper>
+               
                 {allAdventures.map((item) => {
                     return (
-                        <ItemWrapper key={item._id}>
+                        <ItemWrapper key={item._id} onClick = {()=>{ setDisplayAllPackingLists(false); setSpecificPackingList({item:item, totalWeight:calculatedTotalWeight(item.packingList)})}}>
 
                             <SeasonIcon src={calculatedIcon(item.season)} />
                             <InfoText>
-                               
                                 <p className='days'>{item.days}<span> dygn</span></p>
                                 <p className='adventureName'>{item.adventure}</p>
                             </InfoText>
@@ -156,4 +165,4 @@ const PackingLists = () => {
     )
 }
 
-export default PackingLists
+export default AllPackingLists

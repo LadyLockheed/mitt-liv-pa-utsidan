@@ -20,9 +20,11 @@ const WrapperSelectInput = styled.div`
 
     .categorySelect{
        margin-top:0;
+      
     }
     .sortingSelect{
         margin-bottom: 8px;
+        
     }
     
     @media screen and (min-width: 600px){
@@ -30,9 +32,11 @@ const WrapperSelectInput = styled.div`
 
         .categorySelect{
             margin-bottom: 8px;
+            margin-right: 1rem;
         }
         .sortingSelect{
             margin-bottom: 8px;
+            margin-left: 1rem;
         }
 
     }
@@ -84,7 +88,7 @@ const AccordionSortedFiltered = (props) => {
         <StyledWrapper>
             <WrapperSelectInput>
                 <SelectInput
-                className='categorySelect'
+                    className='categorySelect'
                     name="category"
                     id="category"
                     type='text'
@@ -106,7 +110,7 @@ const AccordionSortedFiltered = (props) => {
                 </SelectInput>
 
                 <SelectInput
-                className='sortingSelect'
+                    className='sortingSelect'
                     name="category"
                     id="category"
                     type='text'

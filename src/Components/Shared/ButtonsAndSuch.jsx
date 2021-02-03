@@ -1,5 +1,5 @@
-
 import styled from 'styled-components'
+
 
 
 export const Button = styled.button` 
@@ -26,6 +26,7 @@ export const SecondaryButton = styled.button`
     font-size: 1rem;
 
 `;
+
 
 export const Label = styled.label`
     font-weight: bold;

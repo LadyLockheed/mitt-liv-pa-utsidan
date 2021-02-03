@@ -19,6 +19,7 @@ const Wrapper = styled.div`
     &::-webkit-scrollbar {
         display: none;
     }
+    border-radius: 3px;
   
     @media screen and (min-width:600px;){
         ${'' /* margin: 1rem 2rem 2rem 2rem; */}

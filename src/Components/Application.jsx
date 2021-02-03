@@ -25,7 +25,7 @@ import AddNewUser from './Login/AddNewUser'
 
 //Equipment components
 import AllEquipment from './Equipment/AllEquipment'
-import PackingLists from './Equipment/PackingLists'
+import PackingLists from './Equipment/PackingLists/index'
 import AddEquipment from './Equipment/AddEquipment'
 //Adventure components
 import Adventures from './Adventure/Adventures/index'

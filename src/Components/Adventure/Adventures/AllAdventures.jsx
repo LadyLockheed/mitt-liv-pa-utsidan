@@ -30,11 +30,11 @@ const Wrapper = styled.div`
 
 `;
 
-
 const WrapperSelectInput = styled.div`
 
     display:grid;
     grid-template-columns: 1fr;
+    
     
     @media screen and (min-width: 600px){
         grid-template-columns: 1fr 1fr;
@@ -175,6 +175,7 @@ const AllAdventure = (props) => {
 
             <WrapperSelectInput>
                 <StyledSelectInput
+                    className='seasonSelect'
                     name="season"
                     id="season"
                     type='text'
@@ -191,6 +192,7 @@ const AllAdventure = (props) => {
                 </StyledSelectInput>
 
                 <StyledSelectInput
+                    className='sortingSelect'
                     name="days"
                     id="days"
                     type='text'

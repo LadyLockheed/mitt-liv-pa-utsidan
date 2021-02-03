@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import {  useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-
 import mainLogo from '../Assets/mainLogo.svg'
-
 import Burger from './Menu/Burger'
 import MenuFromSide from './Menu/MenuFromSide'
 
@@ -16,10 +14,9 @@ const Navigation = styled.div`
     align-items:center;
     margin-bottom: 0.5rem;
     
-
     @media screen and (min-width: 600px){
 
-        margin-bottom: 5rem;
+        margin-bottom: 3.5rem;
     }
 `;
 const H1 = styled.h1`

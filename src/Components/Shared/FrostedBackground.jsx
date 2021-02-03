@@ -64,7 +64,7 @@ const InvisibleProblemFixer = styled.div`
 const FrostedBackground = (props) => {
 
 
-    const { headline,  children, useInvisibleProblemFixer=false } = props
+    const { headline,  children, useInvisibleProblemFixer = false } = props
 
 
     return (
