@@ -69,11 +69,7 @@ const AddAdventure = () => {
     const [isLoading, setIsLoading] = useState(false)
     const history = useHistory()
 
-
     const [totalWeight, setTotalWeight] = useState(0)
-    // console.log('addadventure, totalweight: ', totalWeight)
-    // console.log('avrundad totalweight i gram: ', totalWeight.toFixed(2))
-    // console.log('till kilo totalweight: ', totalWeight/1000+'kg')
 
     let newAdventure = newAdventureInfo
     const handleCreateNewAdventure = () => {
@@ -86,7 +82,6 @@ const AddAdventure = () => {
 
             setIsLoading(true)
             newAdventure = { ...newAdventureInfo, packingList: packingList }
-            console.log('Från frontend skickas detta till backend: ', newAdventure)
             addNewAdventure()
 
         }
@@ -140,9 +135,9 @@ const AddAdventure = () => {
 
             {!displayForm && !isLoading &&
                 <FrostedBackground headline={'Dags att packa'}>
-{/* 
+                    {/* 
                     <SecondaryOptionButton onClick={() => setDisplayPackingLists(true)}>Välj en färdig lista</SecondaryOptionButton> */}
-                    
+
                     <SecondaryOptionButton>Välj en färdig lista</SecondaryOptionButton>
 
                     <AccordionSortedFiltered
@@ -155,7 +150,7 @@ const AddAdventure = () => {
 
                     />
                     <WeightWrapper>
-                        <Weight> Total vikt <br/> {totalWeight/1000} kg</Weight>
+                        <Weight> Total vikt <br /> {totalWeight / 1000} kg</Weight>
 
                     </WeightWrapper>
 

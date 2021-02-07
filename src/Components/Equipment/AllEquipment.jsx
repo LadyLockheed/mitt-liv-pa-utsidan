@@ -48,54 +48,87 @@ const AllEquipment = () => {
 
     useEffect(() => {
 
+        async function getAllEquipment() {
+            setIsLoading(true)
+            setDisplayErrorInfo(false)
+    
+            try {
+                const response = await axios.get('/api/allEquipment')
+                setAllEquipment(response.data)
+                console.log('response equipment: ', response.data)
+                setIsLoading(false)
+    
+                if (response.data.length < 1) {
+    
+                    setDisplayNoDataInfo(true)
+                }
+            }
+            catch (err) {
+                console.log('Meddelande från frontend: nånting gick fel', err)
+                setDisplayErrorInfo(true)
+                setIsLoading(false)
+            }
+        };
+    
+        async function getAllAdventures() {
+    
+    
+            try {
+                const response = await axios.get('/api/allAdventures')
+                setAllAdventures(response.data)
+                console.log('response adventure: ', response.data)
+      
+            }
+            catch (err) {
+                console.log('Meddelande från frontend: nånting gick fel', err)
+                setDisplayErrorInfo(true)
+                setIsLoading(false)
+            }
+        };
+
+        
         getAllEquipment();
         getAllAdventures();
 
     }, [])
 
-    async function getAllEquipment() {
-        setIsLoading(true)
-        setDisplayErrorInfo(false)
+    // async function getAllEquipment() {
+    //     setIsLoading(true)
+    //     setDisplayErrorInfo(false)
 
-        try {
-            const response = await axios.get('/api/allEquipment')
-            setAllEquipment(response.data)
-            console.log('response equipment: ', response.data)
-            setIsLoading(false)
+    //     try {
+    //         const response = await axios.get('/api/allEquipment')
+    //         setAllEquipment(response.data)
+    //         console.log('response equipment: ', response.data)
+    //         setIsLoading(false)
 
-            if (response.data.length < 1) {
+    //         if (response.data.length < 1) {
 
-                setDisplayNoDataInfo(true)
-            }
-        }
-        catch (err) {
-            console.log('Meddelande från frontend: nånting gick fel', err)
-            setDisplayErrorInfo(true)
-            setIsLoading(false)
-        }
-    };
+    //             setDisplayNoDataInfo(true)
+    //         }
+    //     }
+    //     catch (err) {
+    //         console.log('Meddelande från frontend: nånting gick fel', err)
+    //         setDisplayErrorInfo(true)
+    //         setIsLoading(false)
+    //     }
+    // };
 
-    async function getAllAdventures() {
-        // setIsLoading(true)
-        // setDisplayErrorInfo(false)
+    // async function getAllAdventures() {
 
-        try {
-            const response = await axios.get('/api/allAdventures')
-            setAllAdventures(response.data)
-            console.log('response adventure: ', response.data)
-            // setIsLoading(false)
 
-            // if (response.data.length < 1) {
-
-            //     setDisplayNoDataInfo(true)
-            // }
-        }
-        catch (err) {
-            console.log('Meddelande från frontend: nånting gick fel', err)
-            setDisplayErrorInfo(true)
-            setIsLoading(false)
-        }
-    };
+    //     try {
+    //         const response = await axios.get('/api/allAdventures')
+    //         setAllAdventures(response.data)
+    //         console.log('response adventure: ', response.data)
+  
+    //     }
+    //     catch (err) {
+    //         console.log('Meddelande från frontend: nånting gick fel', err)
+    //         setDisplayErrorInfo(true)
+    //         setIsLoading(false)
+    //     }
+    // };
 
 
     return (

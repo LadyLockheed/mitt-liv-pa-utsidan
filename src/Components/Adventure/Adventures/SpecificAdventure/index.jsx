@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useRecoilValue } from 'recoil';
-import { allEquipmentState } from '../../Shared/GlobalStates'
-import Accordion from '../../Shared/Accordion'
-import autumnIcon from '../../../Assets/autumnLeafIcon.svg'
-import summerIcon from '../../../Assets/summerSunIcon.svg'
-import winterIcon from '../../../Assets/winterSnowFlaceIcon.svg'
-import springIcon from '../../../Assets/springBranchIcon.svg'
-import FrostedBackground from '../../Shared/FrostedBackground'
-import { SecondaryButton } from '../../Shared/ButtonsAndSuch'
-import backArrowWhite from '../../../Assets/backArrowWhite.svg'
+import { allEquipmentState } from '../../../Shared/GlobalStates'
+
+//Components
+import Accordion from '../../../Shared/Accordion'
+import AdventureNotes from './AdventureNotes'
+import FrostedBackground from '../../../Shared/FrostedBackground'
+
+import { SecondaryButton } from '../../../Shared/ButtonsAndSuch'
+
+//images
+import autumnIcon from '../../../../Assets/autumnLeafIcon.svg'
+import summerIcon from '../../../../Assets/summerSunIcon.svg'
+import winterIcon from '../../../../Assets/winterSnowFlaceIcon.svg'
+import springIcon from '../../../../Assets/springBranchIcon.svg'
+import backArrowWhite from '../../../../Assets/backArrowWhite.svg'
 
 
 const Wrapper = styled.div`
@@ -32,6 +38,19 @@ const Wrapper = styled.div`
     'map'
     'bottom';
 
+    @media screen and (min-width: 600px){
+
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-areas: 
+        'header header header header'
+        'accordion accordion notes notes'
+        'accordion accordion notes notes'
+        'accordion accordion map map'
+        'accordion accordion map map'
+        'bottom bottom . .';
+        }
+
+
     @media screen and (min-width: 700px){
 
         grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -41,8 +60,44 @@ const Wrapper = styled.div`
         'accordion accordion notes notes'
         'accordion accordion map map'
         'accordion accordion map map'
-        'bottom . . .';
+        'bottom bottom . .';
     }
+
+    @media screen and (min-width: 995px){
+
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-areas: 
+        'header header header header'
+        'accordion accordion notes notes'
+        'accordion accordion notes notes'
+        'accordion accordion map map'
+        'accordion accordion map map'
+        'bottom bottom . .';
+    }
+
+    @media screen and (min-width: 1000px){
+
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-areas: 
+        'header header header header'
+        'accordion accordion notes notes'
+        'accordion accordion notes notes'
+        'accordion accordion map map'
+        'accordion accordion map map'
+        'bottom bottom . .';
+    }
+${'' /* 
+    @media screen and (min-width: 1000px){
+        border: 1px solid red;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas: 
+    'header header header header'
+    'notes notes accordion accordion'
+    'notes notes accordion accordion'
+    'map map accordion accordion'
+    'map map accordion accordion'
+    'bottom bottom accordion accordion';
+    } */}
 
 `;
 
@@ -111,11 +166,12 @@ const StyledAccordionWrapper = styled.div`
 `;
 
 const StyledAccordion = styled.div`
-    height: 20rem;
+    height: 21rem;
     overflow:scroll;
     overflow-x: hidden;
     background-color: ${props => props.theme.white};
     border-radius: 3px;
+
     &::-webkit-scrollbar {
         display: none;
     }
@@ -129,15 +185,6 @@ const StyledNoteInputWrapper = styled.div`
     grid-area: notes;
     margin: 0.5rem;
  
-`;
-
-const StyledNoteInput = styled.textarea`
-    width: 96%;
-    font-family: 'Quicksand', sans-serif;
-    font-weight: bold;
-    border: none;
-    resize: none;
-    padding: 8px;
 `;
 
 const StyledMapWrapper = styled.div`
@@ -182,11 +229,15 @@ const SpecificAdventure = (props) => {
 
                 packingListEquipment.push(equipment)
                 totalWeight = totalWeight + equipment.weight
-                
+
             }
-            
+
         })
     })
+
+    useEffect(()=>{
+       
+    },[specificAdventure])
 
     const calculatedIcon = (season) => {
 
@@ -224,19 +275,14 @@ const SpecificAdventure = (props) => {
                         />
 
                     </StyledAccordion>
-                    <p className='totalWeight'>Total vikt: <br /> {totalWeight/1000} kg</p>
+                    <p className='totalWeight'>Total vikt: <br /> {totalWeight / 1000} kg</p>
 
                 </StyledAccordionWrapper>
 
                 <StyledNoteInputWrapper>
 
                     <StyledSubHeadline htmlFor='notes'>Noteringar</StyledSubHeadline>
-                    <StyledNoteInput
-                        id='notes'
-                        rows='5'
-                        type='text'
-                    />
-                    <button>Spara</button>
+                    <AdventureNotes specificAdventure = {specificAdventure}/>
 
                 </StyledNoteInputWrapper>
 
@@ -249,7 +295,7 @@ const SpecificAdventure = (props) => {
                 </StyledMapWrapper>
 
                 <StyledGoBackButton onClick={() => setDisplayAllAdventures(true)}>
-                <StyledArrowIcon src={backArrowWhite}/>Tillbaka</StyledGoBackButton>
+                    <StyledArrowIcon src={backArrowWhite} />Tillbaka</StyledGoBackButton>
 
             </Wrapper>
         </FrostedBackground>

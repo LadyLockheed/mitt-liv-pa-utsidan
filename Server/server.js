@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const path = require('path')
 // const { cloudinary } = require('./cloudinary')
 const cors = require('cors');
-const { getAllEquipment, getUser, addNewUser, addNewEquipment, deleteEquipment, editEquipment, addNewAdventure, getAllAdventures } = require('./database.js');
+const { getAllEquipment, getUser, addNewUser, addNewEquipment, deleteEquipment, editEquipment, addNewAdventure, getAllAdventures, saveAdventureNotes } = require('./database.js');
 
 const port = 1337; // Port number
 
@@ -112,16 +112,16 @@ app.post('/api/addNewUser', async (req, res) => {
 
     //kollar om user redan finns
     const userArray = await getUser(newUserName)
-    console.log('efter getUser, responsen: ', userArray)
+
     if (userArray.length > 0) {
-        console.log('i ifsats, användaren finns redan')
+       
         res.send(null)
         //fail här, (kanske skicka annan statuskod)
         //användaren finns redan
     }
     else {
 
-        console.log('i else sats användaren finns inte, adda ny user ok')
+       
         const newUser = await addNewUser(newUserName, hashedPassword)
 
         res.send(newUser)
@@ -155,6 +155,16 @@ app.post('/api/addNewAdventure', async (req, res) => {
 
     res.send(addedNewAdventure)
 
+})
+
+app.put('/api/saveAdventureNotes', async (req, res)=>{
+  
+    const notes = req.body.notes
+    const adventureId = req.body.adventureId
+    
+    const savedAdventureNotes = await saveAdventureNotes(notes, adventureId)
+    res.send(savedAdventureNotes)
+   
 })
 
 // add equipment

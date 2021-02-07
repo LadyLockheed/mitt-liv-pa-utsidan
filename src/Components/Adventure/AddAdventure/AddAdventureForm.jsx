@@ -62,13 +62,13 @@ const AddNewAdventure = (props) => {
             setDays(newAdventureInfo.days)
         }
 
-    },[])
+    },[newAdventureInfo])
 
     
     const [adventure, setAdventure] = useState('')
     const [season, setSeason] = useState('')
     const [dateStarting, setDateStarting] = useState('')
-    const [days, setDays] = useState('')
+    const [days, setDays] = useState(null)
 
     const [validateAdventure, setValidateAdventure] = useState(false)
     const [validateSeason, setValidateSeason] = useState(false)
@@ -80,7 +80,8 @@ const AddNewAdventure = (props) => {
         adventure: adventure,
         season: season,
         dateStarting: dateStarting,
-        days: parseFloat(days)
+        days: parseFloat(days),
+        notes: ''
     }
 
     const handleAddNewAdventure = () => {

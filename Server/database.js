@@ -91,7 +91,7 @@ async function deleteItem(payload, collection) {
 
 
 async function put(payload, collection, id) {
- 
+    console.log('database: payload: ', payload, 'collection: ', collection, 'id: ', id)
 
     let client;
     try {
@@ -155,15 +155,11 @@ function editEquipment(updatedEquipment, equipmentId){
     return put(updatedEquipment,'equipment', {_id: new ObjectID(equipmentId)})
 }
 
+function saveAdventureNotes(notes, adventureId){
+    // console.log('notes: ', notes, 'adventureId: ', adventureId)
 
-
-
-
-
-
-
-
-
+    return put({notes: notes}, 'adventure', {_id: new ObjectID(adventureId)})
+}
 
 
 module.exports = {
@@ -174,5 +170,6 @@ module.exports = {
     deleteEquipment,
     editEquipment,
     addNewAdventure,
-    getAllAdventures
+    getAllAdventures,
+    saveAdventureNotes
 }
