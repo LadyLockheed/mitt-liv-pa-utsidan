@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import FrostedBackground from '../../Shared/FrostedBackground'
 import { useRecoilValue } from 'recoil';
 import { allEquipmentState } from '../../Shared/GlobalStates'
 import AccordionSortedFiltered from '../../Shared/AccordionSortedFiltered'
@@ -26,7 +25,7 @@ const StyledArrowIcon = styled.img`
 const SpecificPackingList = (props) => {
 
     const { setDisplayAllPackingLists, specificPackingList } = props;
-    const { item, totalWeight } = specificPackingList;
+    const { item } = specificPackingList;
     const allEquipment = useRecoilValue(allEquipmentState)
     const packingListArray = item.packingList;
 
@@ -46,7 +45,8 @@ const SpecificPackingList = (props) => {
 
     return (
 
-        <FrostedBackground headline={`Packlista, totalt ${totalWeight}kg`}>
+    
+        <>
             <AccordionSortedFiltered
                 equipmentList={packingListEquipment}
                 displayDotOrBox={'dot'}
@@ -55,8 +55,7 @@ const SpecificPackingList = (props) => {
             <StyledGoBackButton onClick={() => setDisplayAllPackingLists(true)}>
                 <StyledArrowIcon src={backArrowBlack} />Tillbaka
                 </StyledGoBackButton>
-         
-        </FrostedBackground>
+         </>
 
     )
 }

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { allAdventuresState, allEquipmentState } from '../../Shared/GlobalStates';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components'
-import FrostedBackground from '../../Shared/FrostedBackground'
 import autumnIcon from '../../../Assets/autumnLeafIcon.svg'
 import summerIcon from '../../../Assets/summerSunIcon.svg'
 import winterIcon from '../../../Assets/winterSnowFlaceIcon.svg'
@@ -141,7 +140,7 @@ const AllPackingLists = (props) => {
     let filteredAdventures = allAdventures;
 
     useEffect(()=>{
-        console.log('useEffect')
+       
     },[filter, sorting])
 
     const updateFilter = ({ target: { value } }) => {
@@ -161,7 +160,7 @@ const AllPackingLists = (props) => {
             filteredAdventures = filteredAdventures.filter((adventure) => adventure.season === filter)
         }
         if (sorting) {
-            console.log('i if-sats för sorting')
+            
             if (sorting === 'longest') {
                 filteredAdventures = [...filteredAdventures].sort((a, b) => {
                     return b.days - a.days
@@ -209,7 +208,8 @@ const AllPackingLists = (props) => {
 
 
     return (
-        <FrostedBackground headline={'Packlistor'}>
+        // <FrostedBackground headline={'Packlistor'}>
+        <>
     <WrapperSelectInput>
             <StyledSelectInput
                 className='seasonSelect'
@@ -265,8 +265,9 @@ const AllPackingLists = (props) => {
                 })}
 
             </Wrapper>
+            </>
 
-        </FrostedBackground >
+        // </FrostedBackground >
 
     )
 }

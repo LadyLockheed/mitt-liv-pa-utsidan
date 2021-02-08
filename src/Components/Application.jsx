@@ -29,7 +29,7 @@ import PackingLists from './Equipment/PackingLists/index'
 import AddEquipment from './Equipment/AddEquipment'
 //Adventure components
 import Adventures from './Adventure/Adventures/index'
-import AddAdventure from './Adventure/AddAdventure/AddAdventure'
+import AddAdventure from './Adventure/AddAdventure/index'
 
 
 //gör så att alla request kommer skicka med kakor
