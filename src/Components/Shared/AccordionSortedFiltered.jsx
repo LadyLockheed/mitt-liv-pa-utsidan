@@ -47,6 +47,8 @@ const AccordionSortedFiltered = (props) => {
     // const { equipmentList, displayDotOrBox, packingList, setPackingList } = props;
     const { equipmentList, displayDotOrBox, packingList, setPackingList, totalWeight, setTotalWeight } = props;
 
+  
+
     const [filter, setFilter] = useState('')
     const [sorting, setSorting] = useState('')
 

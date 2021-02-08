@@ -49,7 +49,7 @@ const ArrowForwardIcon = styled.img`
 
 const AddNewAdventure = (props) => {
 
-    const { setDisplayForm, setNewAdventureInfo, newAdventureInfo } = props
+    const { setDisplayForm, setNewAdventureInfo, newAdventureInfo} = props
 
     //TODO Datestarting och days syns ej om man backar tillbaka from packlistan. Funkar ju i editEquipment, varför inte här?
     //kollar om man redan har skrivit något i formuläret om man backar tillbaka från skapa packlista, så att allt man skrev fortfarande är ifyllt

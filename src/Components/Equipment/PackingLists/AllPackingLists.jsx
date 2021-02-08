@@ -131,13 +131,25 @@ const WeightText = styled.p`
 
 const AllPackingLists = (props) => {
 
-    const { setDisplayAllPackingLists, setSpecificPackingList } = props;
+    const { setDisplayAllPackingLists, setSpecificPackingList, setPackingList, creatingPackingList } = props;
 
     const allAdventures = useRecoilValue(allAdventuresState)
     const allEquipment = useRecoilValue(allEquipmentState)
     const [filter, setFilter] = useState('')
     const [sorting, setSorting] = useState('')
     let filteredAdventures = allAdventures;
+
+    //kollar om setPackingList-prop skickats in i komponenten. Förhindrar att AllpackingList kraschar när man klickar på en packlista och setPackingList-propsen inte finns.
+    const handleSetPackingList = (packingList)=>{
+        
+        if (creatingPackingList){
+
+            setPackingList(packingList)
+        }
+        else{
+           return
+        }
+    }
 
     useEffect(()=>{
        
@@ -204,8 +216,6 @@ const AllPackingLists = (props) => {
 
     }
 
-   
-
 
     return (
         // <FrostedBackground headline={'Packlistor'}>
@@ -243,14 +253,17 @@ const AllPackingLists = (props) => {
 
             </WrapperSelectInput>
 
-            {/* <StyledSelectInput>
-                <option>Vikt</option>
-            </StyledSelectInput> */}
             <Wrapper>
 
                 {filteredAdventures.map((item) => {
                     return (
-                        <ItemWrapper key={item._id} onClick={() => { setDisplayAllPackingLists(false); setSpecificPackingList({ item: item, totalWeight: calculatedTotalWeight(item.packingList) }) }}>
+                        <ItemWrapper 
+                        key={item._id} 
+                        onClick={() => { 
+                            setDisplayAllPackingLists(false); 
+                            // setPackingList(item.packingList);
+                            handleSetPackingList(item.packingList) ;
+                            setSpecificPackingList({ item: item, totalWeight: calculatedTotalWeight(item.packingList) }) }}>
 
                             <SeasonIcon src={calculatedIcon(item.season)} />
                             <InfoText>

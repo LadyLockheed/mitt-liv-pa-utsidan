@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import FrostedBackground from '../../Shared/FrostedBackground'
 import { allAdventuresState } from '../../Shared/GlobalStates';
@@ -9,8 +9,6 @@ import winterIcon from '../../../Assets/winterSnowFlaceIcon.svg'
 import springIcon from '../../../Assets/springBranchIcon.svg'
 import { SelectInput } from '../../Shared/ButtonsAndSuch'
 // import { useHistory } from 'react-router-dom'
-
-
 
 const Wrapper = styled.div`
    
@@ -152,11 +150,51 @@ const StyledDays = styled.p`
 `;
 
 
-
 const AllAdventure = (props) => {
 
     const { setDisplayAllAdventures, setSpecificAdventure } = props
     const allAdventures = useRecoilValue(allAdventuresState)
+
+    const [filter, setFilter] = useState('')
+    const [sorting, setSorting] = useState('')
+    let filteredAdventures = allAdventures
+
+    const updateFilter = ({ target: { value } }) => {
+
+        setFilter(value);
+    };
+
+    const updateSorting = ({ target: { value } }) => {
+
+        setSorting(value);
+    };
+
+    if (filter || sorting) {
+
+        if (filter) {
+
+            filteredAdventures = filteredAdventures.filter((adventure) => adventure.season === filter)
+        }
+        if (sorting) {
+
+            if (sorting === 'highest') {
+                filteredAdventures = [...filteredAdventures].sort((a, b) => {
+                    return b.days - a.days
+                })
+            }
+            if (sorting === 'lowest') {
+                filteredAdventures = [...filteredAdventures].sort((a, b) => {
+                    return a.days - b.days
+                })
+            }
+
+        }
+
+    }
+
+    useEffect(()=>{
+
+    },[filteredAdventures])
 
     const calculatedIcon = (season) => {
 
@@ -177,10 +215,10 @@ const AllAdventure = (props) => {
                     name="season"
                     id="season"
                     type='text'
-                // value={filter}
-                // onChange={updateFilter}
+                    value={filter}
+                    onChange={updateFilter}
                 >
-                    <option value=''>Välj kategori</option>
+                    <option value=''>Välj årstid</option>
                     <option value=''>Alla</option>
                     <option value="autumn">Höst</option>
                     <option value="winter">Vinter</option>
@@ -194,12 +232,12 @@ const AllAdventure = (props) => {
                     name="days"
                     id="days"
                     type='text'
-                // value={filter}
-                // onChange={updateFilter}
+                    value={sorting}
+                    onChange={updateSorting}
                 >
                     <option value=''>Sortera</option>
-                    <option value=''>Alla</option>
-                    <option value="lowest">Minsta antal dagar</option>
+                    <option value=''>Senast inlagda</option>
+                    <option value="lowest">Minst antal dagar</option>
                     <option value="highest">Mest antal dagar</option>
 
 
@@ -208,12 +246,12 @@ const AllAdventure = (props) => {
             </WrapperSelectInput>
             <Wrapper>
 
-                {allAdventures.map((adventure) => {
+                {filteredAdventures.map((adventure) => {
 
                     return (
 
 
-                        <AdventureWrapper key={adventure._id} onClick = {()=>{ setDisplayAllAdventures(false); setSpecificAdventure(adventure)}}>
+                        <AdventureWrapper key={adventure._id} onClick={() => { setDisplayAllAdventures(false); setSpecificAdventure(adventure) }}>
 
                             <ItemWrapper>
 

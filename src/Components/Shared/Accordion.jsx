@@ -222,9 +222,9 @@ const TrachcanIcon = styled.img`
 
 const Accordion = (props) => {
 
-    // const { equipmentList, displayDotOrBox, packingList, setPackingList } = props;
-    const { equipmentList, displayDotOrBox, packingList=[], setPackingList, totalWeight, setTotalWeight } = props;
 
+    const { equipmentList, displayDotOrBox, packingList=[], setPackingList, totalWeight, setTotalWeight } = props;
+  
     const [expandedItems, setExpandedItems] = useState([]);
     const [isDeleting, setIsDeleting] = useState(false)
     const [displayModal, setDisplayModal] = useState(false)
@@ -363,7 +363,7 @@ const Accordion = (props) => {
                             {item.isExpanded &&
 
                                 <Collapse>
-                                    {/* <CategoryText>Kategori: {item.category}</CategoryText> */}
+                         
                                     <Info>Kategori: {item.category} <br />{item.info}</Info>
                                     <IconWrapper>
 

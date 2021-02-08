@@ -8,7 +8,7 @@ import { allEquipmentState } from '../../Shared/GlobalStates'
 //components
 import AccordionSortedFiltered from '../../Shared/AccordionSortedFiltered'
 import FrostedBackground from '../../Shared/FrostedBackground'
-import {Button, SecondaryButton} from '../../Shared/ButtonsAndSuch'
+import { Button, SecondaryButton } from '../../Shared/ButtonsAndSuch'
 
 import arrowBackwardIcon from '../../../Assets/backArrowBlack.svg'
 
@@ -16,7 +16,7 @@ import arrowBackwardIcon from '../../../Assets/backArrowBlack.svg'
 const SubmitButton = styled(Button)`
     display:block;
     margin:auto;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 `;
 
 const SecondaryOptionButton = styled(SecondaryButton)`
@@ -24,7 +24,7 @@ const SecondaryOptionButton = styled(SecondaryButton)`
     font-weight: bold;
     display:block;
     margin:auto;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 `
 
 const ArrowIcon = styled.img`
@@ -37,22 +37,23 @@ const ArrowIcon = styled.img`
 `;
 
 const WeightWrapper = styled.div`
-
-    ${'' /* width: 7rem; */}
-    ${'' /* border-radius: 50px; */}
-    ${'' /* background-color: ${props => props.theme.black}; */}
     display:grid;
     justify-content: end;
+    margin-bottom: 0;
+
 `;
 const Weight = styled.p`
     color: ${props => props.theme.white};
     display:inline-block;
-    margin: 1rem;
     margin-right: 1.5rem;
     margin-top: 0;
-   text-align: right;
+    text-align: right;
 
- 
+
+   @media screen and (min-width: 600px){
+        margin-bottom: 0;
+   }
+
    
 `;
 
@@ -60,18 +61,16 @@ const Weight = styled.p`
 const AddAdventurePackingList = (props) => {
 
     const { packingList, setPackingList, submitFunction, setDisplayForm, totalWeight,
-    setTotalWeight} = props
+        setTotalWeight, setDisplayPackingLists, submitButtonText } = props
 
     const allEquipment = useRecoilValue(allEquipmentState)
-    // const [totalWeight, setTotalWeight] = useState(0)
+  
 
     return (
 
         <FrostedBackground headline={'Dags att packa'}>
-            {/* 
-        <SecondaryOptionButton onClick={() => setDisplayPackingLists(true)}>Välj en färdig lista</SecondaryOptionButton> */}
-
-            <SecondaryOptionButton>Välj en färdig lista</SecondaryOptionButton>
+       
+            <SecondaryOptionButton onClick={() => setDisplayPackingLists(true)}>Välj en färdig lista</SecondaryOptionButton>
 
             <AccordionSortedFiltered
                 equipmentList={allEquipment}
@@ -83,15 +82,17 @@ const AddAdventurePackingList = (props) => {
 
             />
             <WeightWrapper>
+     
                 <Weight> Total vikt <br /> {totalWeight / 1000} kg</Weight>
 
             </WeightWrapper>
 
-            <SubmitButton onClick={submitFunction}>Skapa äventyr</SubmitButton>
-
             <SecondaryOptionButton onClick={() => setDisplayForm(true)}><ArrowIcon src={arrowBackwardIcon} />Tillbaka</SecondaryOptionButton>
 
-            {/* <p>Vikt</p> */}
+            <SubmitButton onClick={submitFunction}>{submitButtonText}</SubmitButton>
+
+
+
         </FrostedBackground>
     )
 }

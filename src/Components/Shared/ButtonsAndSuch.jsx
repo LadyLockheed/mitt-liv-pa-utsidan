@@ -11,6 +11,7 @@ export const Button = styled.button`
     cursor: pointer;
     padding: 0.5rem 1.6rem;
     font-size: 1rem;
+    width: 225px;
    
     
 `;
@@ -22,8 +23,9 @@ export const SecondaryButton = styled.button`
     border-radius: 3px;
     border: 3px solid ${props => props.theme.orange};
     cursor: pointer;
-    padding: 0.5rem 1.4rem;
+    padding: 0.4rem 1.4rem;
     font-size: 1rem;
+    width: 225px;
 
 `;
 

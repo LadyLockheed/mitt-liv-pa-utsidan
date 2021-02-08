@@ -8,6 +8,7 @@ import { SecondaryButton } from '../../Shared/ButtonsAndSuch'
 
 const StyledGoBackButton = styled(SecondaryButton)`
     display: block;
+    font-weight: bold;
     margin: auto;
     margin-bottom: 16px;
     color: ${props => props.theme.black};
@@ -24,8 +25,9 @@ const StyledArrowIcon = styled.img`
 
 const SpecificPackingList = (props) => {
 
-    const { setDisplayAllPackingLists, specificPackingList } = props;
+    const { setDisplayAllPackingLists, specificPackingList, setPackingList } = props;
     const { item } = specificPackingList;
+
     const allEquipment = useRecoilValue(allEquipmentState)
     const packingListArray = item.packingList;
 
@@ -45,7 +47,6 @@ const SpecificPackingList = (props) => {
 
     return (
 
-    
         <>
             <AccordionSortedFiltered
                 equipmentList={packingListEquipment}
@@ -55,6 +56,8 @@ const SpecificPackingList = (props) => {
             <StyledGoBackButton onClick={() => setDisplayAllPackingLists(true)}>
                 <StyledArrowIcon src={backArrowBlack} />Tillbaka
                 </StyledGoBackButton>
+
+                {/* <button onClick={()=>setPackingList(packingListArray)}>Välj denna lista och avsluta</button> */}
          </>
 
     )

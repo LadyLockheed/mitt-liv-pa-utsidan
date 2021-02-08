@@ -15,7 +15,7 @@ import autumnIcon from '../../../../Assets/autumnLeafIcon.svg'
 import summerIcon from '../../../../Assets/summerSunIcon.svg'
 import winterIcon from '../../../../Assets/winterSnowFlaceIcon.svg'
 import springIcon from '../../../../Assets/springBranchIcon.svg'
-import backArrowWhite from '../../../../Assets/backArrowWhite.svg'
+import backArrowBlack from '../../../../Assets/backArrowBlack.svg'
 
 
 const Wrapper = styled.div`
@@ -204,6 +204,9 @@ const StyledMap = styled.div`
 const StyledGoBackButton = styled(SecondaryButton)`
     grid-area: bottom;
     margin-left: 0.5rem;
+    justify-self: center;
+    color: ${props => props.theme.black};
+    font-weight: bold;
 `;
 const StyledArrowIcon = styled.img`
     height: 0.5rem;
@@ -295,7 +298,7 @@ const SpecificAdventure = (props) => {
                 </StyledMapWrapper>
 
                 <StyledGoBackButton onClick={() => setDisplayAllAdventures(true)}>
-                    <StyledArrowIcon src={backArrowWhite} />Tillbaka</StyledGoBackButton>
+                    <StyledArrowIcon src={backArrowBlack} />Tillbaka</StyledGoBackButton>
 
             </Wrapper>
         </FrostedBackground>
