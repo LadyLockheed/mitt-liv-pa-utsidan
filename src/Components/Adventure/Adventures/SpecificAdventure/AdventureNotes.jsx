@@ -8,6 +8,7 @@ import {  allAdventuresState } from '../../../Shared/GlobalStates'
 const StyledNoteInput = styled.textarea`
     width: 96%;
     font-family: 'Quicksand', sans-serif;
+    border-radius: 3px;
     font-weight: bold;
     border: none;
     resize: none;
@@ -51,7 +52,7 @@ const AdventureNotes = (props) => {
         <>
             <StyledNoteInput
                 id='notes'
-                rows='6'
+                rows='8'
                 type='text'
                 value = {notes}
                 onChange={(event)=> setNotes(event.target.value)}

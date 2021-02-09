@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const path = require('path')
 // const { cloudinary } = require('./cloudinary')
 const cors = require('cors');
-const { getAllEquipment, getUser, addNewUser, addNewEquipment, deleteEquipment, editEquipment, addNewAdventure, getAllAdventures, saveAdventureNotes } = require('./database.js');
+const { getAllEquipment, getUser, addNewUser, addNewEquipment, deleteEquipment, editEquipment, addNewAdventure, getAllAdventures, saveAdventureNotes, deleteAdventure } = require('./database.js');
 
 const port = 1337; // Port number
 
@@ -107,7 +107,6 @@ app.post('/api/addNewUser', async (req, res) => {
     const newUserName = req.body.newUserName;
     const newPassword = req.body.newPassword
 
-
     const hashedPassword = await bcrypt.hash(newPassword, 8)
 
     //kollar om user redan finns
@@ -121,7 +120,6 @@ app.post('/api/addNewUser', async (req, res) => {
     }
     else {
 
-       
         const newUser = await addNewUser(newUserName, hashedPassword)
 
         res.send(newUser)
@@ -165,6 +163,14 @@ app.put('/api/saveAdventureNotes', async (req, res)=>{
     const savedAdventureNotes = await saveAdventureNotes(notes, adventureId)
     res.send(savedAdventureNotes)
    
+})
+
+app.delete('/api/deleteAdventure', async (req,res)=>{
+    console.log(req.body)
+
+    const adventureId = req.body._id
+    const deletedAdventure = await deleteAdventure(adventureId)
+    res.send(deletedAdventure)
 })
 
 // add equipment

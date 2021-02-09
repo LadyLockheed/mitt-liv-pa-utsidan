@@ -17,6 +17,7 @@ const SubmitButton = styled(Button)`
     display:block;
     margin:auto;
     margin-bottom: 2rem;
+
 `;
 
 const SecondaryOptionButton = styled(SecondaryButton)`
@@ -25,6 +26,7 @@ const SecondaryOptionButton = styled(SecondaryButton)`
     display:block;
     margin:auto;
     margin-bottom: 1rem;
+ 
 `
 
 const ArrowIcon = styled.img`

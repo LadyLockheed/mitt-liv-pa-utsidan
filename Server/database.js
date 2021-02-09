@@ -91,7 +91,6 @@ async function deleteItem(payload, collection) {
 
 
 async function put(payload, collection, id) {
-    console.log('database: payload: ', payload, 'collection: ', collection, 'id: ', id)
 
     let client;
     try {
@@ -147,6 +146,10 @@ function addNewAdventure(newAdventure){
     return post(newAdventure, 'adventure')
 }
 
+function deleteAdventure(id){
+    return deleteItem({_id: new ObjectID(id)}, 'adventure')
+}
+
 function deleteEquipment(id) {
     return deleteItem( {_id: new ObjectID(id)}, 'equipment' )
 }
@@ -171,5 +174,6 @@ module.exports = {
     editEquipment,
     addNewAdventure,
     getAllAdventures,
-    saveAdventureNotes
+    saveAdventureNotes,
+    deleteAdventure
 }

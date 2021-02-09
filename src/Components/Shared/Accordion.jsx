@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
+
+//globalstates
+import { allEquipmentState } from './GlobalStates'
+import { useSetRecoilState } from 'recoil'
+
+//images
 import dropDownArrow from '../../Assets/dropdownarrow.svg'
 import editIcon from '../../Assets/editIcon.svg'
 import trashcanIcon from '../../Assets/trashcanIcon.svg'
-import { allEquipmentState } from './GlobalStates'
-import { useSetRecoilState } from 'recoil'
+
+//components
 import AlertModal from './AlertModal'
 import EditEquipment from '../Equipment/EditEquipment'
-import axios from 'axios'
 import SpinnerFireLog from './SpinnerFireLog'
 
 

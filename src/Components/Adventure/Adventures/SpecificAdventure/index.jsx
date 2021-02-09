@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { useRecoilValue } from 'recoil';
-import { allEquipmentState } from '../../../Shared/GlobalStates'
+import axios from 'axios'
+
+//globalstates
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { allEquipmentState, allAdventuresState } from '../../../Shared/GlobalStates'
 
 //Components
 import Accordion from '../../../Shared/Accordion'
 import AdventureNotes from './AdventureNotes'
 import FrostedBackground from '../../../Shared/FrostedBackground'
-
 import { SecondaryButton } from '../../../Shared/ButtonsAndSuch'
+import AlertModal from '../../../Shared/AlertModal'
+import Spinner from '../../../Shared/Spinner'
 
 //images
 import autumnIcon from '../../../../Assets/autumnLeafIcon.svg'
@@ -16,6 +20,7 @@ import summerIcon from '../../../../Assets/summerSunIcon.svg'
 import winterIcon from '../../../../Assets/winterSnowFlaceIcon.svg'
 import springIcon from '../../../../Assets/springBranchIcon.svg'
 import backArrowBlack from '../../../../Assets/backArrowBlack.svg'
+import trashcanIcon from '../../../../Assets/trashcanIconBlack.svg'
 
 
 const Wrapper = styled.div`
@@ -36,7 +41,8 @@ const Wrapper = styled.div`
     'map'
     'map'
     'map'
-    'bottom';
+    'backButton'
+    'deleteButton';
 
     @media screen and (min-width: 600px){
 
@@ -47,7 +53,7 @@ const Wrapper = styled.div`
         'accordion accordion notes notes'
         'accordion accordion map map'
         'accordion accordion map map'
-        'bottom bottom . .';
+        'backButton backButton . deleteButton';
         }
 
 
@@ -60,7 +66,7 @@ const Wrapper = styled.div`
         'accordion accordion notes notes'
         'accordion accordion map map'
         'accordion accordion map map'
-        'bottom bottom . .';
+        'backButton backButton . deleteButton';
     }
 
     @media screen and (min-width: 995px){
@@ -72,7 +78,7 @@ const Wrapper = styled.div`
         'accordion accordion notes notes'
         'accordion accordion map map'
         'accordion accordion map map'
-        'bottom bottom . .';
+        'backButton backButton . deleteButton';
     }
 
     @media screen and (min-width: 1000px){
@@ -84,7 +90,7 @@ const Wrapper = styled.div`
         'accordion accordion notes notes'
         'accordion accordion map map'
         'accordion accordion map map'
-        'bottom bottom . .';
+        'backButton backButton . deleteButton';
     }
 ${'' /* 
     @media screen and (min-width: 1000px){
@@ -96,7 +102,7 @@ ${'' /*
     'notes notes accordion accordion'
     'map map accordion accordion'
     'map map accordion accordion'
-    'bottom bottom accordion accordion';
+    'backButtonbackButton accordion accordion';
     } */}
 
 `;
@@ -153,7 +159,7 @@ const StyledSubHeadline = styled.p`
 `
 const StyledAccordionWrapper = styled.div`
     grid-area: accordion;
-    margin: 0.5rem;
+    margin: 1rem;
   
     .totalWeight {
         color: ${props => props.theme.black};
@@ -183,17 +189,16 @@ const StyledAccordion = styled.div`
 
 const StyledNoteInputWrapper = styled.div`
     grid-area: notes;
-    margin: 0.5rem;
+    margin: 1rem;
  
 `;
 
 const StyledMapWrapper = styled.div`
     grid-area: map;
-    margin: 0.5rem;
+    margin: 1rem;
 `;
 
 const StyledMap = styled.div`
-    
     border: 1px solid black;
     background-color: grey;
     height: 15rem;
@@ -202,11 +207,11 @@ const StyledMap = styled.div`
 `;
 
 const StyledGoBackButton = styled(SecondaryButton)`
-    grid-area: bottom;
-    margin-left: 0.5rem;
-    justify-self: center;
+    grid-area: backButton;
+    margin: 1rem;
     color: ${props => props.theme.black};
     font-weight: bold;
+    width: 90%;
 `;
 const StyledArrowIcon = styled.img`
     height: 0.5rem;
@@ -216,12 +221,31 @@ const StyledArrowIcon = styled.img`
     margin-right: 0.3rem;
 `;
 
+const TrachcanIcon = styled.img`
+    grid-area: deleteButton;
+    height: 1.5rem;
+    width: auto;
+    align-self:end;
+    transition: all .2s ease-in-out;
+    justify-self: end;
+    margin-right: 0.5rem;
+    cursor:pointer;
+  
+  &:hover {
+    transform: scale(1.4);
+  }
+    
+`;
+
 
 const SpecificAdventure = (props) => {
 
     const { setDisplayAllAdventures, specificAdventure } = props;
     const allEquipment = useRecoilValue(allEquipmentState)
+    const setAllAdventures = useSetRecoilState(allAdventuresState)
     const packingListArray = specificAdventure.packingList
+    const [displayModal, setDisplayModal] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     let packingListEquipment = [];
     let totalWeight = 0;
@@ -238,9 +262,9 @@ const SpecificAdventure = (props) => {
         })
     })
 
-    useEffect(()=>{
-       
-    },[specificAdventure])
+    useEffect(() => {
+
+    }, [specificAdventure])
 
     const calculatedIcon = (season) => {
 
@@ -251,8 +275,45 @@ const SpecificAdventure = (props) => {
 
     }
 
+    const handleDelete = () => {
+    
+        setDisplayModal(true)
+    }
+
+    async function deleteAdventure(id) {
+        console.log(id)
+        setIsLoading(true)
+        try {
+            const response = await axios.delete('/api/deleteAdventure', { data: { _id: id } })
+            console.log(response)
+            getAllAdventures();
+
+        }
+        catch (err) {
+            console.log('Meddelande från frontend: nånting gick fel', err)
+        }
+    }
+
+    async function getAllAdventures() {
+    
+        try {
+
+            const response = await axios.get('/api/allAdventures')
+            setAllAdventures(response.data)
+            console.log('response adventure: ', response.data)
+            setIsLoading(false)
+            setDisplayAllAdventures(true)
+  
+        }
+        catch (err) {
+            console.log('Meddelande från frontend: nånting gick fel', err)
+   
+        }
+    };
+
     return (
         <FrostedBackground>
+        {isLoading ? <Spinner spinnerMessage={'Tar bort äventyr'}/>: 
             <Wrapper>
 
                 <StyledHeader>
@@ -285,7 +346,7 @@ const SpecificAdventure = (props) => {
                 <StyledNoteInputWrapper>
 
                     <StyledSubHeadline htmlFor='notes'>Noteringar</StyledSubHeadline>
-                    <AdventureNotes specificAdventure = {specificAdventure}/>
+                    <AdventureNotes specificAdventure={specificAdventure} />
 
                 </StyledNoteInputWrapper>
 
@@ -300,7 +361,17 @@ const SpecificAdventure = (props) => {
                 <StyledGoBackButton onClick={() => setDisplayAllAdventures(true)}>
                     <StyledArrowIcon src={backArrowBlack} />Tillbaka</StyledGoBackButton>
 
+                <TrachcanIcon src={trashcanIcon} onClick={() => handleDelete()} ></TrachcanIcon>
+
             </Wrapper>
+        }
+            {displayModal && 
+            <AlertModal
+                setDisplayModal={setDisplayModal}
+                confirmFunction={()=> deleteAdventure(specificAdventure._id)}
+               />
+            }
+         
         </FrostedBackground>
     )
 }

@@ -11,7 +11,13 @@ export const Button = styled.button`
     cursor: pointer;
     padding: 0.5rem 1.6rem;
     font-size: 1rem;
-    width: 225px;
+    ${'' /* width: 225px; */}
+    ${'' /* width: 100% */}
+    width: 80%;
+   
+   @media screen and (min-width: 600px){
+       width: 50%;
+   }
    
     
 `;
@@ -25,7 +31,13 @@ export const SecondaryButton = styled.button`
     cursor: pointer;
     padding: 0.4rem 1.4rem;
     font-size: 1rem;
-    width: 225px;
+    ${'' /* width: 225px; */}
+    ${'' /* width: 100%; */}
+    width: 80%;
+   
+   @media screen and (min-width: 600px){
+       width: 50%;
+   }
 
 `;
 

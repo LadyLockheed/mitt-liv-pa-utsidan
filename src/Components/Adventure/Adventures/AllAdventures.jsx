@@ -275,8 +275,6 @@ const AllAdventure = (props) => {
                                 </StyledDays>
                             </ItemWrapper>
 
-
-
                         </AdventureWrapper>
 
                     )

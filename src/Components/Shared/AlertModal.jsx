@@ -42,7 +42,6 @@ const CloseButton = styled.button `
     color: ${props => props.theme.black};
     grid-column: 5/6;
     justify-self: end;
-
     cursor: pointer;
     padding-bottom:3px;
  
@@ -51,6 +50,7 @@ const ConfirmButton = styled(Button) `
     grid-column: 2/5;
     margin-bottom: 1rem;
     margin-top: 2rem;
+    width: 100%;
     
 `;
 
@@ -59,6 +59,7 @@ const RegretButton = styled(SecondaryButton)`
     margin-bottom: 1rem;
     color: ${props => props.theme.black};
     background-color: ${props => props.theme.white};
+    width: 100%;
 `;
 
 //den här ska ta props för headline, vad som ska stå på knappen och en funktion för vad som ska göra om man klickar på confirm
