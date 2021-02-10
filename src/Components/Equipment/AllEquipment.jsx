@@ -71,8 +71,7 @@ const AllEquipment = () => {
         };
     
         async function getAllAdventures() {
-    
-    
+
             try {
                 const response = await axios.get('/api/allAdventures')
                 setAllAdventures(response.data)
@@ -91,44 +90,6 @@ const AllEquipment = () => {
         getAllAdventures();
 
     }, [])
-
-    // async function getAllEquipment() {
-    //     setIsLoading(true)
-    //     setDisplayErrorInfo(false)
-
-    //     try {
-    //         const response = await axios.get('/api/allEquipment')
-    //         setAllEquipment(response.data)
-    //         console.log('response equipment: ', response.data)
-    //         setIsLoading(false)
-
-    //         if (response.data.length < 1) {
-
-    //             setDisplayNoDataInfo(true)
-    //         }
-    //     }
-    //     catch (err) {
-    //         console.log('Meddelande från frontend: nånting gick fel', err)
-    //         setDisplayErrorInfo(true)
-    //         setIsLoading(false)
-    //     }
-    // };
-
-    // async function getAllAdventures() {
-
-
-    //     try {
-    //         const response = await axios.get('/api/allAdventures')
-    //         setAllAdventures(response.data)
-    //         console.log('response adventure: ', response.data)
-  
-    //     }
-    //     catch (err) {
-    //         console.log('Meddelande från frontend: nånting gick fel', err)
-    //         setDisplayErrorInfo(true)
-    //         setIsLoading(false)
-    //     }
-    // };
 
 
     return (

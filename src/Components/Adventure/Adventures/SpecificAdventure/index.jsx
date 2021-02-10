@@ -9,6 +9,7 @@ import { allEquipmentState, allAdventuresState } from '../../../Shared/GlobalSta
 //Components
 import Accordion from '../../../Shared/Accordion'
 import AdventureNotes from './AdventureNotes'
+import Map from './Map'
 import FrostedBackground from '../../../Shared/FrostedBackground'
 import { SecondaryButton } from '../../../Shared/ButtonsAndSuch'
 import AlertModal from '../../../Shared/AlertModal'
@@ -121,7 +122,8 @@ const StyledHeader = styled.div`
 
     span{
         font-weight: bold;
-        margin:4px;
+        margin-left: 3px;
+        margin-right: -2px;
     }
 
 `;
@@ -172,7 +174,7 @@ const StyledAccordionWrapper = styled.div`
 `;
 
 const StyledAccordion = styled.div`
-    height: 21rem;
+    height: 25rem;
     overflow:scroll;
     overflow-x: hidden;
     background-color: ${props => props.theme.white};
@@ -198,13 +200,13 @@ const StyledMapWrapper = styled.div`
     margin: 1rem;
 `;
 
-const StyledMap = styled.div`
-    border: 1px solid black;
-    background-color: grey;
-    height: 15rem;
-    width: 100%;
+// const StyledMap = styled.div`
+//     border: 1px solid black;
+//     background-color: grey;
+//     height: 15rem;
+//     width: 100%;
 
-`;
+// `;
 
 const StyledGoBackButton = styled(SecondaryButton)`
     grid-area: backButton;
@@ -354,8 +356,7 @@ const SpecificAdventure = (props) => {
                 <StyledMapWrapper>
 
                     <StyledSubHeadline>Karta</StyledSubHeadline>
-                    <StyledMap></StyledMap>
-
+                    <Map/>
                 </StyledMapWrapper>
 
                 <StyledGoBackButton onClick={() => setDisplayAllAdventures(true)}>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { Button, SecondaryButton } from './ButtonsAndSuch'
 
@@ -65,18 +65,24 @@ const RegretButton = styled(SecondaryButton)`
 //den här ska ta props för headline, vad som ska stå på knappen och en funktion för vad som ska göra om man klickar på confirm
 const AlertModal = (props) => {
 
-
+   
     const {setDisplayModal, confirmFunction} = props
 
     const handleConfirm = () => {
         setDisplayModal(false);
         confirmFunction()
     }
+
+    useEffect(()=>{
+        const scrollIntoViewOptions = {block: 'center', behavior: 'smooth'}
+        let element = document.getElementById('modal')
+        element.scrollIntoView(scrollIntoViewOptions)
+    },[])
    
 
     return (
 
-        <ModalWrapper>
+        <ModalWrapper id='modal'>
 
            
                 <Headline>Är du riktigt riktigt riktigt säker?</Headline>

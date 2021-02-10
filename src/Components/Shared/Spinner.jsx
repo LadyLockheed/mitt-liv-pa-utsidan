@@ -1,12 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import spinnerDayNight from '../../Assets/animatedDayNight.gif'
-// import {elementHeightState} from './GlobalStates'
-// import {useRecoilValue} from 'recoil'
+
 
 
 const OuterWrapper = styled.div `
-    ${'' /* height: ${props => `${props.height}px`}; */}
+
 
 `
 const InnerWrapper = styled.div`
@@ -24,8 +23,6 @@ const SpinnerMessage = styled.h3`
 
 const Spinner = ({ spinnerMessage }) => {
 
-    // const height = useRecoilValue(elementHeightState)
-    // console.log(height)
     
     return (
         <OuterWrapper>

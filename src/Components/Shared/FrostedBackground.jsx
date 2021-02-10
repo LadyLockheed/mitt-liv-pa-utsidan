@@ -64,12 +64,12 @@ const InvisibleProblemFixer = styled.div`
 const FrostedBackground = (props) => {
 
 
-    const { headline,  children, useInvisibleProblemFixer = false } = props
+    const { headline, children, useInvisibleProblemFixer = false } = props
 
 
     return (
         <>
-        {useInvisibleProblemFixer && <InvisibleProblemFixer></InvisibleProblemFixer> } 
+            {useInvisibleProblemFixer && <InvisibleProblemFixer></InvisibleProblemFixer>}
             <Container id='foo'>
                 <Headline>
                     {headline}

@@ -10,7 +10,7 @@ async function get(filter, collection) {
     try {
         client = await MongoClient.connect(url, { useUnifiedTopology: true })
     }
-    catch {
+    catch(error) {
         console.log('Could not connect to mongodb ', error.message);
         throw new Error('Could not connect to mongodb')
     }

@@ -8,7 +8,10 @@ import MenuFromSide from './Menu/MenuFromSide'
 const Navigation = styled.div`
     background-color: ${props => props.theme.green};
     padding: 0.5rem 3rem;
-    position: relative;
+    ${'' /* position: relative; */}
+    position: sticky;
+    top: 0;
+    z-index: 25;
     display:grid;
     grid-template-columns: repeat(5, 1fr);
     align-items:center;

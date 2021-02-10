@@ -12,8 +12,10 @@ import ProtectedRoute from './Shared/ProtectedRoute'
 
 //images/assets
 // import imagePinkField from '../Assets/landingpageDSC00149.JPG'
-import imageTentSolo from '../Assets/mainDSC00103.JPG'
-import imageGrassAndPlank from '../Assets/DSC00009.JPG'
+// import imageTentSolo from '../Assets/mainDSC00103.JPG'
+import imageTentSoloSmaller from '../Assets/mainDSC00103smaller.jpg'
+import imageGrassAndPlankSmaller from '../Assets/DSC00009smaller.jpg'
+// import imageGrassAndPlank from '../Assets/DSC00009.JPG'
 // import imagelake from '../Assets/DSC_1663.JPG'
 // import imageStorm from '../Assets/DSC_1540.JPG'
 // import imageTent from '../Assets/DSC_1347.JPG'
@@ -42,7 +44,7 @@ const MyApp = styled.div`
     margin: 0;
     height:100%;
     min-height:100vh;
-    background-image:url(${props => props.isAuthenticated ? `${imageTentSolo}` : `${imageGrassAndPlank}`});
+    background-image:url(${props => props.isAuthenticated ? `${imageTentSoloSmaller}` : `${imageGrassAndPlankSmaller}`});
     background-position:left;
     background-repeat: no-repeat;
     background-size: cover;
@@ -51,7 +53,6 @@ const MyApp = styled.div`
     flex-direction: column;
     justify-content: center; */}
 
- 
 
 `;
 

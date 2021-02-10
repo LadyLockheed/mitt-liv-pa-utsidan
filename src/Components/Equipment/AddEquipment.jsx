@@ -9,7 +9,9 @@ import Spinner from '../Shared/Spinner'
 
 const Wrapper = styled.div`
    
-    background-color: ${props => props.theme.mintGreen};
+    ${'' /* background-color: ${props => props.theme.mintGreen}; */}
+    ${'' /* background-color:rgb(233,235,218); */}
+    background-color:rgb(219,221,205);
     margin: 1rem;
     padding: 1rem;
     border-radius: 3px;

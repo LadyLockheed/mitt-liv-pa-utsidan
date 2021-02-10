@@ -40,11 +40,12 @@ const ItemWrapper = styled.div`
     position: relative;
 
     &:nth-child(odd) {
-        background-color:#D4DBD4;
+        background-color:rgb(219,221,205);
     }
     &:nth-child(even) {
-        background-color:#E7EEE2;
+        background-color:rgb(233,235,218);
     }
+
     &:first-child {
         border-radius:5px 5px 0px 0px;
     }
@@ -117,16 +118,16 @@ const CheckBox = styled.input`
             margin-left: 3px;
             margin-bottom:2px;
             color: ${(prop) => {
-            if (prop.categoryColor === 'living') return '#D38324';
-            if (prop.categoryColor === 'clothes') return '#67C070';
-            if (prop.categoryColor === 'sleeping') return '#678AC0';
-            if (prop.categoryColor === 'fun') return '#BF67C0'
-            if (prop.categoryColor === 'cooking') return '#6E67C0'
-            if (prop.categoryColor === 'electronics') return '#C0B267'
-            if (prop.categoryColor === 'hygiene') return '#67C0B0'
-            if (prop.categoryColor === 'storage') return '#D15933'
-            if (prop.categoryColor === 'other') return '#BABCAB'
-            }};
+        if (prop.categoryColor === 'living') return '#D38324';
+        if (prop.categoryColor === 'clothes') return '#67C070';
+        if (prop.categoryColor === 'sleeping') return '#678AC0';
+        if (prop.categoryColor === 'fun') return '#BF67C0'
+        if (prop.categoryColor === 'cooking') return '#6E67C0'
+        if (prop.categoryColor === 'electronics') return '#C0B267'
+        if (prop.categoryColor === 'hygiene') return '#67C0B0'
+        if (prop.categoryColor === 'storage') return '#D15933'
+        if (prop.categoryColor === 'other') return '#BABCAB'
+    }};
 
         }
 
@@ -229,16 +230,19 @@ const TrachcanIcon = styled.img`
 const Accordion = (props) => {
 
 
-    const { equipmentList, displayDotOrBox, packingList=[], setPackingList, totalWeight, setTotalWeight } = props;
-  
+    const { equipmentList, displayDotOrBox, packingList = [], setPackingList, totalWeight, setTotalWeight } = props;
+
     const [expandedItems, setExpandedItems] = useState([]);
     const [isDeleting, setIsDeleting] = useState(false)
     const [displayModal, setDisplayModal] = useState(false)
     const [displayEditEquipment, setDisplayEditEquipment] = useState(false)
     const setAllEquipment = useSetRecoilState(allEquipmentState)
-    const [deleteItemId, setDeleteItemId] = useState('')
-    const [editItemId, setEditItemId] = useState('')
-
+    // const [deleteItemId, setDeleteItemId] = useState('')
+    // const [editItemId, setEditItemId] = useState('')
+    const [itemToEdit, setItemToEdit] = useState({})
+    const [itemToDelete, setItemToDelete]=useState({})
+  
+    console.log(displayEditEquipment)
 
 
     useEffect(() => {
@@ -265,10 +269,11 @@ const Accordion = (props) => {
     }
 
     //delete equipment
-    const handleDelete = (id) => {
+    const handleDelete = (item) => {
 
         setDisplayModal(true)
-        setDeleteItemId(id)
+        setItemToDelete(item._id)
+        // setDeleteItemId(id)
     }
 
     async function deleteEquipment(id) {
@@ -299,16 +304,18 @@ const Accordion = (props) => {
     };
 
     //edit equipment
-    const handleEdit = (id) => {
+    const handleEdit = (item) => {
+        setItemToEdit(item)
         setDisplayEditEquipment(true)
-        setEditItemId(id)
+
+        // setEditItemId(item._id)
     }
 
 
     // editing packinglists
     const handleChecked = (event) => {
-        const newId = event.target.value
 
+        const newId = event.target.value
         const isIdAlreadyChecked = packingList.find((id) => id === newId)
 
         if (isIdAlreadyChecked) {
@@ -316,32 +323,22 @@ const Accordion = (props) => {
 
         }
         else {
-
             setPackingList([...packingList, newId])
-
         }
-
     }
 
     const countTotalWeight = (weight, itemId) => {
-        
+
         const isAlreadyCounted = packingList.find((id) => id === itemId)
 
         if (isAlreadyCounted) {
 
-           
             setTotalWeight(totalWeight - weight)
-
 
         }
         else {
-
-          
             setTotalWeight(totalWeight + weight)
-
         }
-
-
     }
 
     return (
@@ -369,19 +366,17 @@ const Accordion = (props) => {
                             {item.isExpanded &&
 
                                 <Collapse>
-                         
+
                                     <Info>Kategori: {item.category} <br />{item.info}</Info>
                                     <IconWrapper>
 
-                                        <EditIcon src={editIcon} onClick={() => handleEdit(item._id)} />
+                                        <EditIcon src={editIcon} onClick={() => handleEdit(item)} />
 
-                                        {displayEditEquipment && (editItemId === item._id) && <EditEquipment setDisplayEditEquipment={setDisplayEditEquipment} equipmentToEdit={item} />}
+                                        <TrachcanIcon src={trashcanIcon} onClick={() => handleDelete(item)}></TrachcanIcon>
 
-                                        <TrachcanIcon src={trashcanIcon} onClick={() => handleDelete(item._id)}></TrachcanIcon>
-
-                                        {displayModal && (deleteItemId === item._id) && <AlertModal
+                                        {/* {displayModal && (deleteItemId === item._id) && <AlertModal
                                             setDisplayModal={setDisplayModal}
-                                            confirmFunction={() => deleteEquipment(item._id)} />}
+                                            confirmFunction={() => deleteEquipment(item._id)} />} */}
 
 
 
@@ -389,13 +384,17 @@ const Accordion = (props) => {
 
                                 </Collapse>
                             }
-
+                            {/* {displayEditEquipment && (editItemId === item._id) && <EditEquipment setDisplayEditEquipment={setDisplayEditEquipment} equipmentToEdit={item} />} */}
                         </ItemWrapper>
 
                     )
                 })}
             </>}
+            {displayEditEquipment && <EditEquipment setDisplayEditEquipment={setDisplayEditEquipment} equipmentToEdit={itemToEdit} />}
 
+            {displayModal && <AlertModal
+                setDisplayModal={setDisplayModal}
+                confirmFunction={() => deleteEquipment(itemToDelete)} />}
         </Wrapper>
 
     )

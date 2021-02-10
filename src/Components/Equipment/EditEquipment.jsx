@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Spinner from '../Shared/Spinner'
 
 import styled from 'styled-components';
@@ -10,6 +10,7 @@ import { allEquipmentState } from '../Shared/GlobalStates'
 import { useSetRecoilState } from 'recoil'
 
 
+
 const Wrapper = styled.div`
     background-color: ${props => props.theme.mediumbeige};
     padding: 0.5rem 0.8rem;
@@ -19,7 +20,7 @@ const Wrapper = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 4;
+    z-index: 20;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
     @media screen and (min-width: 600px){
@@ -105,6 +106,12 @@ const EditEquipment = (props) => {
 
     const [isEditing, setIsEditing]= useState(false)
 
+      useEffect(()=>{
+        const scrollIntoViewOptions = {block: 'end', behavior: 'smooth'}
+        let element = document.getElementById('wrapper')
+        element.scrollIntoView(scrollIntoViewOptions)
+    },[])
+
 
     async function editEquipment() {
 
@@ -158,7 +165,7 @@ const EditEquipment = (props) => {
 
     return (
   
-        <Wrapper id='foo'>
+        <Wrapper id='wrapper'>
         {isEditing ? <Spinner spinnerMessage={'uppdaterar...'}/> :
         <>
             <TopWrapper>
