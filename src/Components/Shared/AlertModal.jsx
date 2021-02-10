@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Button, SecondaryButton } from './ButtonsAndSuch'
+import { handleOutsideClick } from '../Shared/Helpers'
 
 
 const ModalWrapper = styled.div`
     min-width: 15rem;
-    background: ${props=> props.theme.white};
-    color: ${props=> props.theme.white};
+    background: ${props => props.theme.white};
+    color: ${props => props.theme.white};
     text-align:center;
     position:absolute;
     top: 50%;
@@ -24,21 +25,19 @@ const ModalWrapper = styled.div`
         width: 50%;
     }
 
-   
-`; 
+`;
 
-
-const Headline = styled.h1 `
+const Headline = styled.h1`
     text-align:center;
     grid-column:2/5;
     font-size: 1rem;
     color:black;
 `;
-const CloseButton = styled.button `
+const CloseButton = styled.button`
     height: 1.4rem;
     width: 1.5rem;
     border-radius: 3px;
-    border: 1px solid ${props=> props.theme.darkgrey};
+    border: 1px solid ${props => props.theme.darkgrey};
     color: ${props => props.theme.black};
     grid-column: 5/6;
     justify-self: end;
@@ -46,7 +45,7 @@ const CloseButton = styled.button `
     padding-bottom:3px;
  
 `;
-const ConfirmButton = styled(Button) `
+const ConfirmButton = styled(Button)`
     grid-column: 2/5;
     margin-bottom: 1rem;
     margin-top: 2rem;
@@ -65,9 +64,18 @@ const RegretButton = styled(SecondaryButton)`
 //den här ska ta props för headline, vad som ska stå på knappen och en funktion för vad som ska göra om man klickar på confirm
 const AlertModal = (props) => {
 
+    const { setDisplayModal, confirmFunction } = props
    
-    const {setDisplayModal, confirmFunction} = props
+    //when modal opens it scrolls into view
+    useEffect(() => {
+        const scrollIntoViewOptions = { block: 'center', behavior: 'smooth' }
+        let element = document.getElementById('modal')
+        element.scrollIntoView(scrollIntoViewOptions)
+    }, [])
+
+    //closing modal on click outside
     const ref = useRef();
+    handleOutsideClick(ref, setDisplayModal)
 
     const handleConfirm = () => {
         setDisplayModal(false);
@@ -76,37 +84,42 @@ const AlertModal = (props) => {
 
 
 
-    useEffect(()=>{
-        const scrollIntoViewOptions = {block: 'center', behavior: 'smooth'}
-        let element = document.getElementById('modal')
-        element.scrollIntoView(scrollIntoViewOptions)
-    },[])
-   useEffect(()=>{
-    const useOutsideClick = (ref) => {
 
-        console.log(ref)
-        // const handleClick = e => {
-        //   if (ref.current && !ref.current.contains(e.target)) {
-            
-        //   }
-        };
 
-   },[ref])
+    // !ref.current ||
+    // const handleClick = e => {
+    //     if (ref.current.contains(e.target)) {
+    //       // inside click
+    //       return;
+    //     }
+    //     // outside click
+    //     setDisplayModal(false);
+    //   };
+
+    // useEffect(() => {
+    //     document.addEventListener("mousedown", handleClick);
+
+    //     return () => {
+    //       document.removeEventListener("mousedown", handleClick);
+    //     };
+    //   }, []);
+
+
 
     return (
 
         <ModalWrapper id='modal' ref={ref}>
 
-           
-                <Headline>Är du riktigt riktigt riktigt säker?</Headline>
-                <CloseButton onClick={()=> setDisplayModal(false)}>x</CloseButton>
-                <ConfirmButton onClick={ handleConfirm }>Hell yeah</ConfirmButton>
-                <RegretButton onClick={()=> setDisplayModal(false)}>Mjaeh</RegretButton>
-          
-            
+
+            <Headline>Är du riktigt riktigt riktigt säker?</Headline>
+            <CloseButton onClick={() => setDisplayModal(false)}>x</CloseButton>
+            <ConfirmButton onClick={handleConfirm}>Hell yeah</ConfirmButton>
+            <RegretButton onClick={() => setDisplayModal(false)}>Mjaeh</RegretButton>
+
+
         </ModalWrapper>
 
-       
+
     )
 
 }

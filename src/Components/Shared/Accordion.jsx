@@ -18,8 +18,7 @@ import SpinnerFireLog from './SpinnerFireLog'
 
 
 const Wrapper = styled.div`
-   
-    max-height: 61vh;
+    max-height: 54vh;
     overflow:scroll;
     overflow-x: hidden;
     &::-webkit-scrollbar {
@@ -62,11 +61,9 @@ const TopRowWrapper = styled.div`
    
 `
 const CategoryDot = styled.div` 
-    
     width: 0.7rem;
     height: 0.7rem;
     border-radius: 6px;
-
     display: inline-block;
     grid-column: 1/2;
     margin-right:0.7rem;
@@ -174,12 +171,14 @@ const DropDownArrow = styled.img`
 const Collapse = styled.div` 
     grid-column: 1/3;
     display: grid;
-    grid-template-columns: 6fr 1fr;
+    ${'' /* grid-template-columns: 6fr 1fr; */}
+    grid-template-columns: repeat(14, 1fr);
     margin-bottom: 1rem;
    
 `;
 
 const Info = styled.div`
+    grid-column: 1/12;
     border: 1px solid #E2E2E2;
     border-radius: 3px;
     box-shadow: 4px 4px 4px 1px rgba(197,197,197,0.30);
@@ -188,25 +187,27 @@ const Info = styled.div`
     background-color: #F5F8F4;
     font-size: 0.8rem;
 
-   
     @media screen and (min-width: 600px){
-        margin-left: 1.5rem;
+        ${'' /* margin-left: 1.5rem; */}
         font-size: 1rem;
       
     }
     
 `;
 const IconWrapper = styled.div`
+    grid-column: 14/15;
     margin-top: 0.2rem;
     display: grid;
-    justify-content: end;
-    margin-right:0.4rem;
+    ${'' /* justify-content: end; */}
+    ${'' /* margin-right:0.4rem; */}
     
 `;
 const EditIcon = styled.img`
+    justify-self: start;
     height: 1.2rem;
     width: auto;
     margin-bottom: 1rem;
+    margin-left:0.6rem;
     transition: all .2s ease-in-out;
   
   &:hover {
@@ -215,9 +216,11 @@ const EditIcon = styled.img`
     
 `;
 const TrachcanIcon = styled.img`
+    justify-self: start;
     height: 1.5rem;
     width: auto;
-    align-self:end;
+    margin-left:0.6rem;
+    ${'' /* align-self:end; */}
     transition: all .2s ease-in-out;
   
   &:hover {
@@ -237,13 +240,8 @@ const Accordion = (props) => {
     const [displayModal, setDisplayModal] = useState(false)
     const [displayEditEquipment, setDisplayEditEquipment] = useState(false)
     const setAllEquipment = useSetRecoilState(allEquipmentState)
-    // const [deleteItemId, setDeleteItemId] = useState('')
-    // const [editItemId, setEditItemId] = useState('')
     const [itemToEdit, setItemToEdit] = useState({})
-    const [itemToDelete, setItemToDelete]=useState({})
-  
-    console.log(displayEditEquipment)
-
+    const [itemToDelete, setItemToDelete] = useState({})
 
     useEffect(() => {
         //skapar kopia av allEquipment så att ändringarna inte sker i originallistan
@@ -347,6 +345,18 @@ const Accordion = (props) => {
 
             {isDeleting && <SpinnerFireLog text={'bränner upp skiten'} />}
 
+            {displayEditEquipment &&
+                <EditEquipment
+                    setDisplayEditEquipment={setDisplayEditEquipment}
+                    equipmentToEdit={itemToEdit} />
+            }
+
+            {displayModal &&
+                <AlertModal
+                    setDisplayModal={setDisplayModal}
+                    confirmFunction={() => deleteEquipment(itemToDelete)} />
+            }
+
             {!isDeleting && <>
                 {expandedItems.map((item, index) => {
                     return (
@@ -374,27 +384,17 @@ const Accordion = (props) => {
 
                                         <TrachcanIcon src={trashcanIcon} onClick={() => handleDelete(item)}></TrachcanIcon>
 
-                                        {/* {displayModal && (deleteItemId === item._id) && <AlertModal
-                                            setDisplayModal={setDisplayModal}
-                                            confirmFunction={() => deleteEquipment(item._id)} />} */}
-
-
-
                                     </IconWrapper>
 
                                 </Collapse>
                             }
-                            {/* {displayEditEquipment && (editItemId === item._id) && <EditEquipment setDisplayEditEquipment={setDisplayEditEquipment} equipmentToEdit={item} />} */}
+
                         </ItemWrapper>
 
                     )
                 })}
             </>}
-            {displayEditEquipment && <EditEquipment setDisplayEditEquipment={setDisplayEditEquipment} equipmentToEdit={itemToEdit} />}
 
-            {displayModal && <AlertModal
-                setDisplayModal={setDisplayModal}
-                confirmFunction={() => deleteEquipment(itemToDelete)} />}
         </Wrapper>
 
     )

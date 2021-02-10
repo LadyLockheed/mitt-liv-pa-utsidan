@@ -1,19 +1,18 @@
-import axios from 'axios'
 
-export const getAllEquipment = async (g) => {
-    
-  
-    try {
+import { useEffect } from "react";
 
-        const response = await axios.get('/api/allEquipment')
-    
-
-        return response.data
-
+export const handleOutsideClick = (ref, callback) => {
+  const handleClick = e => {
+    if (ref.current && !ref.current.contains(e.target)) {
+      callback();
     }
-    catch (err) {
-        console.log('Meddelande från frontend: nånting gick fel', err)
-        return err
-    }
+  };
 
-}
+  useEffect(() => {
+    document.addEventListener("click", handleClick);
+
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  });
+};

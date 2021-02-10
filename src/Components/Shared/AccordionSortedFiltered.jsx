@@ -6,7 +6,6 @@ import searchIcon from '../../Assets/search.svg'
 
 
 const StyledWrapper = styled.div`
-
     padding: 0 1rem 1rem 1rem;
 
 `;
@@ -122,8 +121,9 @@ const AccordionSortedFiltered = (props) => {
         <StyledWrapper>
             <SearchWrapper>
                 <SearchIcon src={searchIcon} />
-                <SearchField 
-                type='text'
+                <SearchField
+                   
+                    type='text'
                     name='search'
                     id='search'
                     value={searchParam}

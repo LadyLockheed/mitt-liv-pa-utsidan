@@ -25,7 +25,7 @@ const StyledArrowIcon = styled.img`
 
 const SpecificPackingList = (props) => {
 
-    const { setDisplayAllPackingLists, specificPackingList, setPackingList } = props;
+    const { setDisplayAllPackingLists, specificPackingList } = props;
     const { item } = specificPackingList;
 
     const allEquipment = useRecoilValue(allEquipmentState)

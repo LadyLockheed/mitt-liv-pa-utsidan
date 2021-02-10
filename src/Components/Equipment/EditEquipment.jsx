@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import Spinner from '../Shared/Spinner'
-
+import React, { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components';
-
-import { Button, Label, InputField, SelectInput, ValidateMessage } from '../Shared/ButtonsAndSuch'
 import axios from 'axios';
 
+//globalstates
 import { allEquipmentState } from '../Shared/GlobalStates'
 import { useSetRecoilState } from 'recoil'
 
+//components
+import Spinner from '../Shared/Spinner'
+import { Button, Label, InputField, SelectInput, ValidateMessage } from '../Shared/ButtonsAndSuch'
+import { handleOutsideClick } from '../Shared/Helpers'
 
 
 const Wrapper = styled.div`
@@ -106,12 +107,17 @@ const EditEquipment = (props) => {
 
     const [isEditing, setIsEditing]= useState(false)
 
-      useEffect(()=>{
+    //when modal opens it scrolls into view
+    useEffect(()=>{
         const scrollIntoViewOptions = {block: 'end', behavior: 'smooth'}
         let element = document.getElementById('wrapper')
         element.scrollIntoView(scrollIntoViewOptions)
     },[])
 
+ 
+    //closing modal on click outside
+    const ref = useRef();
+    handleOutsideClick(ref, setDisplayEditEquipment)
 
     async function editEquipment() {
 
@@ -165,7 +171,8 @@ const EditEquipment = (props) => {
 
     return (
   
-        <Wrapper id='wrapper'>
+        <Wrapper id='wrapper' ref={ref}>
+
         {isEditing ? <Spinner spinnerMessage={'uppdaterar...'}/> :
         <>
             <TopWrapper>

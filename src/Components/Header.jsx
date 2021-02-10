@@ -7,8 +7,7 @@ import MenuFromSide from './Menu/MenuFromSide'
 
 const Navigation = styled.div`
     background-color: ${props => props.theme.green};
-    padding: 0.5rem 3rem;
-    ${'' /* position: relative; */}
+    padding: 0.4rem 3rem;
     position: sticky;
     top: 0;
     z-index: 25;
@@ -19,7 +18,7 @@ const Navigation = styled.div`
     
     @media screen and (min-width: 600px){
 
-        margin-bottom: 3.5rem;
+        margin-bottom: 1.5rem;
     }
 `;
 const H1 = styled.h1`
@@ -47,7 +46,7 @@ const H1 = styled.h1`
 
 `;
 const Logo = styled.img` 
-    height: 4rem;
+    height: 3.5rem;
     margin: auto;
     grid-column:3/4;
 
