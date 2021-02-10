@@ -1,14 +1,21 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import FrostedBackground from '../../Shared/FrostedBackground'
+
+//globalstates
 import { allAdventuresState } from '../../Shared/GlobalStates';
 import { useRecoilValue } from 'recoil';
+
+//components
+import FrostedBackground from '../../Shared/FrostedBackground'
+import { SelectInput } from '../../Shared/ButtonsAndSuch'
+
+//images
 import autumnIcon from '../../../Assets/autumnLeafIcon.svg'
 import summerIcon from '../../../Assets/summerSunIcon.svg'
 import winterIcon from '../../../Assets/winterSnowFlaceIcon.svg'
 import springIcon from '../../../Assets/springBranchIcon.svg'
-import { SelectInput } from '../../Shared/ButtonsAndSuch'
-// import { useHistory } from 'react-router-dom'
+import searchIcon from '../../../Assets/search.svg'
+
 
 const Wrapper = styled.div`
    
@@ -21,6 +28,30 @@ const Wrapper = styled.div`
         display: none;
     }
 
+`;
+const SearchWrapper = styled.div`
+    border-bottom: 1px solid ${props => props.theme.black};
+    margin-bottom: 0.5rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    display:flex;
+    align-items: center;
+    
+`;
+const SearchIcon = styled.img`
+    height: 1rem;
+    width: auto;
+    padding: 0.5rem;
+    border-radius: 10px;
+    cursor:pointer;
+`;
+
+const SearchField = styled.input`
+    background: rgba(255,255,255,0.001);
+    outline:none;
+    border: none;
+    padding: 0.5rem;
+    width: 100%;
 `;
 
 const WrapperSelectInput = styled.div`
@@ -157,6 +188,7 @@ const AllAdventure = (props) => {
 
     const [filter, setFilter] = useState('')
     const [sorting, setSorting] = useState('')
+    const [searchParam, setSearchParam]=useState('')
     let filteredAdventures = allAdventures
 
     const updateFilter = ({ target: { value } }) => {
@@ -169,7 +201,15 @@ const AllAdventure = (props) => {
         setSorting(value);
     };
 
-    if (filter || sorting) {
+    if (searchParam || filter || sorting) {
+
+        if(searchParam){
+            filteredAdventures = filteredAdventures.filter(adventure =>{
+                return(
+                    adventure.adventure.toLowerCase().includes(searchParam.toLowerCase())
+                )
+            })
+        }
 
         if (filter) {
 
@@ -192,9 +232,9 @@ const AllAdventure = (props) => {
 
     }
 
-    useEffect(()=>{
+    useEffect(() => {
 
-    },[filteredAdventures])
+    }, [filteredAdventures])
 
     const calculatedIcon = (season) => {
 
@@ -208,6 +248,16 @@ const AllAdventure = (props) => {
     return (
 
         <FrostedBackground headline={'Alla äventyr'}>
+            <SearchWrapper>
+                <SearchIcon src={searchIcon} />
+                <SearchField
+                    type='text'
+                    name='search'
+                    id='search'
+                    value={searchParam}
+                    onChange={(event) => setSearchParam(event.target.value)}
+                />
+            </SearchWrapper>
 
             <WrapperSelectInput>
                 <StyledSelectInput

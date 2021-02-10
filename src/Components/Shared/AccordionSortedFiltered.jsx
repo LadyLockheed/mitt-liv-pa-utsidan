@@ -2,17 +2,42 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import Accordion from './Accordion'
 import { SelectInput } from './ButtonsAndSuch'
+import searchIcon from '../../Assets/search.svg'
 
 
-const StyledWrapper = styled.div `
+const StyledWrapper = styled.div`
 
     padding: 0 1rem 1rem 1rem;
 
-    @media screen and (min-width: 600px){
+`;
 
-    }
+const SearchWrapper = styled.div`
+    border-bottom: 1px solid ${props => props.theme.black};
+    margin-bottom: 0.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    display:flex;
+    align-items: center;
+`;
+const SearchIcon = styled.img`
+   
+    height: 1rem;
+    width: auto;
+    padding: 0.5rem;
+    border-radius: 10px;
+    cursor:pointer;
 
-`
+`;
+
+const SearchField = styled.input`
+    background: rgba(255,255,255,0.001);
+    outline:none;
+    border: none;
+    padding: 0.5rem;
+    width: 100%;
+
+  
+`;
 const WrapperSelectInput = styled.div`
 
     display:grid;
@@ -42,15 +67,14 @@ const WrapperSelectInput = styled.div`
     }
 `;
 
+
 const AccordionSortedFiltered = (props) => {
 
-    // const { equipmentList, displayDotOrBox, packingList, setPackingList } = props;
     const { equipmentList, displayDotOrBox, packingList, setPackingList, totalWeight, setTotalWeight } = props;
-
-  
 
     const [filter, setFilter] = useState('')
     const [sorting, setSorting] = useState('')
+    const [searchParam, setSearchParam]=useState('')
 
     let filteredEquipment = equipmentList;
     const updateFilter = ({ target: { value } }) => {
@@ -63,7 +87,15 @@ const AccordionSortedFiltered = (props) => {
         setSorting(value);
     };
 
-    if (filter || sorting) {
+    if (searchParam || filter || sorting ) {
+
+        if(searchParam){
+            filteredEquipment = filteredEquipment.filter(equipment =>{
+                return(
+                    equipment.equipment.toLowerCase().includes(searchParam.toLowerCase())
+                )
+            })
+        }
 
         if (filter) {
 
@@ -88,6 +120,16 @@ const AccordionSortedFiltered = (props) => {
 
     return (
         <StyledWrapper>
+            <SearchWrapper>
+                <SearchIcon src={searchIcon} />
+                <SearchField 
+                type='text'
+                    name='search'
+                    id='search'
+                    value={searchParam}
+                    onChange={(event)=> setSearchParam(event.target.value)}
+                />
+            </SearchWrapper>
             <WrapperSelectInput>
                 <SelectInput
                     className='categorySelect'

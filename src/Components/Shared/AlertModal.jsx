@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Button, SecondaryButton } from './ButtonsAndSuch'
 
@@ -67,22 +67,35 @@ const AlertModal = (props) => {
 
    
     const {setDisplayModal, confirmFunction} = props
+    const ref = useRef();
 
     const handleConfirm = () => {
         setDisplayModal(false);
         confirmFunction()
     }
 
+
+
     useEffect(()=>{
         const scrollIntoViewOptions = {block: 'center', behavior: 'smooth'}
         let element = document.getElementById('modal')
         element.scrollIntoView(scrollIntoViewOptions)
     },[])
-   
+   useEffect(()=>{
+    const useOutsideClick = (ref) => {
+
+        console.log(ref)
+        // const handleClick = e => {
+        //   if (ref.current && !ref.current.contains(e.target)) {
+            
+        //   }
+        };
+
+   },[ref])
 
     return (
 
-        <ModalWrapper id='modal'>
+        <ModalWrapper id='modal' ref={ref}>
 
            
                 <Headline>Är du riktigt riktigt riktigt säker?</Headline>
