@@ -222,10 +222,11 @@ const EditIcon = styled.img`
 `;
 const TrachcanIcon = styled.img`
     justify-self: start;
+    align-self: end;
     height: 1.5rem;
     width: auto;
     margin-left:0.6rem;
-    ${'' /* align-self:end; */}
+
     transition: all .2s ease-in-out;
   
   &:hover {
@@ -233,9 +234,6 @@ const TrachcanIcon = styled.img`
   }
     
 `;
-
-
-
 
 const Accordion = (props) => {
 
@@ -408,7 +406,6 @@ const Accordion = (props) => {
 
                                 <Collapse>
 
-                             
                                     <Info> <CategoryText category={item.category}/><p>{item.info}</p></Info>
                                     <IconWrapper>
 

@@ -12,7 +12,7 @@ import { isAuthenticatedState } from '../Shared/GlobalStates'
 
 //images
 import LogOutIcon from '../../Assets/logouticon.svg'
-import userIcon from '../../Assets/userIcon.svg'
+import userIcon from '../../Assets/user.svg'
 
 
 const StyledMenu = styled.nav`
@@ -20,7 +20,7 @@ const StyledMenu = styled.nav`
     flex-direction: column;
     justify-content: center;
     background: ${props => props.theme.darkgrey};
-    height: 91vh;
+    height: 95vh;
     text-align: left;
     padding: 2rem;
     position: fixed;

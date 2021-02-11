@@ -45,7 +45,7 @@ const Wrapper = styled.div`
     'backButton'
     'deleteButton';
 
-    @media screen and (min-width: 600px){
+    ${'' /* @media screen and (min-width: 600px){
 
         grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-template-areas: 
@@ -55,22 +55,10 @@ const Wrapper = styled.div`
         'accordion accordion map map'
         'accordion accordion map map'
         'backButton backButton . deleteButton';
-        }
+    } */}
 
 
-    @media screen and (min-width: 700px){
-
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-areas: 
-        'header header header header'
-        'accordion accordion notes notes'
-        'accordion accordion notes notes'
-        'accordion accordion map map'
-        'accordion accordion map map'
-        'backButton backButton . deleteButton';
-    }
-
-    @media screen and (min-width: 995px){
+    @media screen and (min-width: 750px){
 
         grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-template-areas: 
@@ -82,7 +70,7 @@ const Wrapper = styled.div`
         'backButton backButton . deleteButton';
     }
 
-    @media screen and (min-width: 1000px){
+    ${'' /* @media screen and (min-width: 995px){
 
         grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-template-areas: 
@@ -92,7 +80,19 @@ const Wrapper = styled.div`
         'accordion accordion map map'
         'accordion accordion map map'
         'backButton backButton . deleteButton';
-    }
+    } */}
+
+    ${'' /* @media screen and (min-width: 1000px){
+
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-areas: 
+        'header header header header'
+        'accordion accordion notes notes'
+        'accordion accordion notes notes'
+        'accordion accordion map map'
+        'accordion accordion map map'
+        'backButton backButton . deleteButton';
+    } */}
 ${'' /* 
     @media screen and (min-width: 1000px){
         border: 1px solid red;
@@ -118,6 +118,11 @@ const StyledHeader = styled.div`
         margin-top:0;
         font-size: 0.8rem;
         margin-left: 4px;
+      
+    }
+
+    .start-date{
+        margin-left: 3rem;
     }
 
     span{
@@ -162,7 +167,7 @@ const StyledSubHeadline = styled.p`
 const StyledAccordionWrapper = styled.div`
     grid-area: accordion;
     margin: 1rem;
-  
+
     .totalWeight {
         color: ${props => props.theme.black};
         font-size: 1.2rem;
@@ -174,7 +179,7 @@ const StyledAccordionWrapper = styled.div`
 `;
 
 const StyledAccordion = styled.div`
-    height: 25rem;
+    height: 19rem;
     overflow:scroll;
     overflow-x: hidden;
     background-color: ${props => props.theme.white};
@@ -185,28 +190,30 @@ const StyledAccordion = styled.div`
     }
  
     @media screen and (min-width: 600px){
-        max-height: 26rem;
+        height: 25rem;
     }
 `
 
 const StyledNoteInputWrapper = styled.div`
     grid-area: notes;
     margin: 1rem;
+    margin-top:0;
+
+    @media screen and (min-width: 750px){
+        margin-top:1rem;
+    }
  
 `;
 
 const StyledMapWrapper = styled.div`
     grid-area: map;
     margin: 1rem;
+    margin-top:0;
+
+    @media screen and (min-width: 750px){
+        margin-top:1rem;
+    }
 `;
-
-// const StyledMap = styled.div`
-//     border: 1px solid black;
-//     background-color: grey;
-//     height: 15rem;
-//     width: 100%;
-
-// `;
 
 const StyledGoBackButton = styled(SecondaryButton)`
     grid-area: backButton;
@@ -214,6 +221,11 @@ const StyledGoBackButton = styled(SecondaryButton)`
     color: ${props => props.theme.black};
     font-weight: bold;
     width: 90%;
+
+    @media screen and (min-width: 750px){
+        margin-bottom: 0;
+
+    }
 `;
 const StyledArrowIcon = styled.img`
     height: 0.5rem;
@@ -278,7 +290,7 @@ const SpecificAdventure = (props) => {
     }
 
     const handleDelete = () => {
-    
+
         setDisplayModal(true)
     }
 
@@ -297,7 +309,7 @@ const SpecificAdventure = (props) => {
     }
 
     async function getAllAdventures() {
-    
+
         try {
 
             const response = await axios.get('/api/allAdventures')
@@ -305,74 +317,75 @@ const SpecificAdventure = (props) => {
             console.log('response adventure: ', response.data)
             setIsLoading(false)
             setDisplayAllAdventures(true)
-  
+
         }
         catch (err) {
             console.log('Meddelande från frontend: nånting gick fel', err)
-   
+
         }
     };
 
     return (
         <FrostedBackground>
-        {isLoading ? <Spinner spinnerMessage={'Tar bort äventyr'}/>: 
-            <Wrapper>
+            {isLoading ? <Spinner spinnerMessage={'Tar bort äventyr'} /> :
+                <Wrapper>
 
-                <StyledHeader>
+                    <StyledHeader>
 
-                    <StyledHeadlineWrapper>
-                        <StyledSeasonIcon src={calculatedIcon(specificAdventure.season)} />
-                        <StyledAdventureName>{specificAdventure.adventure}</StyledAdventureName>
-                    </StyledHeadlineWrapper>
-                    <p className='date'>{specificAdventure.dateStarting}</p>
-                    <span>-</span>
-                    <p className='date'> {specificAdventure.dateEnding}</p>
+                        <StyledHeadlineWrapper>
+                            <StyledSeasonIcon src={calculatedIcon(specificAdventure.season)} />
+                            <StyledAdventureName>{specificAdventure.adventure}</StyledAdventureName>
+                        </StyledHeadlineWrapper>
+                        <p className='date start-date'>{specificAdventure.dateStarting}</p>
+                        <span>-</span>
+                        <p className='date'> {specificAdventure.dateEnding}</p>
 
-                </StyledHeader>
+                    </StyledHeader>
 
-                <StyledAccordionWrapper>
+                    <StyledAccordionWrapper>
 
-                    <StyledSubHeadline>Packlista</StyledSubHeadline>
-                    <StyledAccordion>
+                        <StyledSubHeadline>Packlista</StyledSubHeadline>
+                        <StyledAccordion>
 
-                        <Accordion
-                            equipmentList={packingListEquipment}
-                            displayDotOrBox={'dot'}
-                        />
+                            <Accordion
 
-                    </StyledAccordion>
-                    <p className='totalWeight'>Total vikt: <br /> {totalWeight / 1000} kg</p>
+                                equipmentList={packingListEquipment}
+                                displayDotOrBox={'dot'}
+                            />
 
-                </StyledAccordionWrapper>
+                        </StyledAccordion>
+                        <p className='totalWeight'>Total vikt: <br /> {totalWeight / 1000} kg</p>
 
-                <StyledNoteInputWrapper>
+                    </StyledAccordionWrapper>
 
-                    <StyledSubHeadline htmlFor='notes'>Noteringar</StyledSubHeadline>
-                    <AdventureNotes specificAdventure={specificAdventure} />
+                    <StyledNoteInputWrapper>
 
-                </StyledNoteInputWrapper>
+                        <StyledSubHeadline htmlFor='notes'>Noteringar</StyledSubHeadline>
+                        <AdventureNotes specificAdventure={specificAdventure} />
+
+                    </StyledNoteInputWrapper>
 
 
-                <StyledMapWrapper>
+                    <StyledMapWrapper>
 
-                    <StyledSubHeadline>Karta</StyledSubHeadline>
-                    <Map/>
-                </StyledMapWrapper>
+                        <StyledSubHeadline>Karta</StyledSubHeadline>
+                        <Map />
+                    </StyledMapWrapper>
 
-                <StyledGoBackButton onClick={() => setDisplayAllAdventures(true)}>
-                    <StyledArrowIcon src={backArrowBlack} />Tillbaka</StyledGoBackButton>
+                    <StyledGoBackButton onClick={() => setDisplayAllAdventures(true)}>
+                        <StyledArrowIcon src={backArrowBlack} />Tillbaka</StyledGoBackButton>
 
-                <TrachcanIcon src={trashcanIcon} onClick={() => handleDelete()} ></TrachcanIcon>
+                    <TrachcanIcon src={trashcanIcon} onClick={() => handleDelete()} ></TrachcanIcon>
 
-            </Wrapper>
-        }
-            {displayModal && 
-            <AlertModal
-                setDisplayModal={setDisplayModal}
-                confirmFunction={()=> deleteAdventure(specificAdventure._id)}
-               />
+                </Wrapper>
             }
-         
+            {displayModal &&
+                <AlertModal
+                    setDisplayModal={setDisplayModal}
+                    confirmFunction={() => deleteAdventure(specificAdventure._id)}
+                />
+            }
+
         </FrostedBackground>
     )
 }
