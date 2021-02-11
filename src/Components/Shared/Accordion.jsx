@@ -187,6 +187,11 @@ const Info = styled.div`
     background-color: #F5F8F4;
     font-size: 0.8rem;
 
+    p{
+       
+        margin:0;
+    }
+
     @media screen and (min-width: 600px){
         ${'' /* margin-left: 1.5rem; */}
         font-size: 1rem;
@@ -228,6 +233,8 @@ const TrachcanIcon = styled.img`
   }
     
 `;
+
+
 
 
 const Accordion = (props) => {
@@ -339,6 +346,30 @@ const Accordion = (props) => {
         }
     }
 
+   
+    const CategoryText = (prop) =>{
+   
+        if(prop.category ==='living')return <p>Kategori: Boende</p>
+        
+        if(prop.category ==='storage') return <p>Kategori: Bära/förvaring</p>
+      
+        if(prop.category ==='sleeping') return <p>Kategori: sova</p>
+       
+        if(prop.category ==='clothes') return <p>Kategori: kläder</p>
+
+        if(prop.category ==='electronics') return <p>Kategori: elektronik</p>
+
+        if(prop.category ==='fun') return <p>Kategori: nöje</p>
+
+        if(prop.category ==='cooking') return <p>Kategori: matlagning</p>
+
+        if(prop.category ==='hygiene') return <p>Kategori: hygien</p>
+
+        if(prop.category ==='other') return <p>Kategori: övrigt</p>
+  
+    }
+    
+
     return (
 
         <Wrapper>
@@ -377,7 +408,8 @@ const Accordion = (props) => {
 
                                 <Collapse>
 
-                                    <Info>Kategori: {item.category} <br />{item.info}</Info>
+                             
+                                    <Info> <CategoryText category={item.category}/><p>{item.info}</p></Info>
                                     <IconWrapper>
 
                                         <EditIcon src={editIcon} onClick={() => handleEdit(item)} />

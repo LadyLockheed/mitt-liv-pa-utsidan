@@ -51,14 +51,10 @@ const AddAdventure = () => {
     const [packingList, setPackingList] = useState([])
     const [submitButtonText, setSubmitButtonText]=useState('Skapa äventyr')
     let newAdventure = newAdventureInfo
-   
-    
-    //TODO Kunna ta bort ett äventyr. Om det inte påverkar packlistorna. Det borde inte påverka då packlistan är bunden till äventyret
 
     const history = useHistory()
 
     const GoBackButton = () => {
-    
         return (
             <StyledSecondaryButton onClick={() => { setDisplayPackingLists(false); setPackingList([]); setTotalWeight(0); setSubmitButtonText('Skapa äventyr') }}><ArrowIcon src = {arrowBackwardIcon}/>Tillbaka</StyledSecondaryButton>
         )
@@ -70,8 +66,6 @@ const AddAdventure = () => {
         )
     }
 
-
-   
     const handleCreateNewAdventure = () => {
        
         if (packingList.length === 0) {
@@ -93,7 +87,7 @@ const AddAdventure = () => {
 
         try {
             const responseAddNewAdventure = await axios.post('/api/addNewAdventure', { newAdventure })
-            console.log('resonse frontend efter att ha addat: ', responseAddNewAdventure)
+            
             if (responseAddNewAdventure) {
 
                 getAllAdventures()
@@ -114,8 +108,7 @@ const AddAdventure = () => {
             const response = await axios.get('/api/allAdventures')
             setAllAdventures(response.data)
             setIsLoading(false)
-            //TODO använd history och skicka vidare till specifikt äventyr, nu skickar den till alla äventyr
-
+          
             history.push("/alladventures")
 
         }

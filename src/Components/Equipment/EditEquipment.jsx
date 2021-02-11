@@ -208,7 +208,7 @@ const EditEquipment = (props) => {
                 <option value="clothes">Kläder</option>
                 <option value="electronics">Elektronik</option>
                 <option value="fun">Nöje</option>
-                <option value="cooking">Laga mat</option>
+                <option value="cooking">Matlagning</option>
                 <option value="hygiene">Hygien</option>
                 <option value="other">Övrigt</option>
 
