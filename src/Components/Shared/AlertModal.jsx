@@ -118,7 +118,7 @@ const AlertModal = (props) => {
 
     return (
 
-        <ModalWrapper id='modal' ref={ref} displayModal={displayModal}  >
+        <ModalWrapper id='modal' ref={ref} displayModal={displayModal}>
 
 
             <Headline>Är du riktigt riktigt riktigt säker?</Headline>

@@ -11,7 +11,8 @@ const { getAllEquipment, getUser, addNewUser, addNewEquipment, deleteEquipment, 
 // const port = 1337; // Port number
 
 const port = process.env.PORT || 1337; 
-console.log('Foo: ', process.env);  // RÄTT
+// console.log('Foo: ', process.env.NODE_ENV);
+console.log('Foo: ', process.env)  // RÄTT
 
 const bcrypt = require('bcryptjs');
 // const { default: EditEquipment } = require('../src/Components/Equipment/EditEquipment.jsx');
