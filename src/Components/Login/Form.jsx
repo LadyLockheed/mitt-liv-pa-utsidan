@@ -176,7 +176,6 @@ const FrostedStartSquare = (props) => {
 
     const { headline, topLabel, bottomLabel, topInputValue, topInputSetValue, topInputValidation, bottomInputValidation, topInputValidationMessage, bottomInputValidationMessage, handleSubmit, topButtonText, bottomButtonText, arrowIcon, positionArrowIconOnRight, bottomInputValue, bottomInputSetValue, goToPage, typeOnBottomInputfield, isLoading} = props
 
-
     return (
         <>
           
@@ -186,8 +185,9 @@ const FrostedStartSquare = (props) => {
 
                     <>
                         <H1> {headline} </H1>
-
+                   
                         <InputSection id='container'>
+                             {/* username  */}
                             <Label htmlFor={topLabel}>{topLabel}</Label>
                             <InputField
                                 type='text'
@@ -198,7 +198,7 @@ const FrostedStartSquare = (props) => {
                             />
                             <ValidateMessage
                                 displayMessage={topInputValidation}> {topInputValidationMessage} </ValidateMessage>
-
+                            {/* password */}
                             <Label htmlFor={bottomLabel} > {bottomLabel} </Label>
                             <InputField
                                 type={typeOnBottomInputfield}
