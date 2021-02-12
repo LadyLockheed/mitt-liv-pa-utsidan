@@ -9,7 +9,7 @@ import { useSetRecoilState } from 'recoil'
 //components
 import Spinner from '../Shared/Spinner'
 import { Button, Label, InputField, SelectInput, ValidateMessage } from '../Shared/ButtonsAndSuch'
-import { handleOutsideClick } from '../Shared/Helpers'
+import { HandleOutsideClick } from '../Shared/Helpers'
 
 
 const Wrapper = styled.div`
@@ -117,7 +117,7 @@ const EditEquipment = (props) => {
  
     //closing modal on click outside
     const ref = useRef();
-    handleOutsideClick(ref, setDisplayEditEquipment)
+    HandleOutsideClick(ref, setDisplayEditEquipment)
 
     async function editEquipment() {
 

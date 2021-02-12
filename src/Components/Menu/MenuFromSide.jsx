@@ -8,7 +8,7 @@ import { useSetRecoilState } from "recoil";
 import { isAuthenticatedState } from '../Shared/GlobalStates'
 
 //components
-// import { handleOutsideClick } from '../Shared/Helpers'
+// import { HandleOutsideClick } from '../Shared/Helpers'
 
 //images
 import LogOutIcon from '../../Assets/logouticon.svg'
@@ -131,7 +131,7 @@ const MenuFromSide = (props) => {
     //! handleOutsideClick funkar inte här
     //closing modal on click outside
        const ref = useRef();
-    //    handleOutsideClick(ref, setIsOpen)
+    //    HandleOutsideClick(ref, setIsOpen)
 
     const logOut = () => {
 

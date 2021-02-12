@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Button, SecondaryButton } from './ButtonsAndSuch'
-import { handleOutsideClick } from '../Shared/Helpers'
+import { HandleOutsideClick } from '../Shared/Helpers'
 
 
 const ModalWrapper = styled.div`
@@ -101,7 +101,7 @@ const AlertModal = (props) => {
 
     //closing modal on click outside
     const ref = useRef();
-    handleOutsideClick(ref, setDisplayModal)
+    HandleOutsideClick(ref, setDisplayModal)
 
     const handleConfirm = () => {
         setDisplayModal(false);
