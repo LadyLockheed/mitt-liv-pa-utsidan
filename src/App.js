@@ -1,16 +1,25 @@
-import Application from './Application'
-
-
+import Application from './Components/Application'
+import { BrowserRouter as Router} from 'react-router-dom';
+import { RecoilRoot } from "recoil";
+import { ThemeProvider } from 'styled-components';
+import { theme } from './Components/Shared/ButtonsAndSuch';
 
 
 function App() {
+
   return (
-    <div>
-      <Application/>
 
+  <RecoilRoot>
+    <Router>
 
-   
-    </div>
+        <ThemeProvider theme={theme}>
+          <Application/>
+        </ThemeProvider>
+      
+
+      </Router>
+  </RecoilRoot>
+
   );
 }
 

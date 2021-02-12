@@ -1,0 +1,40 @@
+För att starta lokala servern:
+
+npm start
+
+För att starta backendservern:
+se till att öppna gitbach på servermappen
+
+node server.js
+
+
+mongo "mongodb+srv://karinfrontend.foi9f.gcp.mongodb.net/MyLifeOnTheOutside" --username MyLifeOnTheOutside --password MyL1f3OnTh3Outs1d3
+
+
+
+//togglar, tex som i accordion, fast på ett annat sätt
+const Faq = () => {
+  const [showHide, setShowHide] = useState([]);
+  const toggleIsOpen = (index) =>{
+    let toggle = [...showHide];
+    toggle[index] = !toggle[index];
+    setShowHide(toggle)
+  }
+  return (
+    <StyledContainer>
+      <ArrowDownIcon fill="green"/>
+      <Test   left="green" center="black" right="yellow"/>
+      <h1>FRÅGOR OCH SVAR</h1>
+      <ul>
+      {data.map((data, index) => (
+      <StyledFaq onClick={() => toggleIsOpen(index)} key={index}>
+       <div> { showHide[index] ? <ArrowUpIcon fill="red"/> : <ArrowDownIcon fill="blue"/> } </div>
+      <p>{data.question}</p>
+      <Collapse isOpened={showHide[index]}><p>{data.answer}</p></Collapse>
+      </StyledFaq>
+ ))}
+ </ul>
+    </StyledContainer>
+  );
+};
+export default Faq;
