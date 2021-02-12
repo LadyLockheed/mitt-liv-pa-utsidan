@@ -84,6 +84,8 @@ const Login = () => {
     }
 
     const handleSubmit = () => {
+
+       
         //resetar så att validering kan börja om ifall man enbart fyllt i vissa fält rätt
         resetValidation();
         //kollar om allt ifyllt är valid
