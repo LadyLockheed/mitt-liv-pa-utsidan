@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { Button, SecondaryButton } from './ButtonsAndSuch'
 import { HandleOutsideClick } from '../Shared/Helpers'
 
-
 const ModalWrapper = styled.div`
     min-width: 15rem;
     background: ${props => props.theme.white};
@@ -19,6 +18,11 @@ const ModalWrapper = styled.div`
     display:grid;
     grid-template-columns:repeat(5, 1fr);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+ 
+${'' /* 
+    transition: 0.5s;
+  opacity: 0;
+  visibility: hidden; */}
 
     ${'' /* .fadeOut{
      opacity:0;
@@ -90,6 +94,8 @@ const AlertModal = (props) => {
 
     const { setDisplayModal, confirmFunction, displayModal } = props
 
+    // const componentClasses = ['example-component'];
+    // if (displayModal) { componentClasses.push('show'); }
    
 
     //when modal opens it scrolls into view
@@ -108,11 +114,11 @@ const AlertModal = (props) => {
         confirmFunction()
     }
 
-
+    // className={componentClasses.join(' ')}
 
     return (
 
-        <ModalWrapper id='modal' ref={ref} displayModal={displayModal} >
+        <ModalWrapper id='modal' ref={ref} displayModal={displayModal}  >
 
 
             <Headline>Är du riktigt riktigt riktigt säker?</Headline>
@@ -122,7 +128,6 @@ const AlertModal = (props) => {
 
 
         </ModalWrapper>
-
 
     )
 

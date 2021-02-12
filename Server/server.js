@@ -10,7 +10,8 @@ const { getAllEquipment, getUser, addNewUser, addNewEquipment, deleteEquipment, 
 
 // const port = 1337; // Port number
 
-const port = process.env.PORT || 1337;   // RÄTT
+const port = process.env.PORT || 1337; 
+console.log('Foo: ', process.env);  // RÄTT
 
 const bcrypt = require('bcryptjs');
 // const { default: EditEquipment } = require('../src/Components/Equipment/EditEquipment.jsx');
@@ -54,6 +55,9 @@ app.use((req, res, next) => {
     }
     next()
 })
+
+
+
 
 //log in
 app.post('/api/authenticateUser', async (req, res) => {
@@ -123,7 +127,6 @@ app.post('/api/addNewUser', async (req, res) => {
     else {
 
         const newUser = await addNewUser(newUserName, hashedPassword)
-
         res.send(newUser)
     }
 
@@ -132,8 +135,8 @@ app.post('/api/addNewUser', async (req, res) => {
 app.get('/api/allEquipment', async (req, res) => {
 
     const userId = req.session.userId
-    const allEquipment = await getAllEquipment(userId)
 
+    const allEquipment = await getAllEquipment(userId)
     res.send(allEquipment);
 })
 
@@ -142,7 +145,6 @@ app.get('/api/allAdventures', async (req, res) => {
     const userId = req.session.userId
 
     const allAdventures = await getAllAdventures(userId)
-
     res.send(allAdventures);
 })
 
@@ -152,7 +154,6 @@ app.post('/api/addNewAdventure', async (req, res) => {
     const newAdventure ={...req.body.newAdventure, userId}
     
     const addedNewAdventure = await addNewAdventure(newAdventure)
-
     res.send(addedNewAdventure)
 
 })
@@ -168,9 +169,9 @@ app.put('/api/saveAdventureNotes', async (req, res)=>{
 })
 
 app.delete('/api/deleteAdventure', async (req,res)=>{
-    console.log(req.body)
 
     const adventureId = req.body._id
+
     const deletedAdventure = await deleteAdventure(adventureId)
     res.send(deletedAdventure)
 })
