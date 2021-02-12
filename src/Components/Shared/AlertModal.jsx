@@ -18,8 +18,32 @@ const ModalWrapper = styled.div`
     border-radius:3px;
     display:grid;
     grid-template-columns:repeat(5, 1fr);
-
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+    ${'' /* .fadeOut{
+     opacity:0;
+     width:0;
+     height:0;
+     transition: width 0.5s 0.5s, height 0.5s 0.5s, opacity 0.5s;
+
+    }
+    .fadeIn{
+     opacity:1;
+     width:100px;
+     height:100px;
+     transition: width 0.5s, height 0.5s, opacity 0.5s 0.5s;
+
+    } */}
+    ${'' /* ${ props => props.displayModal ? ` 
+    opacity:1;
+    transition: opacity 0.5s 0.5s;`
+    :
+    `opacity:0;
+    transition: opacity 0.5s;`} */}
+
+    opacity: ${props => props.displayModal ? 1 : 0};
+    transition : ${ props=> props.displayModal ? `opacity 0.5s 0.5s` : `opacity 0.5s`};
+
     @media screen and (min-width: 600px){
 
         width: 50%;
@@ -64,8 +88,10 @@ const RegretButton = styled(SecondaryButton)`
 //den här ska ta props för headline, vad som ska stå på knappen och en funktion för vad som ska göra om man klickar på confirm
 const AlertModal = (props) => {
 
-    const { setDisplayModal, confirmFunction } = props
+    const { setDisplayModal, confirmFunction, displayModal } = props
+
    
+
     //when modal opens it scrolls into view
     useEffect(() => {
         const scrollIntoViewOptions = { block: 'center', behavior: 'smooth' }
@@ -84,31 +110,9 @@ const AlertModal = (props) => {
 
 
 
-
-
-    // !ref.current ||
-    // const handleClick = e => {
-    //     if (ref.current.contains(e.target)) {
-    //       // inside click
-    //       return;
-    //     }
-    //     // outside click
-    //     setDisplayModal(false);
-    //   };
-
-    // useEffect(() => {
-    //     document.addEventListener("mousedown", handleClick);
-
-    //     return () => {
-    //       document.removeEventListener("mousedown", handleClick);
-    //     };
-    //   }, []);
-
-
-
     return (
 
-        <ModalWrapper id='modal' ref={ref}>
+        <ModalWrapper id='modal' ref={ref} displayModal={displayModal} >
 
 
             <Headline>Är du riktigt riktigt riktigt säker?</Headline>

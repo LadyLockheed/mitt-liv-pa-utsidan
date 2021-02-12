@@ -25,11 +25,7 @@ const Wrapper = styled.div`
         display: none;
     }
     border-radius: 3px;
-  
-    @media screen and (min-width:600px;){
-        ${'' /* margin: 1rem 2rem 2rem 2rem; */}
-        
-    }
+
 `;
 const ItemWrapper = styled.div`
     display: grid;
@@ -344,36 +340,32 @@ const Accordion = (props) => {
         }
     }
 
-   
-    const CategoryText = (prop) =>{
-   
-        if(prop.category ==='living')return <p>Kategori: Boende</p>
-        
-        if(prop.category ==='storage') return <p>Kategori: Bära/förvaring</p>
-      
-        if(prop.category ==='sleeping') return <p>Kategori: sova</p>
-       
-        if(prop.category ==='clothes') return <p>Kategori: kläder</p>
 
-        if(prop.category ==='electronics') return <p>Kategori: elektronik</p>
+    const CategoryText = (prop) => {
 
-        if(prop.category ==='fun') return <p>Kategori: nöje</p>
+        if (prop.category === 'living') return <p>Kategori: Boende</p>
 
-        if(prop.category ==='cooking') return <p>Kategori: matlagning</p>
+        if (prop.category === 'storage') return <p>Kategori: Bära/förvaring</p>
 
-        if(prop.category ==='hygiene') return <p>Kategori: hygien</p>
+        if (prop.category === 'sleeping') return <p>Kategori: sova</p>
 
-        if(prop.category ==='other') return <p>Kategori: övrigt</p>
-  
+        if (prop.category === 'clothes') return <p>Kategori: kläder</p>
+
+        if (prop.category === 'electronics') return <p>Kategori: elektronik</p>
+
+        if (prop.category === 'fun') return <p>Kategori: nöje</p>
+
+        if (prop.category === 'cooking') return <p>Kategori: matlagning</p>
+
+        if (prop.category === 'hygiene') return <p>Kategori: hygien</p>
+
+        if (prop.category === 'other') return <p>Kategori: övrigt</p>
+
     }
-    
+
 
     return (
-
-        <Wrapper>
-
-            {isDeleting && <SpinnerFireLog text={'bränner upp skiten'} />}
-
+        <>
             {displayEditEquipment &&
                 <EditEquipment
                     setDisplayEditEquipment={setDisplayEditEquipment}
@@ -383,49 +375,61 @@ const Accordion = (props) => {
             {displayModal &&
                 <AlertModal
                     setDisplayModal={setDisplayModal}
-                    confirmFunction={() => deleteEquipment(itemToDelete)} />
+                    confirmFunction={() => deleteEquipment(itemToDelete)}
+                    displayModal={displayModal}
+                />
             }
 
-            {!isDeleting && <>
-                {expandedItems.map((item, index) => {
-                    return (
+            <Wrapper>
 
-                        <ItemWrapper key={item.equipment + index} >
-                            <TopRowWrapper >
-
-                                {displayDotOrBox === 'dot' && <CategoryDot categoryColor={item.category} />}
-
-                                {displayDotOrBox === 'box' && <CheckBox categoryColor={item.category} type='checkbox' value={item._id} onChange={(event) => { handleChecked(event); countTotalWeight(item.weight, item._id) }} checked={packingList.includes(item._id)} />}
+                {isDeleting && <SpinnerFireLog text={'bränner upp skiten'} />}
 
 
-                                <Name>{item.equipment}</Name>
-                                <Weight>{item.weight}g</Weight>
-                                <DropDownArrow src={dropDownArrow} isUpsideDown={item.isExpanded} onClick={() => toggleOpen(item)}></DropDownArrow>
-                            </TopRowWrapper>
-                            {item.isExpanded &&
 
-                                <Collapse>
+                {!isDeleting && <>
+                    {expandedItems.map((item, index) => {
+                        return (
 
-                                    <Info> <CategoryText category={item.category}/><p>{item.info}</p></Info>
-                                    <IconWrapper>
+                            <ItemWrapper key={item.equipment + index} >
+                                <TopRowWrapper >
 
-                                        <EditIcon src={editIcon} onClick={() => handleEdit(item)} />
+                                    {displayDotOrBox === 'dot' && <CategoryDot categoryColor={item.category} />}
 
-                                        <TrachcanIcon src={trashcanIcon} onClick={() => handleDelete(item)}></TrachcanIcon>
+                                    {displayDotOrBox === 'box' && <CheckBox categoryColor={item.category} type='checkbox' value={item._id} onChange={(event) => { handleChecked(event); countTotalWeight(item.weight, item._id) }} checked={packingList.includes(item._id)} />}
 
-                                    </IconWrapper>
 
-                                </Collapse>
-                            }
+                                    <Name>{item.equipment}</Name>
+                                    <Weight>{item.weight}g</Weight>
+                                    <DropDownArrow src={dropDownArrow} isUpsideDown={item.isExpanded} onClick={() => toggleOpen(item)}></DropDownArrow>
+                                </TopRowWrapper>
+                                {item.isExpanded &&
 
-                        </ItemWrapper>
+                                    <Collapse>
 
-                    )
-                })}
-            </>}
+                                        <Info>
+                                            <CategoryText category={item.category} />
+                                            <p>{item.info}</p>
+                                        </Info>
+                                        <IconWrapper>
 
-        </Wrapper>
+                                            <EditIcon src={editIcon} onClick={() => handleEdit(item)} />
 
+                                            <TrachcanIcon src={trashcanIcon} onClick={() => handleDelete(item)}></TrachcanIcon>
+
+                                        </IconWrapper>
+
+                                    </Collapse>
+                                }
+
+                            </ItemWrapper>
+
+                        )
+                    })}
+                </>}
+
+
+            </Wrapper>
+        </>
     )
 }
 

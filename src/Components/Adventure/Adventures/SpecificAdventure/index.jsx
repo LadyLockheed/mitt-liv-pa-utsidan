@@ -327,6 +327,13 @@ const SpecificAdventure = (props) => {
 
     return (
         <FrostedBackground>
+
+            {displayModal &&
+                <AlertModal
+                    setDisplayModal={setDisplayModal}
+                    confirmFunction={() => deleteAdventure(specificAdventure._id)}
+                />
+            }
             {isLoading ? <Spinner spinnerMessage={'Tar bort äventyr'} /> :
                 <Wrapper>
 
@@ -379,12 +386,7 @@ const SpecificAdventure = (props) => {
 
                 </Wrapper>
             }
-            {displayModal &&
-                <AlertModal
-                    setDisplayModal={setDisplayModal}
-                    confirmFunction={() => deleteAdventure(specificAdventure._id)}
-                />
-            }
+
 
         </FrostedBackground>
     )

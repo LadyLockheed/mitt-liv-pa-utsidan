@@ -14,7 +14,6 @@ import { isAuthenticatedState } from '../Shared/GlobalStates'
 import LogOutIcon from '../../Assets/logouticon.svg'
 import userIcon from '../../Assets/user.svg'
 
-
 const StyledMenu = styled.nav`
     display: flex;
     flex-direction: column;
