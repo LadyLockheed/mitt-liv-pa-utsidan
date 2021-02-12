@@ -41,8 +41,8 @@ const ModalWrapper = styled.div`
     `opacity:0;
     transition: opacity 0.5s;`} */}
 
-    opacity: ${props => props.displayModal ? 1 : 0};
-    transition : ${ props=> props.displayModal ? `opacity 0.5s 0.5s` : `opacity 0.5s`};
+    ${'' /* opacity: ${props => props.displayModal ? 1 : 0};
+    transition : ${ props=> props.displayModal ? `opacity 0.5s 0.5s` : `opacity 0.5s`}; */}
 
     @media screen and (min-width: 600px){
 
