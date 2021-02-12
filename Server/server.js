@@ -8,7 +8,9 @@ const path = require('path')
 const cors = require('cors');
 const { getAllEquipment, getUser, addNewUser, addNewEquipment, deleteEquipment, editEquipment, addNewAdventure, getAllAdventures, saveAdventureNotes, deleteAdventure } = require('./database.js');
 
-const port = 1337; // Port number
+// const port = 1337; // Port number
+
+const port = process.env.PORT || 1337;   // RÄTT
 
 const bcrypt = require('bcryptjs');
 // const { default: EditEquipment } = require('../src/Components/Equipment/EditEquipment.jsx');
