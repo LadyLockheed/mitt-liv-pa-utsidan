@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import mainLogo from '../../Assets/mainLogo.svg'
+import mainLogo from '../../Assets/mainlogo.svg'
 import { Button, InputField, SecondaryButton, ValidateMessage } from '../Shared/ButtonsAndSuch'
 import Spinner from '../Shared/Spinner'
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {  useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import mainLogo from '../Assets/mainLogo.svg'
+import mainLogo from '../Assets/mainlogo.svg'
 import Burger from './Menu/Burger'
 import MenuFromSide from './Menu/MenuFromSide'
 
