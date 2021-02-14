@@ -9,11 +9,12 @@ import { useSetRecoilState } from 'recoil'
 //components
 import Spinner from '../Shared/Spinner'
 import { Button, Label, InputField, SelectInput, ValidateMessage } from '../Shared/ButtonsAndSuch'
-import { handleOutsideClick } from '../Shared/Helpers'
+import { HandleOutsideClick } from '../Shared/Helpers'
+
 
 
 const Wrapper = styled.div`
-    background-color: ${props => props.theme.mediumbeige};
+    background-color: ${props => props.theme.mintgreen};
     padding: 0.5rem 0.8rem;
     border-radius: 3px;
     position: absolute;
@@ -39,11 +40,10 @@ const CloseButton = styled.button`
     height: 1.2rem;
     width: 1.3rem;
     border-radius: 3px;
-    border: 1px solid ${props => props.theme.darkgrey};
+    border: 1px solid ${props => props.theme.darkgreygreen};
     color: ${props => props.theme.black};
     cursor: pointer;
     margin-bottom: 0.3rem;
- 
 `;
 
 const StyledSelectInput = styled(SelectInput)` 
@@ -117,7 +117,7 @@ const EditEquipment = (props) => {
  
     //closing modal on click outside
     const ref = useRef();
-    handleOutsideClick(ref, setDisplayEditEquipment)
+    HandleOutsideClick(ref, setDisplayEditEquipment)
 
     async function editEquipment() {
 

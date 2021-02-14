@@ -6,7 +6,10 @@ import Burger from './Menu/Burger'
 import MenuFromSide from './Menu/MenuFromSide'
 
 const Navigation = styled.div`
-    background-color: ${props => props.theme.green};
+    ${'' /* background-color: ${props => props.theme.green}; */}
+    background-color: ${props => props.theme.headergreen};
+    ${'' /* background-color: #4C5E2C; */}
+    ${'' /* background-color: #556338; */}
     padding: 0.4rem 3rem;
     position: sticky;
     top: 0;

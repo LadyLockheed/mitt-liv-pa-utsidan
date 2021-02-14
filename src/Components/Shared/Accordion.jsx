@@ -35,10 +35,10 @@ const ItemWrapper = styled.div`
     position: relative;
 
     &:nth-child(odd) {
-        background-color:rgb(219,221,205);
+        background-color:${props => props.theme.mediumgreygreen};
     }
     &:nth-child(even) {
-        background-color:rgb(233,235,218);
+        background-color:${props => props.theme.lightgreygreen};
     }
 
     &:first-child {
@@ -154,16 +154,14 @@ const Weight = styled.p`
 const DropDownArrow = styled.img`
     height: 0.7rem;
     width: auto;
-    
     grid-column: 14/15;
     transform: rotate(${props => props.isUpsideDown ? `180deg` : `0deg`});
-   
     padding:${props => props.isUpsideDown ? '0.5rem 0.5rem 0.5rem 0rem' : '0.5rem 0rem 0.5rem 0.5rem'};
     &:hover {
         cursor: pointer;
     }
- 
 `;
+
 const Collapse = styled.div` 
     grid-column: 1/3;
     display: grid;
@@ -174,7 +172,7 @@ const Collapse = styled.div`
 `;
 
 const Info = styled.div`
-    grid-column: 1/12;
+    grid-column: 1/13;
     border: 1px solid #E2E2E2;
     border-radius: 3px;
     box-shadow: 4px 4px 4px 1px rgba(197,197,197,0.30);
