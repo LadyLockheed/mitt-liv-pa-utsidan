@@ -174,7 +174,7 @@ const Collapse = styled.div`
 `;
 
 const Info = styled.div`
-    grid-column: 1/12;
+    grid-column: 1/13;
     border: 1px solid #E2E2E2;
     border-radius: 3px;
     box-shadow: 4px 4px 4px 1px rgba(197,197,197,0.30);

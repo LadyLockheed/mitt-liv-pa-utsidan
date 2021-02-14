@@ -21,6 +21,7 @@ const bcrypt = require('bcryptjs');
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json({ limit: '2mb' }));
+
 //middleware session
 app.use(session({
     resave: false,
@@ -28,6 +29,7 @@ app.use(session({
     secret: 'jlfdsfjmjericroe854958409!!',
     store: new MongoStore({ url: 'mongodb+srv://MyLifeOnTheOutside:MyL1f3OnTh3Outs1d3@karinfrontend.foi9f.gcp.mongodb.net/MyLifeOnTheOutside?retryWrites=true&w=majority' })
 }));
+
 //middleware logging
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
@@ -56,8 +58,6 @@ app.use((req, res, next) => {
     }
     next()
 })
-
-
 
 
 //log in
