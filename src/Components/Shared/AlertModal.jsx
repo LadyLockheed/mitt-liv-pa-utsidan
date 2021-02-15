@@ -19,30 +19,10 @@ const ModalWrapper = styled.div`
     display:grid;
     grid-template-columns:repeat(5, 1fr);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    ${'' /* transition: 1s;
+    opacity: ${props => props.displayModal  ? 1 : 0}; */}
+    opacity: 1;
 
-    ${'' /* .fadeOut{
-     opacity:0;
-     width:0;
-     height:0;
-     transition: width 0.5s 0.5s, height 0.5s 0.5s, opacity 0.5s;
-
-    }
-    .fadeIn{
-     opacity:1;
-     width:100px;
-     height:100px;
-     transition: width 0.5s, height 0.5s, opacity 0.5s 0.5s;
-
-    } */}
-    ${'' /* ${ props => props.displayModal ? ` 
-    opacity:1;
-    transition: opacity 0.5s 0.5s;`
-    :
-    `opacity:0;
-    transition: opacity 0.5s;`} */}
-
-    ${'' /* opacity: ${props => props.displayModal ? 1 : 0};
-    transition : ${ props=> props.displayModal ? `opacity 0.5s 0.5s` : `opacity 0.5s`}; */}
 
     @media screen and (min-width: 600px){
 
@@ -89,7 +69,7 @@ const RegretButton = styled(SecondaryButton)`
 const AlertModal = (props) => {
 
     const { setDisplayModal, confirmFunction, displayModal } = props
-
+    console.log(displayModal)
    
 
     //when modal opens it scrolls into view
@@ -113,7 +93,6 @@ const AlertModal = (props) => {
     return (
 
         <ModalWrapper id='modal' ref={ref} displayModal={displayModal} >
-
 
             <Headline>Är du riktigt riktigt riktigt säker?</Headline>
             <CloseButton onClick={() => setDisplayModal(false)}>x</CloseButton>

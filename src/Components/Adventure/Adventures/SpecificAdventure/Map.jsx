@@ -1,49 +1,119 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import L from 'leaflet'
+
+
 import styled from 'styled-components'
 
-const StyledMap = styled.div`
-    border: 1px solid black;
+const StyledMap = styled(MapContainer)`
+    
     background-color: white;
     height: 15rem;
     width: 100%;
 
 `;
 
-const Map = () => {
+const SaveButton = styled.button`
+
+
+`
+
+const Map = (props) => {
+
+
+    const { longAndLat } = props
+    console.log(L)
+
+    const userSavedLocations = [
+        {
+            long: 11.939411419683836,
+            lat: 57.716123811750336,
+            popupText: 'Bra tältplats'
+        },
+        {
+            long: 11.943885345114667,
+            lat: 57.71441527354612,
+            popupText: 'Hittade svamp här!'
+        }
+    ]
+
+    const saveLocation = () => {
+        
+    }
+
 
     // let geo = navigator.geolocation
 
-    useEffect(() => {
-        console.log('i useEffect map')
-        // navigator.geolocation.getCurrentPosition(success, error, options)
-      navigator.geolocation.getCurrentPosition(success, error)
-    
-    })
+    // const [currentCoordinates, setCurrentCoordinates] = useState({})
+    // const [longAndLat, setLongAndLat]=useState([])
 
-    function success(pos) {
-        console.log(pos)
-        var crd = pos.coords;
+    // console.log(longAndLat)
 
-        console.log('Your current position is:');
-        console.log(`Latitude : ${crd.latitude}`);
-        console.log(`Longitude: ${crd.longitude}`);
-        console.log(`More or less ${crd.accuracy} meters.`);
-    }
+    // useEffect(() => {
+    //     console.log('i useEffect map')
+    //     // navigator.geolocation.getCurrentPosition(success, error)
+    //     getLocation();
 
-    // let options = {
-    //     enableHighAccuracy: true,
-    //     timeout: 5000,
-    //     maximumAge: 0
-    // };
+    // }, [])
 
-    function error(err) {
-        console.warn(`ERROR(${err.code}): ${err.message}`);
-    }
+    // async function getLocation() {
+    //     try {
+    //         await navigator.geolocation.getCurrentPosition(success, error)
 
-    // navigator.geolocation.getCurrentPosition(success, error, options);
+    //     }
+    //     catch (err) {
+    //         console.log('nåt gick fel: ', err)
+    //     }
+    // }
+
+    // async function success(pos) {
+    //     try {
+    //         await setCurrentCoordinates(pos.coords)
+    //         await setLongAndLat([pos.coords.latitude, pos.coords.longitude])
+
+    //     }
+    //     catch (err) {
+    //         console.log('nåt gick fel: ', err)
+    //     }
+
+    // }
+
+    // function error(err) {
+    //     console.warn(`ERROR(${err.code}): ${err.message}`);
+    // }
+
+
 
     return (
-        <StyledMap></StyledMap>
+        <>
+            <StyledMap>
+
+
+                {/* <StyledMap center={[51.505, -0.09]} zoom={13} scrollWheelZoom={true}> */}
+                <StyledMap center={longAndLat} zoom={11} scrollWheelZoom={true}>
+                    <TileLayer
+                        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <Marker position={longAndLat}>
+                        <Popup>
+                            Du är här! <br /> Var nu här är nånstans.
+                    </Popup>
+                    </Marker>
+                    {userSavedLocations.map((location) => {
+                        return (<Marker position={[location.lat, location.long]} key={location.lat}>
+                            <Popup>
+                                {location.popupText}
+                            </Popup>
+                        </Marker>)
+                    })}
+
+
+
+                </StyledMap>
+            </StyledMap>
+            <SaveButton onClick={saveLocation}>Spara plats</SaveButton>
+        </>
     )
 }
 
