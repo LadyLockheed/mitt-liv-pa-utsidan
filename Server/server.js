@@ -215,6 +215,7 @@ app.put('/api/editEquipment', async (req, res) => {
     res.send(editedEquipment)
 })
 
+//seems to be important to have this when using heroku, or you get error cannot GET when reloading page
 app.use((req, res, next) => {
     res.sendFile(path.join(__dirname, "..", "build", "index.html"));
 });

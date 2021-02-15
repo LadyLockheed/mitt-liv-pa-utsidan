@@ -18,9 +18,15 @@ const ModalWrapper = styled.div`
     display:grid;
     grid-template-columns:repeat(5, 1fr);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    ${'' /* transition: 1s;
-    opacity: ${props => props.displayModal  ? 1 : 0}; */}
-    opacity: 1;
+    transition: opacity 1s;
+    opacity: ${props => props.displayModal  ? 1 : 0};
+    ${'' /* opacity: 1; */}
+
+    ${'' /* &:hover{
+        opacity:0;
+    }
+     */}
+ 
 
 
     @media screen and (min-width: 600px){
@@ -64,7 +70,6 @@ const RegretButton = styled(SecondaryButton)`
     width: 100%;
 `;
 
-//den här ska ta props för headline, vad som ska stå på knappen och en funktion för vad som ska göra om man klickar på confirm
 const AlertModal = (props) => {
 
     const { setDisplayModal, confirmFunction, displayModal } = props

@@ -381,9 +381,7 @@ const Accordion = (props) => {
             <Wrapper>
 
                 {isDeleting && <SpinnerFireLog text={'bränner upp skiten'} />}
-
-
-
+                
                 {!isDeleting && <>
                     {expandedItems.map((item, index) => {
                         return (

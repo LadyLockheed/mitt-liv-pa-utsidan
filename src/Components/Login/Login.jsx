@@ -40,10 +40,9 @@ const Login = () => {
                 setIsLoggingIn(false)
             }
             else {
-                // getAllEquipment()
+
                 setCurrentUser(response.data)
                 setIsAuthenticatedState(true)
-                // getAllEquipment()
                 localStorage.setItem('userName',response.data.userName)
                 history.push('/allequipment')
             }

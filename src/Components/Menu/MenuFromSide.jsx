@@ -138,6 +138,7 @@ const MenuFromSide = (props) => {
         logOutSession();
         setIsAuthenticatedState(false);
         localStorage.removeItem('userName');
+        localStorage.removeItem('isAuthenticated');
     }
 
 

@@ -60,12 +60,12 @@ const MyApp = styled.div`
 const Application=()=>{
 
     const [isAuthenticated, setIsAuthenticated] = useRecoilState(isAuthenticatedState);
+    console.log('isAuthenticated: ', isAuthenticated)
    
     const history = useHistory()
     
     useEffect(()=>{
         
-
         //kollar om session finns i localstorage, om det finns är man fortfarande inloggad och behöver inte logga in igen om man laddar om sidan
         let loggedInUser = localStorage.getItem('userName')
         if (loggedInUser){

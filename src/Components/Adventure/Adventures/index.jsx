@@ -18,7 +18,7 @@ const Adventures = () => {
       maximumAge: 0
   };
 
-    console.log(longAndLat)
+    // console.log(longAndLat)
 
     useEffect(() => {
 

@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react'
+import React from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import L from 'leaflet'
+// import L from 'leaflet'
 
 
 import styled from 'styled-components'
 
-const StyledMap = styled(MapContainer)`
+const StyledMapContainer = styled(MapContainer)`
     
     background-color: white;
     height: 15rem;
@@ -22,7 +22,7 @@ const Map = (props) => {
 
 
     const { longAndLat } = props
-    console.log(L)
+    // console.log(L)
 
     const userSavedLocations = [
         {
@@ -34,63 +34,24 @@ const Map = (props) => {
             long: 11.943885345114667,
             lat: 57.71441527354612,
             popupText: 'Hittade svamp här!'
+        },
+        {
+            long: 11.936589937554986,
+            lat: 57.715458712200494,
+            popupText: 'Här finns vatten'
         }
     ]
 
-    const saveLocation = () => {
-        
-    }
-
-
-    // let geo = navigator.geolocation
-
-    // const [currentCoordinates, setCurrentCoordinates] = useState({})
-    // const [longAndLat, setLongAndLat]=useState([])
-
-    // console.log(longAndLat)
-
-    // useEffect(() => {
-    //     console.log('i useEffect map')
-    //     // navigator.geolocation.getCurrentPosition(success, error)
-    //     getLocation();
-
-    // }, [])
-
-    // async function getLocation() {
-    //     try {
-    //         await navigator.geolocation.getCurrentPosition(success, error)
-
-    //     }
-    //     catch (err) {
-    //         console.log('nåt gick fel: ', err)
-    //     }
-    // }
-
-    // async function success(pos) {
-    //     try {
-    //         await setCurrentCoordinates(pos.coords)
-    //         await setLongAndLat([pos.coords.latitude, pos.coords.longitude])
-
-    //     }
-    //     catch (err) {
-    //         console.log('nåt gick fel: ', err)
-    //     }
+    // const saveLocation = () => {
 
     // }
-
-    // function error(err) {
-    //     console.warn(`ERROR(${err.code}): ${err.message}`);
-    // }
-
-
+  
 
     return (
         <>
-            <StyledMap>
-
-
+          
                 {/* <StyledMap center={[51.505, -0.09]} zoom={13} scrollWheelZoom={true}> */}
-                <StyledMap center={longAndLat} zoom={11} scrollWheelZoom={true}>
+                <StyledMapContainer center={longAndLat} zoom={11} scrollWheelZoom={true}>
                     <TileLayer
                         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -109,10 +70,9 @@ const Map = (props) => {
                     })}
 
 
-
-                </StyledMap>
-            </StyledMap>
-            <SaveButton onClick={saveLocation}>Spara plats</SaveButton>
+                </StyledMapContainer>
+            
+            {/* <SaveButton onClick={saveLocation}>Spara plats</SaveButton> */}
         </>
     )
 }

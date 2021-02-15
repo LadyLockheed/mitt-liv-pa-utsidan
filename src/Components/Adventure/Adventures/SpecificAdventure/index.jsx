@@ -44,31 +44,6 @@ const Wrapper = styled.div`
     'backButton'
     'deleteButton';
 
-    ${'' /* @media screen and (min-width: 600px){
-
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-areas: 
-        'header header header header'
-        'accordion accordion notes notes'
-        'accordion accordion notes notes'
-        'accordion accordion map map'
-        'accordion accordion map map'
-        'backButton backButton . deleteButton';
-    } */}
-
-
-    ${'' /* @media screen and (min-width: 750px){
-
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-areas: 
-        'header header header header'
-        'accordion accordion notes notes'
-        'accordion accordion notes notes'
-        'accordion accordion map map'
-        'accordion accordion map map'
-        'backButton backButton . deleteButton';
-    } */}
-
     @media screen and (min-width: 750px){
 
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
