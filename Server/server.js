@@ -215,6 +215,10 @@ app.put('/api/editEquipment', async (req, res) => {
     res.send(editedEquipment)
 })
 
+app.use((req, res, next) => {
+    res.sendFile(path.join(__dirname, "..", "build", "index.html"));
+});
+
 
 app.listen(port, () => {
     console.log('Web server listening on port ' + port)
