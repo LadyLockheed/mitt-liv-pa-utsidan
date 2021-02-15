@@ -6,17 +6,11 @@ import arrowForwardICon from '../../../Assets/forwardArrowWhite.svg'
 
 const Wrapper = styled.div`
  
-    ${'' /* background-color:${props => props.theme.mintGreen}; */}
-    background-color:rgb(219,221,205);
+    background-color:${props => props.theme.mediumgreygreen};
     margin:1rem;
     padding:1rem;
     border-radius:3px;
-
-    @media  screen and (min-width: 600px){
-
-        ${'' /* margin: 2rem 2rem 2rem 2rem; */}
-
-    }   
+   
 `;
 
 const SelectInputStyled = styled(SelectInput)` 
@@ -31,7 +25,6 @@ const SelectInputStyled = styled(SelectInput)`
         }
 
     }
-
 
 `;
 
@@ -50,22 +43,22 @@ const ArrowForwardIcon = styled.img`
 
 const AddNewAdventure = (props) => {
 
-    const { setDisplayForm, setNewAdventureInfo, newAdventureInfo} = props
+    const { setDisplayForm, setNewAdventureInfo, newAdventureInfo } = props
 
     //TODO Datestarting och days syns ej om man backar tillbaka from packlistan. Funkar ju i editEquipment, varför inte här?
     //kollar om man redan har skrivit något i formuläret om man backar tillbaka från skapa packlista, så att allt man skrev fortfarande är ifyllt
-    useEffect(()=>{
-        if(newAdventureInfo && newAdventureInfo.adventure){
-           
+    useEffect(() => {
+        if (newAdventureInfo && newAdventureInfo.adventure) {
+
             setAdventure(newAdventureInfo.adventure)
             setSeason(newAdventureInfo.season)
             setDateStarting(newAdventureInfo.dateStarting)
             setDays(newAdventureInfo.days)
         }
 
-    },[newAdventureInfo])
+    }, [newAdventureInfo])
 
-    
+
     const [adventure, setAdventure] = useState('')
     const [season, setSeason] = useState('')
     const [dateStarting, setDateStarting] = useState('')
@@ -86,11 +79,11 @@ const AddNewAdventure = (props) => {
     }
 
     const handleAddNewAdventure = () => {
-        
+
         resetValidation();
 
         if (adventure.length < 1 || season === 'season' || season === '' || days < 0.5 || dateStarting.length < 1) {
-        
+
             if (adventure.length < 1) { setValidateAdventure(true); }
             if (season === 'season' || season === '') { setValidateSeason(true); }
             if (days < 0.5) { setValidateDays(true); }
@@ -98,9 +91,9 @@ const AddNewAdventure = (props) => {
 
             return
         }
-  
+
         setDisplayForm(false)
-        setNewAdventureInfo({...adventureInfo, dateEnding:calculateEndDate(adventureInfo)})
+        setNewAdventureInfo({ ...adventureInfo, dateEnding: calculateEndDate(adventureInfo) })
     }
 
     const resetValidation = () => {

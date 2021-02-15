@@ -13,7 +13,7 @@ import { HandleOutsideClick } from '../Shared/Helpers'
 
 
 const Wrapper = styled.div`
-    background-color: ${props => props.theme.mediumbeige};
+    background-color: ${props => props.theme.mintgreen};
     padding: 0.5rem 0.8rem;
     border-radius: 3px;
     position: absolute;
@@ -39,11 +39,10 @@ const CloseButton = styled.button`
     height: 1.2rem;
     width: 1.3rem;
     border-radius: 3px;
-    border: 1px solid ${props => props.theme.darkgrey};
+    border: 1px solid ${props => props.theme.darkgreygreen};
     color: ${props => props.theme.black};
     cursor: pointer;
     margin-bottom: 0.3rem;
- 
 `;
 
 const StyledSelectInput = styled(SelectInput)` 

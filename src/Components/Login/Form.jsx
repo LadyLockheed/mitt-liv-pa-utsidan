@@ -17,54 +17,6 @@ const Container = styled.div`
  
      
     }
-    ${'' /* width: 80%;
-    background: inherit;
-    box-shadow:0 0 1rem 0 rgba(0,0,0, .2);
-    position: relative;
-    margin-left:auto;
-    margin-right:auto;
-    z-index:1;
-    overflow:hidden;
-    border-radius:5px;
-    padding: 1rem;
-    display:grid;
-    grid-template-columns: 1fr;
-    justify-content: center;
-    background-color: rgba(233,235,218,0.8);
-    border-radius: 3px;
-   
-    &:before{
-        content: '';
-        background: inherit; 
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0; 
-        bottom: 0;
-
-        
-        box-shadow: inset 0 0 0 2000px rgba(255,255,255,0.3);
-        margin:-20px;
-        filter: blur(15px);
-        z-index:-1;
-  
-    }
-    @media screen and (min-width: 600px) {
-        width: 60%;
-        grid-template-columns: 1fr 1fr;
-        padding-left: 2rem;
- 
-     
-    }
-  
-    @media screen and (min-width: 1024px) {
-       width: 50%;
-
-    }
-    @media screen and (min-width: 1900px) {
-       width: 40%;
-
-    } */}
 
 `;
 const LoadingWrapper = styled.div`

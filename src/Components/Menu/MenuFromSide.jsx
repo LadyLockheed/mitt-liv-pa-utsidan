@@ -18,7 +18,7 @@ const StyledMenu = styled.nav`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: ${props => props.theme.darkgrey};
+    background: ${props => props.theme.darkgreygreen};
     height: 95vh;
     text-align: left;
     padding: 2rem;

@@ -35,10 +35,10 @@ const ItemWrapper = styled.div`
     position: relative;
 
     &:nth-child(odd) {
-        background-color:rgb(219,221,205);
+        background-color:${props => props.theme.mediumgreygreen};
     }
     &:nth-child(even) {
-        background-color:rgb(233,235,218);
+        background-color:${props => props.theme.lightgreygreen};
     }
 
     &:first-child {
@@ -154,16 +154,14 @@ const Weight = styled.p`
 const DropDownArrow = styled.img`
     height: 0.7rem;
     width: auto;
-    
     grid-column: 14/15;
     transform: rotate(${props => props.isUpsideDown ? `180deg` : `0deg`});
-   
     padding:${props => props.isUpsideDown ? '0.5rem 0.5rem 0.5rem 0rem' : '0.5rem 0rem 0.5rem 0.5rem'};
     &:hover {
         cursor: pointer;
     }
- 
 `;
+
 const Collapse = styled.div` 
     grid-column: 1/3;
     display: grid;

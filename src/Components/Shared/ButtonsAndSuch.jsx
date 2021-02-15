@@ -32,7 +32,7 @@ export const SecondaryButton = styled.button`
     padding: 0.4rem 1.4rem;
     font-size: 1rem;
     ${'' /* width: 225px; */}
-    ${'' /* width: 100%; */}
+    ${'' /* width: 10 0%; */}
     width: 80%;
    
    @media screen and (min-width: 600px){
@@ -119,14 +119,15 @@ export const ValidateMessage = styled.span`
 
 export const theme = {
     black: '#303030',
-    orange: '#D38324',
-    green: '#606338',
-    beige: '#E9EBDA',
     white: '#F9F9F9',
-    grey: '#EFEFEF',
-    darkgrey: '#BABCAB',
-    mediumbeige: '#DBDDCD',
+    orange: '#D38324',
     red: '#D15933',
     yellow: '#D3AC24',
-    mintGreen: '#D4DBD4'
+    darkgreygreen: '#BABCAB',
+    mediumgreygreen: '#DBDDCD',
+    lightgreygreen: '#E9EBDA',
+    grey: '#EFEFEF',
+    green: '#606338',
+    headergreen: '#556338',
+    mintgreen: '#D4DBD4'
 }

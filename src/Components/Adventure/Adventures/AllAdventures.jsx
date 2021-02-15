@@ -81,13 +81,13 @@ const AdventureWrapper = styled.div`
     display:grid;
     align-items: center;
     padding: 1rem;
-    background-color:rgba(233,235,218,0.8);
+    ${'' /* background-color:rgba(233,235,218,0.8); */}
 
     &:nth-child(odd) {
-        background-color:rgb(219,221,205);
+        background-color:${props => props.theme.mediumgreygreen};
     }
     &:nth-child(even) {
-        background-color:rgb(233,235,218);
+        background-color:${props => props.theme.lightgreygreen};
     }
     &:first-child {
         border-radius: 3px 3px 0px 0px;

@@ -18,35 +18,10 @@ const ModalWrapper = styled.div`
     display:grid;
     grid-template-columns:repeat(5, 1fr);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
- 
-${'' /* 
-    transition: 0.5s;
-  opacity: 0;
-  visibility: hidden; */}
+    ${'' /* transition: 1s;
+    opacity: ${props => props.displayModal  ? 1 : 0}; */}
+    opacity: 1;
 
-    ${'' /* .fadeOut{
-     opacity:0;
-     width:0;
-     height:0;
-     transition: width 0.5s 0.5s, height 0.5s 0.5s, opacity 0.5s;
-
-    }
-    .fadeIn{
-     opacity:1;
-     width:100px;
-     height:100px;
-     transition: width 0.5s, height 0.5s, opacity 0.5s 0.5s;
-
-    } */}
-    ${'' /* ${ props => props.displayModal ? ` 
-    opacity:1;
-    transition: opacity 0.5s 0.5s;`
-    :
-    `opacity:0;
-    transition: opacity 0.5s;`} */}
-
-    ${'' /* opacity: ${props => props.displayModal ? 1 : 0};
-    transition : ${ props=> props.displayModal ? `opacity 0.5s 0.5s` : `opacity 0.5s`}; */}
 
     @media screen and (min-width: 600px){
 
@@ -65,7 +40,7 @@ const CloseButton = styled.button`
     height: 1.4rem;
     width: 1.5rem;
     border-radius: 3px;
-    border: 1px solid ${props => props.theme.darkgrey};
+    border: 1px solid ${props => props.theme.darkgreygreen};
     color: ${props => props.theme.black};
     grid-column: 5/6;
     justify-self: end;
@@ -93,9 +68,7 @@ const RegretButton = styled(SecondaryButton)`
 const AlertModal = (props) => {
 
     const { setDisplayModal, confirmFunction, displayModal } = props
-
-    // const componentClasses = ['example-component'];
-    // if (displayModal) { componentClasses.push('show'); }
+    console.log(displayModal)
    
 
     //when modal opens it scrolls into view
@@ -119,7 +92,6 @@ const AlertModal = (props) => {
     return (
 
         <ModalWrapper id='modal' ref={ref} displayModal={displayModal}>
-
 
             <Headline>Är du riktigt riktigt riktigt säker?</Headline>
             <CloseButton onClick={() => setDisplayModal(false)}>x</CloseButton>

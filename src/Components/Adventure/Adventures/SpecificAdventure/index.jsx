@@ -32,16 +32,15 @@ const Wrapper = styled.div`
     grid-template-columns: 1fr;
     grid-template-areas: 
     'header'
-    'accordion'
-    'accordion'
-    'accordion'
+    'map'
+    'map'
+    'map'
     'notes'
     'notes'
     'notes'
-    'map'
-    'map'
-    'map'
-    'map'
+    'accordion'
+    'accordion'
+    'accordion'
     'backButton'
     'deleteButton';
 
@@ -58,54 +57,35 @@ const Wrapper = styled.div`
     } */}
 
 
+    ${'' /* @media screen and (min-width: 750px){
+
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-areas: 
+        'header header header header'
+        'accordion accordion notes notes'
+        'accordion accordion notes notes'
+        'accordion accordion map map'
+        'accordion accordion map map'
+        'backButton backButton . deleteButton';
+    } */}
+
     @media screen and (min-width: 750px){
 
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         grid-template-areas: 
-        'header header header header'
-        'accordion accordion notes notes'
-        'accordion accordion notes notes'
-        'accordion accordion map map'
-        'accordion accordion map map'
-        'backButton backButton . deleteButton';
+        'header header header header header'
+        'map map map map map'
+        'map map map map map'
+        'notes notes notes notes notes'
+        'notes notes notes notes notes'
+        'accordion accordion accordion accordion accordion'
+        'accordion accordion accordion accordion accordion'
+        'accordion accordion accordion accordion accordion'
+        'accordion accordion accordion accordion accordion'
+        'backButton backButton . . deleteButton';
     }
 
-    ${'' /* @media screen and (min-width: 995px){
-
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-areas: 
-        'header header header header'
-        'accordion accordion notes notes'
-        'accordion accordion notes notes'
-        'accordion accordion map map'
-        'accordion accordion map map'
-        'backButton backButton . deleteButton';
-    } */}
-
-    ${'' /* @media screen and (min-width: 1000px){
-
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-areas: 
-        'header header header header'
-        'accordion accordion notes notes'
-        'accordion accordion notes notes'
-        'accordion accordion map map'
-        'accordion accordion map map'
-        'backButton backButton . deleteButton';
-    } */}
-${'' /* 
-    @media screen and (min-width: 1000px){
-        border: 1px solid red;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-areas: 
-    'header header header header'
-    'notes notes accordion accordion'
-    'notes notes accordion accordion'
-    'map map accordion accordion'
-    'map map accordion accordion'
-    'backButtonbackButton accordion accordion';
-    } */}
-
+   
 `;
 
 
@@ -167,6 +147,7 @@ const StyledSubHeadline = styled.p`
 const StyledAccordionWrapper = styled.div`
     grid-area: accordion;
     margin: 1rem;
+    margin-top: 0;
 
     .totalWeight {
         color: ${props => props.theme.black};
@@ -254,7 +235,7 @@ const TrachcanIcon = styled.img`
 
 const SpecificAdventure = (props) => {
 
-    const { setDisplayAllAdventures, specificAdventure } = props;
+    const { setDisplayAllAdventures, specificAdventure, longAndLat } = props;
     const allEquipment = useRecoilValue(allEquipmentState)
     const setAllAdventures = useSetRecoilState(allAdventuresState)
     const packingListArray = specificAdventure.packingList
@@ -314,7 +295,6 @@ const SpecificAdventure = (props) => {
 
             const response = await axios.get('/api/allAdventures')
             setAllAdventures(response.data)
-            console.log('response adventure: ', response.data)
             setIsLoading(false)
             setDisplayAllAdventures(true)
 
@@ -376,7 +356,7 @@ const SpecificAdventure = (props) => {
                     <StyledMapWrapper>
 
                         <StyledSubHeadline>Karta</StyledSubHeadline>
-                        <Map />
+                        <Map longAndLat={longAndLat} />
                     </StyledMapWrapper>
 
                     <StyledGoBackButton onClick={() => setDisplayAllAdventures(true)}>
