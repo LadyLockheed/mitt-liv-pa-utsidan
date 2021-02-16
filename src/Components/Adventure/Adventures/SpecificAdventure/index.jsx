@@ -44,30 +44,7 @@ const Wrapper = styled.div`
     'backButton'
     'deleteButton';
 
-    ${'' /* @media screen and (min-width: 600px){
-
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-areas: 
-        'header header header header'
-        'accordion accordion notes notes'
-        'accordion accordion notes notes'
-        'accordion accordion map map'
-        'accordion accordion map map'
-        'backButton backButton . deleteButton';
-    } */}
-
-
-    ${'' /* @media screen and (min-width: 750px){
-
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-areas: 
-        'header header header header'
-        'accordion accordion notes notes'
-        'accordion accordion notes notes'
-        'accordion accordion map map'
-        'accordion accordion map map'
-        'backButton backButton . deleteButton';
-    } */}
+ 
 
     @media screen and (min-width: 750px){
 
@@ -160,7 +137,7 @@ const StyledAccordionWrapper = styled.div`
 `;
 
 const StyledAccordion = styled.div`
-    height: 19rem;
+    ${'' /* height: 19rem; */}
     overflow:scroll;
     overflow-x: hidden;
     background-color: ${props => props.theme.white};
@@ -171,7 +148,7 @@ const StyledAccordion = styled.div`
     }
  
     @media screen and (min-width: 600px){
-        height: 25rem;
+        ${'' /* height: 25rem; */}
     }
 `
 
@@ -246,7 +223,8 @@ const SpecificAdventure = (props) => {
     let totalWeight = 0;
 
     packingListArray.forEach((listId) => {
-        allEquipment.find((equipment) => {
+
+        allEquipment.forEach((equipment) => {
             if (equipment._id === listId) {
 
                 packingListEquipment.push(equipment)
@@ -276,7 +254,7 @@ const SpecificAdventure = (props) => {
     }
 
     async function deleteAdventure(id) {
-        console.log(id)
+
         setIsLoading(true)
         try {
             const response = await axios.delete('/api/deleteAdventure', { data: { _id: id } })
@@ -308,12 +286,13 @@ const SpecificAdventure = (props) => {
     return (
         <FrostedBackground>
 
-            {displayModal &&
-                <AlertModal
-                    setDisplayModal={setDisplayModal}
-                    confirmFunction={() => deleteAdventure(specificAdventure._id)}
-                />
-            }
+            <AlertModal
+                setDisplayModal={setDisplayModal}
+                confirmFunction={() => deleteAdventure(specificAdventure._id)}
+                displayModal={displayModal}
+
+            />
+
             {isLoading ? <Spinner spinnerMessage={'Tar bort äventyr'} /> :
                 <Wrapper>
 
@@ -328,6 +307,20 @@ const SpecificAdventure = (props) => {
                         <p className='date'> {specificAdventure.dateEnding}</p>
 
                     </StyledHeader>
+
+
+                    <StyledMapWrapper>
+
+                        <StyledSubHeadline>Karta</StyledSubHeadline>
+                        <Map longAndLat={longAndLat} />
+                    </StyledMapWrapper>
+
+                    <StyledNoteInputWrapper>
+
+                        <StyledSubHeadline htmlFor='notes'>Noteringar</StyledSubHeadline>
+                        <AdventureNotes specificAdventure={specificAdventure} />
+
+                    </StyledNoteInputWrapper>
 
                     <StyledAccordionWrapper>
 
@@ -344,20 +337,6 @@ const SpecificAdventure = (props) => {
                         <p className='totalWeight'>Total vikt: <br /> {totalWeight / 1000} kg</p>
 
                     </StyledAccordionWrapper>
-
-                    <StyledNoteInputWrapper>
-
-                        <StyledSubHeadline htmlFor='notes'>Noteringar</StyledSubHeadline>
-                        <AdventureNotes specificAdventure={specificAdventure} />
-
-                    </StyledNoteInputWrapper>
-
-
-                    <StyledMapWrapper>
-
-                        <StyledSubHeadline>Karta</StyledSubHeadline>
-                        <Map longAndLat={longAndLat} />
-                    </StyledMapWrapper>
 
                     <StyledGoBackButton onClick={() => setDisplayAllAdventures(true)}>
                         <StyledArrowIcon src={backArrowBlack} />Tillbaka</StyledGoBackButton>

@@ -96,31 +96,43 @@ const SubmitButton = styled(Button)`
 const EditEquipment = (props) => {
 
     const { setDisplayEditEquipment, equipmentToEdit, displayEditEquipment } = props;
-  
+
+    useEffect(() => {
+    
+        if (equipmentToEdit && equipmentToEdit.equipment) {
+    
+            setEquipment(equipmentToEdit.equipment)
+            setCategory(equipmentToEdit.category)
+            setWeight(equipmentToEdit.weight)
+            setInfo(equipmentToEdit.info)
+        }
+
+    }, [equipmentToEdit])
+
     const setAllEquipment = useSetRecoilState(allEquipmentState)
 
-    const [equipment, setEquipment] = useState(equipmentToEdit.equipment)
-    const [category, setCategory] = useState(equipmentToEdit.category)
-    const [weight, setWeight] = useState(equipmentToEdit.weight)
-    const [info, setInfo] = useState(equipmentToEdit.info)
+    const [equipment, setEquipment] = useState('')
+    const [category, setCategory] = useState('')
+    const [weight, setWeight] = useState('')
+    const [info, setInfo] = useState('')
 
     const [validateEquipment, setValidateEquipment] = useState(false)
     const [validateWeight, setValidateWeight] = useState(false)
     const [validateCategory, setValidateCategory] = useState(false)
 
-    const [isEditing, setIsEditing]= useState(false)
+    const [isEditing, setIsEditing] = useState(false)
 
     //when modal opens it scrolls into view
-    useEffect(()=>{
-        const scrollIntoViewOptions = {block: 'end', behavior: 'smooth'}
-        let element = document.getElementById('wrapper')
-        element.scrollIntoView(scrollIntoViewOptions)
-    },[])
+    // useEffect(() => {
+    //     const scrollIntoViewOptions = { block: 'end', behavior: 'smooth' }
+    //     let element = document.getElementById('wrapper')
+    //     element.scrollIntoView(scrollIntoViewOptions)
+    // }, [])
 
- 
+
     //closing modal on click outside
     const ref = useRef();
-    HandleOutsideClick(ref, ()=>displayEditEquipment && setDisplayEditEquipment(false))
+    HandleOutsideClick(ref, () => displayEditEquipment && setDisplayEditEquipment(false))
 
     async function editEquipment() {
 
@@ -173,78 +185,80 @@ const EditEquipment = (props) => {
     }
 
     return (
-  
+
+
         <Wrapper id='wrapper' ref={ref} displayEditEquipment={displayEditEquipment}>
 
-        {isEditing ? <Spinner spinnerMessage={'uppdaterar...'}/> :
-        <>
-            <TopWrapper>
-                <StyledLabel htmlFor='equipment'>Ändra utrustning</StyledLabel>
-                <CloseButton onClick={() => setDisplayEditEquipment(false)}>x</CloseButton>
-                {/* Equipment */}
+            {isEditing ? <Spinner spinnerMessage={'uppdaterar...'} /> :
+                <>
+                    <TopWrapper>
+                        <StyledLabel htmlFor='equipment'>Ändra utrustning</StyledLabel>
+                        <CloseButton onClick={() => setDisplayEditEquipment(false)}>x</CloseButton>
+                        {/* Equipment */}
 
-            </TopWrapper>
-            <StyledInputField
-                type='text'
-                id='equipment'
-                value={equipment}
-                onChange={event => setEquipment(event.target.value)}
-                isValid={validateEquipment}
-            />
-            <StyledValidateMessage displayMessage={validateEquipment}>Vad är det för pryl?</StyledValidateMessage>
+                    </TopWrapper>
+                    <StyledInputField
+                        type='text'
+                        id='equipment'
+                        value={equipment}
+                        onChange={event => setEquipment(event.target.value)}
+                        isValid={validateEquipment}
+                    />
+                    <StyledValidateMessage displayMessage={validateEquipment}>Vad är det för pryl?</StyledValidateMessage>
 
-            {/* Category */}
+                    {/* Category */}
 
-            <StyledLabel>Ändra kategori</StyledLabel>
+                    <StyledLabel>Ändra kategori</StyledLabel>
 
-            <StyledSelectInput
-                name="category"
-                id="category"
-                type='text'
-                value={category}
-                isValid={validateCategory}
-                onChange={event => setCategory(event.target.value)}>
-                <option value='category'>Välj kategori</option>
-                <option value="living">Boende</option>
-                <option value="storage">Bära/Förvaring</option>
-                <option value="sleeping">Sova</option>
-                <option value="clothes">Kläder</option>
-                <option value="electronics">Elektronik</option>
-                <option value="fun">Nöje</option>
-                <option value="cooking">Matlagning</option>
-                <option value="hygiene">Hygien</option>
-                <option value="other">Övrigt</option>
+                    <StyledSelectInput
+                        name="category"
+                        id="category"
+                        type='text'
+                        value={category}
+                        isValid={validateCategory}
+                        onChange={event => setCategory(event.target.value)}>
+                        <option value='category'>Välj kategori</option>
+                        <option value="living">Boende</option>
+                        <option value="storage">Bära/Förvaring</option>
+                        <option value="sleeping">Sova</option>
+                        <option value="clothes">Kläder</option>
+                        <option value="electronics">Elektronik</option>
+                        <option value="fun">Nöje</option>
+                        <option value="cooking">Matlagning</option>
+                        <option value="hygiene">Hygien</option>
+                        <option value="other">Övrigt</option>
 
-            </StyledSelectInput>
+                    </StyledSelectInput>
 
-            <StyledValidateMessage displayMessage={validateCategory}>What for stuff now?</StyledValidateMessage>
+                    <StyledValidateMessage displayMessage={validateCategory}>What for stuff now?</StyledValidateMessage>
 
-            {/* Weight */}
-            <StyledLabel htmlFor='weight'>Ändra vikt</StyledLabel>
-            <StyledInputField
-                type='number'
-                id='weight'
-                step="0.1"
-                placeholder='(g)'
-                value={weight}
-                onChange={event => setWeight(event.target.value)}
-                isValid={validateWeight}
-            />
-            <StyledValidateMessage displayMessage={validateWeight}>Vikten är viktig</StyledValidateMessage>
+                    {/* Weight */}
+                    <StyledLabel htmlFor='weight'>Ändra vikt</StyledLabel>
+                    <StyledInputField
+                        type='number'
+                        id='weight'
+                        step="0.1"
+                        placeholder='(g)'
+                        value={weight}
+                        onChange={event => setWeight(event.target.value)}
+                        isValid={validateWeight}
+                    />
+                    <StyledValidateMessage displayMessage={validateWeight}>Vikten är viktig</StyledValidateMessage>
 
-            {/* Info */}
-            <StyledLabel htmlFor='info'>Ändra info</StyledLabel>
-            <TextArea
-                id='info'
-                rows='2'
-                type='text'
-                value={info}
-                onChange={event => setInfo(event.target.value)}></TextArea>
+                    {/* Info */}
+                    <StyledLabel htmlFor='info'>Ändra info</StyledLabel>
+                    <TextArea
+                        id='info'
+                        rows='2'
+                        type='text'
+                        value={info}
+                        onChange={event => setInfo(event.target.value)}></TextArea>
 
-            <SubmitButton onClick={() => handleEditEquipment()}>Uppdatera</SubmitButton>
-            </>
-        }
+                    <SubmitButton onClick={() => handleEditEquipment()}>Uppdatera</SubmitButton>
+                </>
+            }
         </Wrapper>
+
 
     )
 

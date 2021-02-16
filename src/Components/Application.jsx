@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory, Redirect } from 'react-router-dom';
 import axios from 'axios'
 
 //global states
-import { isAuthenticatedState} from './Shared/GlobalStates';
+import { isAuthenticatedState } from './Shared/GlobalStates';
 import { useRecoilState } from "recoil";
 
 //routes
@@ -54,55 +54,59 @@ const MyApp = styled.div`
     flex-direction: column;
     justify-content: center; */}
 
-
 `;
 
-const Application=()=>{
+const Application = () => {
 
     const [isAuthenticated, setIsAuthenticated] = useRecoilState(isAuthenticatedState);
-   
+    const [isInitialized, setIsInitialized] = useState(false);
+
     const history = useHistory()
-    
-    useEffect(()=>{
-        
+
+    useEffect(() => {
+
         //kollar om session finns i localstorage, om det finns är man fortfarande inloggad och behöver inte logga in igen om man laddar om sidan
         let loggedInUser = localStorage.getItem('userName')
-        if (loggedInUser){
-        
+        if (loggedInUser) {
+
             setIsAuthenticated(true)
             history.push('/allEquipment')
- 
+
         }
-        
+        setIsInitialized(true)
         return
 
-    },[history, setIsAuthenticated])
-    
+    }, [])
 
-    return(
-        <MyApp isAuthenticated={isAuthenticated}>
-        
-            {isAuthenticated && <Header/>} 
-      
-            <Switch>
-          
-                <Route path='/addnewuser'>
-                    <AddNewUser/>
-                </Route>
-                <Route exact={true} path='/'>
-                    <Login/>
-                </Route>
-           
-                <ProtectedRoute path="/allequipment" component={AllEquipment}/>
-                <ProtectedRoute path="/packinglists" component={PackingLists}/>
-                <ProtectedRoute path="/addequipment" component={AddEquipment}/>
-                <ProtectedRoute path="/alladventures" component={Adventures}/>
-                <ProtectedRoute path="/addadventure" component={AddAdventure}/>
-               
-               
-            </Switch>
-        </MyApp>
-        
+    return (
+        <>
+            {isInitialized &&
+                <MyApp isAuthenticated={isAuthenticated}>
+
+                    {isAuthenticated && <Header />}
+
+                    <Switch>
+
+                        <Route path='/addnewuser'>
+                            <AddNewUser />
+                        </Route>
+
+                        <Route exact={true} path='/'>
+                            {isAuthenticated ? <Redirect to="allEquipment" /> : isInitialized && <Login />}
+                        </Route>
+
+                        <ProtectedRoute path="/allequipment" component={AllEquipment} />
+                        <ProtectedRoute path="/packinglists" component={PackingLists} />
+                        <ProtectedRoute path="/addequipment" component={AddEquipment} />
+                        <ProtectedRoute path="/alladventures" component={Adventures} />
+                        <ProtectedRoute path="/addadventure" component={AddAdventure} />
+
+
+                    </Switch>
+                </MyApp>
+            }
+        </>
+
     )
 }
 

@@ -26,6 +26,8 @@ app.use(session({
     secret: 'jlfdsfjmjericroe854958409!!',
     store: new MongoStore({ url: 'mongodb+srv://MyLifeOnTheOutside:MyL1f3OnTh3Outs1d3@karinfrontend.foi9f.gcp.mongodb.net/MyLifeOnTheOutside?retryWrites=true&w=majority' })
 }));
+
+
 //middleware logging
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);

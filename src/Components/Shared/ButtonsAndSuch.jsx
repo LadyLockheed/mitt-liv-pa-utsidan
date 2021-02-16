@@ -62,7 +62,7 @@ export const InputField = styled.input`
     border-radius: 3px;
     border: none;
     padding: 0.3rem;
-    transition: all 0.3s;
+    transition: all 0.4s;
     background-color: ${props => props.theme.white};
     border:2px solid ${props => props.isValid ? `${props.theme.orange}` : `${props.theme.white}`};
 

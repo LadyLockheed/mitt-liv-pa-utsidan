@@ -34,11 +34,11 @@ const SpecificPackingList = (props) => {
     let packingListEquipment = [];
 
     packingListArray.forEach((listId) => {
-        allEquipment.find((equipment) => {
+        allEquipment.forEach((equipment) => {
+
             if (equipment._id === listId) {
 
                 packingListEquipment.push(equipment)
-
 
             }
 

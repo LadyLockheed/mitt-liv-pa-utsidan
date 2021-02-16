@@ -13,6 +13,8 @@ const Login = () => {
     const setIsAuthenticatedState = useSetRecoilState(isAuthenticatedState)
     const setCurrentUser = useSetRecoilState(currentUserState)
 
+    
+
     const history = useHistory();
 
     const [isLoggingIn, setIsLoggingIn] = useState(false)

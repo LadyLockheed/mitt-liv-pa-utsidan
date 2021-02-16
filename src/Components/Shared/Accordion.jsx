@@ -18,7 +18,7 @@ import SpinnerFireLog from './SpinnerFireLog'
 
 
 const Wrapper = styled.div`
-    max-height: 54vh;
+    max-height: 61vh;
     overflow:scroll;
     overflow-x: hidden;
     &::-webkit-scrollbar {

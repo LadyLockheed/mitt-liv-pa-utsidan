@@ -2,8 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Button, SecondaryButton } from './ButtonsAndSuch'
 import { HandleOutsideClick } from '../Shared/Helpers'
-import { Transition } from 'react-transition-group';
-
+// import { Transition } from 'react-transition-group';
 
 
 const ModalWrapper = styled.div`
@@ -90,12 +89,17 @@ const AlertModal = (props) => {
     // };
 
 
-    //when modal opens it scrolls into view
+    // when modal opens it scrolls into view
     useEffect(() => {
-        const scrollIntoViewOptions = { block: 'center', behavior: 'smooth' }
-        let element = document.getElementById('modal')
-        element.scrollIntoView(scrollIntoViewOptions)
-    }, [])
+
+        if(displayModal){
+
+            const scrollIntoViewOptions = { block: 'center', behavior: 'smooth' }
+            let element = document.getElementById('modal')
+            element.scrollIntoView(scrollIntoViewOptions)
+        }
+       
+    }, [displayModal])
 
     //closing modal on click outside
     const ref = useRef();
@@ -107,8 +111,6 @@ const AlertModal = (props) => {
         setDisplayModal(false);
         confirmFunction()
     }
-
-
 
     return (
 
