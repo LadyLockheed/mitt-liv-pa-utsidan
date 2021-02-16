@@ -45,9 +45,9 @@ const AddNewAdventure = (props) => {
 
     const { setDisplayForm, setNewAdventureInfo, newAdventureInfo } = props
 
-    //TODO Datestarting och days syns ej om man backar tillbaka from packlistan. Funkar ju i editEquipment, varför inte här?
     //kollar om man redan har skrivit något i formuläret om man backar tillbaka från skapa packlista, så att allt man skrev fortfarande är ifyllt
     useEffect(() => {
+
         if (newAdventureInfo && newAdventureInfo.adventure) {
 
             setAdventure(newAdventureInfo.adventure)
@@ -62,7 +62,7 @@ const AddNewAdventure = (props) => {
     const [adventure, setAdventure] = useState('')
     const [season, setSeason] = useState('')
     const [dateStarting, setDateStarting] = useState('')
-    const [days, setDays] = useState(null)
+    const [days, setDays] = useState('')
 
     const [validateAdventure, setValidateAdventure] = useState(false)
     const [validateSeason, setValidateSeason] = useState(false)
@@ -142,6 +142,7 @@ const AddNewAdventure = (props) => {
                     type="date"
                     name="dateStarting"
                     id="dateStarting"
+                    value={dateStarting}
                     onChange={event => setDateStarting(event.target.value)}
                     isValid={validateDateStarting} />
                 <ValidateMessage displayMessage={validateDateStarting}> När ska du ut? </ValidateMessage>
@@ -152,14 +153,12 @@ const AddNewAdventure = (props) => {
                     type='number'
                     id='days'
                     step="0.5"
-                    // placeholder='Dygn'
+                    value={days}
                     onChange={event => setDays(event.target.value)}
                     isValid={validateDays}
                 />
                 <ValidateMessage displayMessage={validateDays}> Hur många dygn? </ValidateMessage>
 
-                {/* <LabelStyled htmlFor="days">Hur långt</LabelStyled>
-                <InputFieldStyled type='number' id='days' step="0.5"/> */}
 
                 <SubmitButton onClick={handleAddNewAdventure}>Packa ryggsäcken <ArrowForwardIcon src={arrowForwardICon} /> </SubmitButton>
 

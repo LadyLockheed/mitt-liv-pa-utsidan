@@ -38,3 +38,38 @@ const Faq = () => {
   );
 };
 export default Faq;
+
+
+
+
+(
+
+        
+        <Transition in={displayModal} timeout={300} nodeRef={nodeRef}>
+
+            {state => (
+
+                <div style={{
+                    ...defaultStyle,
+                    ...transitionStyles[state]
+                }} ref={nodeRef}>
+
+
+                    {/* <ModalWrapper id='modal' ref={ref}> */}
+                    <ModalWrapper id='modal' >
+
+                        <Headline>Är du riktigt riktigt riktigt säker?</Headline>
+                        <CloseButton onClick={() => setDisplayModal(false)}>x</CloseButton>
+                        <ConfirmButton onClick={handleConfirm}>Hell yeah</ConfirmButton>
+                        <RegretButton onClick={() => setDisplayModal(false)}>Mjaeh</RegretButton>
+
+
+                    </ModalWrapper>
+                  </div>
+            )}
+
+               
+         </Transition>
+
+
+    )

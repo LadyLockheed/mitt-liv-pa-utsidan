@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Button, SecondaryButton } from './ButtonsAndSuch'
 import { HandleOutsideClick } from '../Shared/Helpers'
+// import { Transition } from 'react-transition-group';
 
 const ModalWrapper = styled.div`
     min-width: 15rem;
@@ -18,16 +19,10 @@ const ModalWrapper = styled.div`
     display:grid;
     grid-template-columns:repeat(5, 1fr);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    transition: opacity 1s;
-    opacity: ${props => props.displayModal  ? 1 : 0};
-    ${'' /* opacity: 1; */}
-
-    ${'' /* &:hover{
-        opacity:0;
-    }
-     */}
- 
-
+    transition: opacity 0.5s;
+    opacity: ${props => props.displayModal ? 1 : 0};
+    visibility: ${props => props.displayModal ? 'visible' : 'hidden'};
+    
 
     @media screen and (min-width: 600px){
 
@@ -73,29 +68,51 @@ const RegretButton = styled(SecondaryButton)`
 const AlertModal = (props) => {
 
     const { setDisplayModal, confirmFunction, displayModal } = props
-    console.log(displayModal)
-   
+  
+    //TODO se nedan
+    // <div style ={{visibility: !isloggedData ? "hidden: "visible"}}>
 
-    //when modal opens it scrolls into view
+    // const duration = 300;
+
+    // const defaultStyle = {
+    //     transition: `opacity ${duration}ms ease-in-out`,
+    //     opacity: 0,
+    // }
+
+    // const transitionStyles = {
+    //     entering: { opacity: 1 },
+    //     entered: { opacity: 1 },
+    //     exiting: { opacity: 0 },
+    //     exited: { opacity: 0 },
+    // };
+
+
+    // when modal opens it scrolls into view
     useEffect(() => {
-        const scrollIntoViewOptions = { block: 'center', behavior: 'smooth' }
-        let element = document.getElementById('modal')
-        element.scrollIntoView(scrollIntoViewOptions)
-    }, [])
+
+        if(displayModal){
+
+            const scrollIntoViewOptions = { block: 'center', behavior: 'smooth' }
+            let element = document.getElementById('modal')
+            element.scrollIntoView(scrollIntoViewOptions)
+        }
+       
+    }, [displayModal])
 
     //closing modal on click outside
     const ref = useRef();
-    HandleOutsideClick(ref, setDisplayModal)
+    // const nodeRef = useRef(null)
+
+    HandleOutsideClick(ref, ()=>displayModal && setDisplayModal(false))
 
     const handleConfirm = () => {
         setDisplayModal(false);
         confirmFunction()
     }
 
-    // className={componentClasses.join(' ')}
-
     return (
 
+        // <ModalWrapper id='modal' ref={ref} displayModal={displayModal}>
         <ModalWrapper id='modal' ref={ref} displayModal={displayModal}>
 
             <Headline>Är du riktigt riktigt riktigt säker?</Headline>
@@ -105,6 +122,8 @@ const AlertModal = (props) => {
 
 
         </ModalWrapper>
+
+
 
     )
 

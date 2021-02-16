@@ -192,7 +192,7 @@ const AllPackingLists = (props) => {
 
         packingList.forEach((listId) => {
 
-            allEquipment.find((equipment) => {
+            allEquipment.forEach((equipment) => {
 
                 if (equipment._id === listId) {
 

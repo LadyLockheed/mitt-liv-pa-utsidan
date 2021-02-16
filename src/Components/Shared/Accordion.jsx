@@ -18,7 +18,7 @@ import SpinnerFireLog from './SpinnerFireLog'
 
 
 const Wrapper = styled.div`
-    max-height: 54vh;
+    max-height: 61vh;
     overflow:scroll;
     overflow-x: hidden;
     &::-webkit-scrollbar {
@@ -364,19 +364,22 @@ const Accordion = (props) => {
 
     return (
         <>
-            {displayEditEquipment &&
-                <EditEquipment
-                    setDisplayEditEquipment={setDisplayEditEquipment}
-                    equipmentToEdit={itemToEdit} />
-            }
 
-            {displayModal &&
-                <AlertModal
-                    setDisplayModal={setDisplayModal}
-                    confirmFunction={() => deleteEquipment(itemToDelete)}
-                    displayModal={displayModal}
-                />
-            }
+            <EditEquipment
+                setDisplayEditEquipment={setDisplayEditEquipment}
+                equipmentToEdit={itemToEdit}
+                displayEditEquipment={displayEditEquipment}
+
+            />
+
+
+
+            <AlertModal
+                setDisplayModal={setDisplayModal}
+                confirmFunction={() => deleteEquipment(itemToDelete)}
+                displayModal={displayModal}
+            />
+
 
             <Wrapper>
 

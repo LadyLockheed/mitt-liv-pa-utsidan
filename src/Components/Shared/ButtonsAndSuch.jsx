@@ -62,7 +62,7 @@ export const InputField = styled.input`
     border-radius: 3px;
     border: none;
     padding: 0.3rem;
-    border: 1px solid rgba(197,197,197,0.30);
+    transition: all 0.4s;
     background-color: ${props => props.theme.white};
     border:2px solid ${props => props.isValid ? `${props.theme.orange}` : `${props.theme.white}`};
 
@@ -104,6 +104,8 @@ export const SelectInput = styled.select`
 
 export const ValidateMessage = styled.span`
     color:${props => props.theme.orange};
+    transition: all 0.5s;
+    opacity: ${props => props.displayMessage ? 1 : 0};
     visibility: ${props => props.displayMessage ? 'visible' : 'hidden'};
     margin-left: 0.5rem;
     font-weight: bold;

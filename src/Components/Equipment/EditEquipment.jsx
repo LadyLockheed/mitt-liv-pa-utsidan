@@ -23,6 +23,9 @@ const Wrapper = styled.div`
     transform: translate(-50%, -50%);
     z-index: 20;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition: opacity 0.5s;
+    opacity: ${props => props.displayEditEquipment ? 1 : 0};
+    visibility: ${props => props.displayEditEquipment ? 'visible' : 'hidden'};
 
     @media screen and (min-width: 600px){
         width: 50%;
@@ -91,32 +94,44 @@ const SubmitButton = styled(Button)`
 
 const EditEquipment = (props) => {
 
-    const { setDisplayEditEquipment, equipmentToEdit } = props;
-  
+    const { setDisplayEditEquipment, equipmentToEdit, displayEditEquipment } = props;
+
+    useEffect(() => {
+    
+        if (equipmentToEdit && equipmentToEdit.equipment) {
+    
+            setEquipment(equipmentToEdit.equipment)
+            setCategory(equipmentToEdit.category)
+            setWeight(equipmentToEdit.weight)
+            setInfo(equipmentToEdit.info)
+        }
+
+    }, [equipmentToEdit])
+
     const setAllEquipment = useSetRecoilState(allEquipmentState)
 
-    const [equipment, setEquipment] = useState(equipmentToEdit.equipment)
-    const [category, setCategory] = useState(equipmentToEdit.category)
-    const [weight, setWeight] = useState(equipmentToEdit.weight)
-    const [info, setInfo] = useState(equipmentToEdit.info)
+    const [equipment, setEquipment] = useState('')
+    const [category, setCategory] = useState('')
+    const [weight, setWeight] = useState('')
+    const [info, setInfo] = useState('')
 
     const [validateEquipment, setValidateEquipment] = useState(false)
     const [validateWeight, setValidateWeight] = useState(false)
     const [validateCategory, setValidateCategory] = useState(false)
 
-    const [isEditing, setIsEditing]= useState(false)
+    const [isEditing, setIsEditing] = useState(false)
 
     //when modal opens it scrolls into view
-    useEffect(()=>{
-        const scrollIntoViewOptions = {block: 'end', behavior: 'smooth'}
-        let element = document.getElementById('wrapper')
-        element.scrollIntoView(scrollIntoViewOptions)
-    },[])
+    // useEffect(() => {
+    //     const scrollIntoViewOptions = { block: 'end', behavior: 'smooth' }
+    //     let element = document.getElementById('wrapper')
+    //     element.scrollIntoView(scrollIntoViewOptions)
+    // }, [])
 
- 
+
     //closing modal on click outside
     const ref = useRef();
-    HandleOutsideClick(ref, setDisplayEditEquipment)
+    HandleOutsideClick(ref, () => displayEditEquipment && setDisplayEditEquipment(false))
 
     async function editEquipment() {
 
@@ -169,78 +184,80 @@ const EditEquipment = (props) => {
     }
 
     return (
-  
-        <Wrapper id='wrapper' ref={ref}>
 
-        {isEditing ? <Spinner spinnerMessage={'uppdaterar...'}/> :
-        <>
-            <TopWrapper>
-                <StyledLabel htmlFor='equipment'>Ändra utrustning</StyledLabel>
-                <CloseButton onClick={() => setDisplayEditEquipment(false)}>x</CloseButton>
-                {/* Equipment */}
 
-            </TopWrapper>
-            <StyledInputField
-                type='text'
-                id='equipment'
-                value={equipment}
-                onChange={event => setEquipment(event.target.value)}
-                isValid={validateEquipment}
-            />
-            <StyledValidateMessage displayMessage={validateEquipment}>Vad är det för pryl?</StyledValidateMessage>
+        <Wrapper id='wrapper' ref={ref} displayEditEquipment={displayEditEquipment}>
 
-            {/* Category */}
+            {isEditing ? <Spinner spinnerMessage={'uppdaterar...'} /> :
+                <>
+                    <TopWrapper>
+                        <StyledLabel htmlFor='equipment'>Ändra utrustning</StyledLabel>
+                        <CloseButton onClick={() => setDisplayEditEquipment(false)}>x</CloseButton>
+                        {/* Equipment */}
 
-            <StyledLabel>Ändra kategori</StyledLabel>
+                    </TopWrapper>
+                    <StyledInputField
+                        type='text'
+                        id='equipment'
+                        value={equipment}
+                        onChange={event => setEquipment(event.target.value)}
+                        isValid={validateEquipment}
+                    />
+                    <StyledValidateMessage displayMessage={validateEquipment}>Vad är det för pryl?</StyledValidateMessage>
 
-            <StyledSelectInput
-                name="category"
-                id="category"
-                type='text'
-                value={category}
-                isValid={validateCategory}
-                onChange={event => setCategory(event.target.value)}>
-                <option value='category'>Välj kategori</option>
-                <option value="living">Boende</option>
-                <option value="storage">Bära/Förvaring</option>
-                <option value="sleeping">Sova</option>
-                <option value="clothes">Kläder</option>
-                <option value="electronics">Elektronik</option>
-                <option value="fun">Nöje</option>
-                <option value="cooking">Matlagning</option>
-                <option value="hygiene">Hygien</option>
-                <option value="other">Övrigt</option>
+                    {/* Category */}
 
-            </StyledSelectInput>
+                    <StyledLabel>Ändra kategori</StyledLabel>
 
-            <StyledValidateMessage displayMessage={validateCategory}>What for stuff now?</StyledValidateMessage>
+                    <StyledSelectInput
+                        name="category"
+                        id="category"
+                        type='text'
+                        value={category}
+                        isValid={validateCategory}
+                        onChange={event => setCategory(event.target.value)}>
+                        <option value='category'>Välj kategori</option>
+                        <option value="living">Boende</option>
+                        <option value="storage">Bära/Förvaring</option>
+                        <option value="sleeping">Sova</option>
+                        <option value="clothes">Kläder</option>
+                        <option value="electronics">Elektronik</option>
+                        <option value="fun">Nöje</option>
+                        <option value="cooking">Matlagning</option>
+                        <option value="hygiene">Hygien</option>
+                        <option value="other">Övrigt</option>
 
-            {/* Weight */}
-            <StyledLabel htmlFor='weight'>Ändra vikt</StyledLabel>
-            <StyledInputField
-                type='number'
-                id='weight'
-                step="0.1"
-                placeholder='(g)'
-                value={weight}
-                onChange={event => setWeight(event.target.value)}
-                isValid={validateWeight}
-            />
-            <StyledValidateMessage displayMessage={validateWeight}>Vikten är viktig</StyledValidateMessage>
+                    </StyledSelectInput>
 
-            {/* Info */}
-            <StyledLabel htmlFor='info'>Ändra info</StyledLabel>
-            <TextArea
-                id='info'
-                rows='2'
-                type='text'
-                value={info}
-                onChange={event => setInfo(event.target.value)}></TextArea>
+                    <StyledValidateMessage displayMessage={validateCategory}>What for stuff now?</StyledValidateMessage>
 
-            <SubmitButton onClick={() => handleEditEquipment()}>Uppdatera</SubmitButton>
-            </>
-        }
+                    {/* Weight */}
+                    <StyledLabel htmlFor='weight'>Ändra vikt</StyledLabel>
+                    <StyledInputField
+                        type='number'
+                        id='weight'
+                        step="0.1"
+                        placeholder='(g)'
+                        value={weight}
+                        onChange={event => setWeight(event.target.value)}
+                        isValid={validateWeight}
+                    />
+                    <StyledValidateMessage displayMessage={validateWeight}>Vikten är viktig</StyledValidateMessage>
+
+                    {/* Info */}
+                    <StyledLabel htmlFor='info'>Ändra info</StyledLabel>
+                    <TextArea
+                        id='info'
+                        rows='2'
+                        type='text'
+                        value={info}
+                        onChange={event => setInfo(event.target.value)}></TextArea>
+
+                    <SubmitButton onClick={() => handleEditEquipment()}>Uppdatera</SubmitButton>
+                </>
+            }
         </Wrapper>
+
 
     )
 
