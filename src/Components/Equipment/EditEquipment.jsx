@@ -141,6 +141,7 @@ const EditEquipment = (props) => {
             })
 
             getAllEquipment()
+            setIsEditing(false)
             setDisplayEditEquipment(false)
 
         }

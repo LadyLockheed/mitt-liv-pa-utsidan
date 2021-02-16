@@ -13,7 +13,8 @@ const ModalWrapper = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 4;
+    ${'' /* pga leaflet måste jag ha högst z-index */}
+    z-index: 1001;
     padding:0.5rem;
     border-radius:3px;
     display:grid;

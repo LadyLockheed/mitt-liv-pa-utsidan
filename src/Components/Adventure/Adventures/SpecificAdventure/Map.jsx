@@ -63,7 +63,7 @@ const Map = (props) => {
     return (
         <>
 
-            <StyledMap center={longAndLat} zoom={11} scrollWheelZoom={true}>
+            <StyledMapContainer center={longAndLat} zoom={11} scrollWheelZoom={true}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -84,7 +84,7 @@ const Map = (props) => {
 
 
 
-            </StyledMap>
+            </StyledMapContainer>
             
             {/* <label>Platsnotis</label>
             <input
