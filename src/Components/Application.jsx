@@ -65,7 +65,6 @@ const Application=()=>{
     
     useEffect(()=>{
         
-
         //kollar om session finns i localstorage, om det finns är man fortfarande inloggad och behöver inte logga in igen om man laddar om sidan
         let loggedInUser = localStorage.getItem('userName')
         if (loggedInUser){

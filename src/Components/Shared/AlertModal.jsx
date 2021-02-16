@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Button, SecondaryButton } from './ButtonsAndSuch'
 import { HandleOutsideClick } from '../Shared/Helpers'
+import { Transition } from 'react-transition-group';
+
 
 
 const ModalWrapper = styled.div`
@@ -19,10 +21,10 @@ const ModalWrapper = styled.div`
     display:grid;
     grid-template-columns:repeat(5, 1fr);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    ${'' /* transition: 1s;
-    opacity: ${props => props.displayModal  ? 1 : 0}; */}
-    opacity: 1;
-
+    transition: opacity 0.5s;
+    opacity: ${props => props.displayModal ? 1 : 0};
+    visibility: ${props => props.displayModal ? 'visible' : 'hidden'};
+    
 
     @media screen and (min-width: 600px){
 
@@ -69,8 +71,24 @@ const RegretButton = styled(SecondaryButton)`
 const AlertModal = (props) => {
 
     const { setDisplayModal, confirmFunction, displayModal } = props
-    console.log(displayModal)
-   
+  
+    //TODO se nedan
+    // <div style ={{visibility: !isloggedData ? "hidden: "visible"}}>
+
+    // const duration = 300;
+
+    // const defaultStyle = {
+    //     transition: `opacity ${duration}ms ease-in-out`,
+    //     opacity: 0,
+    // }
+
+    // const transitionStyles = {
+    //     entering: { opacity: 1 },
+    //     entered: { opacity: 1 },
+    //     exiting: { opacity: 0 },
+    //     exited: { opacity: 0 },
+    // };
+
 
     //when modal opens it scrolls into view
     useEffect(() => {
@@ -81,7 +99,9 @@ const AlertModal = (props) => {
 
     //closing modal on click outside
     const ref = useRef();
-    HandleOutsideClick(ref, setDisplayModal)
+    // const nodeRef = useRef(null)
+
+    HandleOutsideClick(ref, ()=>displayModal && setDisplayModal(false))
 
     const handleConfirm = () => {
         setDisplayModal(false);
@@ -92,7 +112,8 @@ const AlertModal = (props) => {
 
     return (
 
-        <ModalWrapper id='modal' ref={ref} displayModal={displayModal} >
+        // <ModalWrapper id='modal' ref={ref} displayModal={displayModal}>
+        <ModalWrapper id='modal' ref={ref} displayModal={displayModal}>
 
             <Headline>Är du riktigt riktigt riktigt säker?</Headline>
             <CloseButton onClick={() => setDisplayModal(false)}>x</CloseButton>
@@ -101,6 +122,7 @@ const AlertModal = (props) => {
 
 
         </ModalWrapper>
+
 
 
     )

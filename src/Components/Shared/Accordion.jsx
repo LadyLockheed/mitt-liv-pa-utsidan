@@ -364,19 +364,22 @@ const Accordion = (props) => {
 
     return (
         <>
-            {displayEditEquipment &&
-                <EditEquipment
-                    setDisplayEditEquipment={setDisplayEditEquipment}
-                    equipmentToEdit={itemToEdit} />
-            }
 
-            {displayModal &&
-                <AlertModal
-                    setDisplayModal={setDisplayModal}
-                    confirmFunction={() => deleteEquipment(itemToDelete)}
-                    displayModal={displayModal}
-                />
-            }
+            <EditEquipment
+                setDisplayEditEquipment={setDisplayEditEquipment}
+                equipmentToEdit={itemToEdit}
+                displayEditEquipment={displayEditEquipment}
+
+            />
+
+
+
+            <AlertModal
+                setDisplayModal={setDisplayModal}
+                confirmFunction={() => deleteEquipment(itemToDelete)}
+                displayModal={displayModal}
+            />
+
 
             <Wrapper>
 

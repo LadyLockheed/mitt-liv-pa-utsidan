@@ -22,7 +22,7 @@ const Map = (props) => {
 
 
     const { longAndLat } = props
-    console.log(L)
+    // console.log(L)
 
     const userSavedLocations = [
         {

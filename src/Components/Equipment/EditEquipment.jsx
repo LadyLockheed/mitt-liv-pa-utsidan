@@ -24,6 +24,9 @@ const Wrapper = styled.div`
     transform: translate(-50%, -50%);
     z-index: 20;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition: opacity 0.5s;
+    opacity: ${props => props.displayEditEquipment ? 1 : 0};
+    visibility: ${props => props.displayEditEquipment ? 'visible' : 'hidden'};
 
     @media screen and (min-width: 600px){
         width: 50%;
@@ -92,7 +95,7 @@ const SubmitButton = styled(Button)`
 
 const EditEquipment = (props) => {
 
-    const { setDisplayEditEquipment, equipmentToEdit } = props;
+    const { setDisplayEditEquipment, equipmentToEdit, displayEditEquipment } = props;
   
     const setAllEquipment = useSetRecoilState(allEquipmentState)
 
@@ -117,7 +120,7 @@ const EditEquipment = (props) => {
  
     //closing modal on click outside
     const ref = useRef();
-    HandleOutsideClick(ref, setDisplayEditEquipment)
+    HandleOutsideClick(ref, ()=>displayEditEquipment && setDisplayEditEquipment(false))
 
     async function editEquipment() {
 
@@ -171,7 +174,7 @@ const EditEquipment = (props) => {
 
     return (
   
-        <Wrapper id='wrapper' ref={ref}>
+        <Wrapper id='wrapper' ref={ref} displayEditEquipment={displayEditEquipment}>
 
         {isEditing ? <Spinner spinnerMessage={'uppdaterar...'}/> :
         <>

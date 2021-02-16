@@ -25,6 +25,10 @@ const Login = () => {
     const [validateUserMessage, setValidateUserMessage] = useState('x')
     const [validatePasswordMessage, setValidatePassWordMessage] = useState('x')
 
+    //TODO vid rendering, kolla om isAuthenticated eller om det finns en user i local storage, if so, history.push('/allEquipment)
+
+    // <div style ={{visibility: !isloggedData ? "hidden: "visible"}}>
+
     async function authenticateUser() {
 
         try {
@@ -85,7 +89,6 @@ const Login = () => {
 
     const handleSubmit = () => {
 
-       
         //resetar så att validering kan börja om ifall man enbart fyllt i vissa fält rätt
         resetValidation();
         //kollar om allt ifyllt är valid
