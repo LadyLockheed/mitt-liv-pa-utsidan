@@ -1,3 +1,7 @@
+This is the project I worked with as my examproject. It is an app for managing packing lists during outdoor activities. Or more precise, before the outdoor activity. The purspose is to get an overview of all the equipment you have and the total weight of the packed backpack. It is an app I want to use, and therefore it was really fun to work with. I wanted to use *Styled Components* because it is awesome. I also took the opportunity to try a, for me, new state management library - *Recoil*. The stack is MERN.
+The app is not complete and contains some bugs. I started a new project based on this one but with a little different stack and hopefully I can publish it someday somewhere :) <br/>   
+-LadyLockheed
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
